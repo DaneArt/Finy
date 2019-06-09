@@ -53,8 +53,7 @@ dependencies {
     implementation 'com.google.dagger:dagger-android-support:2.15' // if you use the support libraries
     kapt 'com.google.dagger:dagger-android-processor:2.15'
 
-    //Guava
-    api 'com.google.guava:guava:27.1-android'
+
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

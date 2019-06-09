@@ -8,6 +8,7 @@ import android.widget.Toast;
 import com.rdd.finy.R;
 import com.rdd.finy.data.Wallet;
 import com.rdd.finy.helpers.AppModule;
+import com.rdd.finy.helpers.DaggerAppComponent;
 import com.rdd.finy.helpers.RoomModule;
 import com.rdd.finy.repository.WalletRepository;
 
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         walletRepository.findAll().observe(this, new Observer<List<Wallet>>() {
             @Override
             public void onChanged(@Nullable List<Wallet> wallets) {
-                Toast.makeText(MainActivity.this, String.format("Product size: %s", wallets.size()), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, String.format("Wallet size: %s", wallets.size()), Toast.LENGTH_SHORT).show();
             }
         });
     }
