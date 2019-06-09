@@ -5,9 +5,6 @@ import android.arch.persistence.room.PrimaryKey
 import java.util.*
 
 @Entity
-class Wallet( title: String,
+class Wallet(@PrimaryKey var id:Long,title: String,
              budjet:Int, colorId: Int) {
-
-    @PrimaryKey
-    var id: Long = 0
 }
