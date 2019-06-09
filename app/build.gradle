@@ -47,12 +47,11 @@ dependencies {
     kapt 'com.arello-mobile:moxy-compiler:1.5.5'
 
     //Dagger
-    def daggerVer = 2.15 // or latest version
-
-    implementation "com.google.dagger:dagger:$daggerVer"
-    implementation "com.google.dagger:dagger-android-support:$daggerVer"
-    kapt "com.google.dagger:dagger-android-processor:$daggerVer"
-    kapt "com.google.dagger:dagger-compiler:$daggerVer"
+    implementation 'com.google.dagger:dagger:2.15'
+    kapt 'com.google.dagger:dagger-compiler:2.15'
+    implementation 'com.google.dagger:dagger-android:2.15'
+    implementation 'com.google.dagger:dagger-android-support:2.15' // if you use the support libraries
+    kapt 'com.google.dagger:dagger-android-processor:2.15'
 
     //Guava
     api 'com.google.guava:guava:27.1-android'
