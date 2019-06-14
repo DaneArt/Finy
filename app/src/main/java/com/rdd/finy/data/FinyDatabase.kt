@@ -10,6 +10,6 @@ import com.rdd.finy.data.WalletDao
 abstract class FinyDatabase : RoomDatabase() {
 
 
-    abstract val walletDao: WalletDao
+    abstract fun walletDao(): WalletDao
 
 }

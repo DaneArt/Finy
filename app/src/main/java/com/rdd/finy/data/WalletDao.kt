@@ -8,10 +8,10 @@ import android.arch.persistence.room.*
 interface WalletDao {
 
     @Query("SELECT * FROM Wallet WHERE id=:id")
-    fun findById(id: Int): LiveData<Wallet>
+    fun findById(id: Long): Wallet
 
     @Query("SELECT * FROM Wallet")
-    fun findAll(): LiveData<List<Wallet>>
+    fun findAll(): List<Wallet>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(wallet: Wallet): Long

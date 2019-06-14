@@ -3,21 +3,29 @@ package com.rdd.finy.di
 import android.arch.persistence.room.Room
 import android.content.Context
 import com.rdd.finy.data.FinyDatabase
+import com.rdd.finy.data.WalletDao
 import dagger.Module
 import dagger.Provides
-
 import javax.inject.Singleton
 
 @Module
-class AppModule(private val context: Context) {
+class AppModule(val context: Context) {
 
-    @Provides fun providesAppContext() = context
-
-    @Provides
     @Singleton
-    fun providesFinyDatabase(context: Context): FinyDatabase =
-        Room.databaseBuilder(context, FinyDatabase::class.java, "finy-db").build()
-
     @Provides
-    fun providesWalletDao(database: FinyDatabase) = database.walletDao
+    fun provideContext():Context{
+        return context
+    }
+
+    @Singleton
+    @Provides
+    fun provideFinyDatabase(context:Context):FinyDatabase{
+        return Room.databaseBuilder(context,FinyDatabase::class.java,"finy-db").build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideWalletDao(database: FinyDatabase): WalletDao{
+        return database.walletDao()
+    }
 }
