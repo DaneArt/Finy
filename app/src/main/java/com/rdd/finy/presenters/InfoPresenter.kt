@@ -1,6 +1,10 @@
 package com.rdd.finy.presenters
 
 import android.content.Context
+import android.nfc.Tag
+import android.os.AsyncTask
+import android.util.Log
+
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.rdd.finy.data.Wallet
@@ -12,24 +16,23 @@ import javax.inject.Inject
 @InjectViewState
 class InfoPresenter : MvpPresenter<InfoView>() {
 
-    /*@Inject
+    private val TAG = "InfoPresenter"
+
+    @Inject
     lateinit var walletDao: WalletDao
 
-
     fun loadWallets(){
+        FinyApp.app()?.appComponent()?.inject(this)
+        viewState.setupEmptyWalletsList()
+        loadWalletsTask().execute()
+    }
 
-        run{
-           if (walletDao.findAll().isNotEmpty())
-           {
-               val walletsList = walletDao.findAll()
-               viewState.setupWalletsList(wallets = walletsList)
-           }else{
-               viewState.setupEmptyWalletsList()
-           }
-        }
-    }*/
+    fun addWallet()
+    {
+        addWalletTask().execute()
+    }
 
-    fun testload(){
+    /*fun testload(){
         viewState.setupEmptyWalletsList()
 
         val wallets = arrayListOf<Wallet>()
@@ -38,6 +41,33 @@ class InfoPresenter : MvpPresenter<InfoView>() {
         wallets.add(Wallet(id = 2))
 
         viewState.setupWalletsList(wallets)
+    }*/
+
+    private inner class addWalletTask : AsyncTask<Void,Void, Void>() {
+
+        override fun doInBackground(vararg params: Void?): Void? {
+
+            walletDao.insert(wallet = Wallet())
+            loadWallets()
+            viewState.setToNewWallet(walletDao.findAll().size-1)
+            return null
+        }
+
+        override fun onPostExecute(result: Void?) {
+
+        }
     }
+
+    private inner class loadWalletsTask : AsyncTask<Void, Void, List<Wallet>>() {
+
+        override fun doInBackground(vararg params: Void?): List<Wallet> {
+            return walletDao.findAll()
+        }
+
+        override fun onPostExecute(result: List<Wallet>?) {
+            if(result !=null) viewState.setupWalletsList(result)
+        }
+    }
+
 
 }

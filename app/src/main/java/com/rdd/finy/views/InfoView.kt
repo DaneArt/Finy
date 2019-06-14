@@ -11,4 +11,6 @@ interface InfoView : MvpView {
     fun setupEmptyWalletsList()
 
     fun setupWalletsList(wallets : List<Wallet>)
+
+    fun setToNewWallet(lastPos : Int)
 }

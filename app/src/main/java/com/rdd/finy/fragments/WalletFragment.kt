@@ -53,7 +53,7 @@ class WalletFragment : MvpAppCompatFragment(),WalletView {
         walletBackground = view.findViewById(R.id.wallet_back)
 
         val walletId:Long = arguments!!.getLong(WALLET_ID_ARG)
-        walletPresenter.testLoad(walletId)
+        walletPresenter.loadWalletById(walletId)
 
         return view
 

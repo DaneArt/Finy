@@ -20,7 +20,9 @@ class AppModule(val context: Context) {
     @Singleton
     @Provides
     fun provideFinyDatabase(context:Context):FinyDatabase{
-        return Room.databaseBuilder(context,FinyDatabase::class.java,"finy-db").build()
+        return Room.databaseBuilder(context,FinyDatabase::class.java,"finy-db")
+            .fallbackToDestructiveMigration()
+            .build()
     }
 
     @Singleton
