@@ -8,4 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="iconStyle" >
+        <item name="android:layout_width">@dimen/icon_dimen</item>
+        <item name="android:layout_height">@dimen/icon_dimen</item>
+        <item name="android:background">@null</item>
+    </style>
 </resources>

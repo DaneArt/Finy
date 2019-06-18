@@ -1,17 +1,14 @@
 package com.rdd.finy.fragments
 
-import android.graphics.Color
 import android.os.Bundle
-import android.support.v7.widget.CardView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.rdd.finy.R
-import com.rdd.finy.data.Wallet
 import com.rdd.finy.presenters.WalletPresenter
 import com.rdd.finy.views.WalletView
 
@@ -23,8 +20,7 @@ class WalletFragment : MvpAppCompatFragment(),WalletView {
 
     private lateinit var nameTxt: TextView
     private lateinit var countTxt: TextView
-    private lateinit var walletBackground: LinearLayout
-
+    private lateinit var walletBackground: RelativeLayout
     companion object{
 
         const val WALLET_ID_ARG = "walletId"

@@ -1,10 +1,6 @@
 package com.rdd.finy.presenters
 
-import android.content.Context
-import android.nfc.Tag
 import android.os.AsyncTask
-import android.util.Log
-
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.rdd.finy.data.Wallet
@@ -16,7 +12,7 @@ import javax.inject.Inject
 @InjectViewState
 class InfoPresenter : MvpPresenter<InfoView>() {
 
-    private val TAG = "InfoPresenter"
+
 
     @Inject
     lateinit var walletDao: WalletDao
@@ -43,19 +39,18 @@ class InfoPresenter : MvpPresenter<InfoView>() {
         viewState.setupWalletsList(wallets)
     }*/
 
-    private inner class addWalletTask : AsyncTask<Void,Void, Void>() {
+    private inner class addWalletTask : AsyncTask<Void,Void, List<Wallet>>() {
 
-        override fun doInBackground(vararg params: Void?): Void? {
+        override fun doInBackground(vararg params: Void?): List<Wallet>? {
 
             walletDao.insert(wallet = Wallet())
-            loadWallets()
-            viewState.setToNewWallet(walletDao.findAll().size-1)
-            return null
+            return walletDao.findAll()
         }
 
-        override fun onPostExecute(result: Void?) {
-
-        }
+        override fun onPostExecute(wallets: List<Wallet>?) {
+            viewState.setupWalletsList(wallets = wallets!!)
+            viewState.setToNewWallet(lastPos = wallets.size-1)
+                        }
     }
 
     private inner class loadWalletsTask : AsyncTask<Void, Void, List<Wallet>>() {
