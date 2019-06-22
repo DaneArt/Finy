@@ -14,7 +14,6 @@ class WalletsAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fr
         walletsList.clear()
         walletsList.addAll(wallets)
         notifyDataSetChanged()
-
     }
 
     override fun getItem(pos: Int): Fragment {

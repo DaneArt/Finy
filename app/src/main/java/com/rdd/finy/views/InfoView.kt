@@ -13,4 +13,8 @@ interface InfoView : MvpView {
     fun setupWalletsList(wallets : List<Wallet>)
 
     fun setToNewWallet(lastPos : Int)
+
+    fun updateViewStatus()
+    fun endLoadingFromDB()
+
 }
