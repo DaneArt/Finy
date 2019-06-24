@@ -2,6 +2,7 @@ package com.rdd.finy.activities
 
 import android.os.Bundle
 import android.support.v4.view.ViewPager
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.arellomobile.mvp.MvpAppCompatActivity
@@ -15,6 +16,8 @@ import com.rdd.finy.views.InfoView
 
 class InfoActivity : MvpAppCompatActivity(), InfoView {
 
+    private val TAG = InfoActivity::class.java.simpleName
+
     @InjectPresenter
     lateinit var infoPresenter: InfoPresenter
 
@@ -24,47 +27,31 @@ class InfoActivity : MvpAppCompatActivity(), InfoView {
     }
 
     private lateinit var walletsPager: ViewPager
-    private var walletsAdapter: WalletsAdapter? = null
+    private lateinit var walletsAdapter: WalletsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_info)
         walletsPager = findViewById(R.id.wallets_VPager)
 
-        updateViewStatus()
-
+        walletsAdapter = WalletsAdapter(supportFragmentManager)
+        walletsPager.adapter = walletsAdapter
+        infoPresenter.loadWalletsFromDB()
+        infoPresenter.updateWalletsListViewState()
     }
 
     override fun onResume() {
         super.onResume()
-        try{
-            updateViewStatus()
-        }catch (t:Throwable){
-            t.printStackTrace()
-        }
-    }
-
-    override fun endLoadingFromDB() {
-        walletsPager.adapter = walletsAdapter
-    }
-
-    override fun updateViewStatus() {
-        if(walletsAdapter == null){
-            walletsAdapter = WalletsAdapter(supportFragmentManager)
-            infoPresenter.loadWalletsFromDB()
-        }else
-        {
-            infoPresenter.updateWalletsListViewState()
-        }
-
+        infoPresenter.updateWalletsListViewState()
     }
 
     override fun setupEmptyWalletsList() {
-        walletsAdapter?.setupWallets(emptyList())
+        walletsAdapter.setupWallets(emptyList())
     }
 
     override fun setupWalletsList(wallets: List<Wallet>) {
-        walletsAdapter?.setupWallets(wallets)
+        walletsAdapter.setupWallets(wallets)
+        Log.e(TAG,"Wallets list was set to adapter")
     }
 
     override fun setToNewWallet(lastPos : Int) {

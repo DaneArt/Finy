@@ -1,8 +1,6 @@
 package com.rdd.finy.presenters
 
 import android.arch.lifecycle.LifecycleOwner
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.Observer
 import android.os.AsyncTask
 import android.util.Log
 import com.arellomobile.mvp.InjectViewState
@@ -22,45 +20,42 @@ class InfoPresenter(val owner: LifecycleOwner) : MvpPresenter<InfoView>() {
     @Inject
     lateinit var walletDao: WalletDao
 
-    private var walletsList : MutableLiveData<List<Wallet>> = MutableLiveData()
+    private var localWalletsList: ArrayList<Wallet> = arrayListOf()
 
-    fun loadWalletsFromDB(){
+    fun loadWalletsFromDB() {
         FinyApp.app()?.appComponent()?.inject(this)
+
+        viewState.setupEmptyWalletsList()
 
         walletDao.findAll()
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe ({walletsFromDataBase ->
-                walletsList.value = walletsFromDataBase
-                viewState.setupEmptyWalletsList()
-                walletsList.observe(
-                    owner, Observer<List<Wallet>> {
-                        Log.e(TAG, "Wallets list changed. Current size is ${walletsList.value!!.size}")
-                        updateWalletsListViewState()
-                    }
-                )
-                viewState.endLoadingFromDB()
+            .subscribe({ walletsFromDataBase ->
+                localWalletsList.clear()
+                localWalletsList.addAll(walletsFromDataBase)
+                Log.e(TAG, "Wallets list changed. Current size is ${localWalletsList.size}")
+                for(item in localWalletsList){
+                    Log.e(TAG,"Wallet id ${item.id}")
+                }
                 updateWalletsListViewState()
-            },{ error ->
+            }, { error ->
                 Log.e(TAG, error.localizedMessage)
             })
 
     }
 
-    fun updateWalletsListViewState(){
-        viewState.setupWalletsList(walletsList.value!!)
-
+    fun updateWalletsListViewState() {
+        viewState.setupWalletsList(localWalletsList)
     }
 
-    fun addWallet()
-    {
-        object:AsyncTask<Void,Void,Int>(){
+    fun addWallet() {
+        object : AsyncTask<Void, Void, Int>() {
             override fun doInBackground(vararg params: Void?): Int {
                 walletDao.insert(Wallet())
                 return 1
             }
 
             override fun onPostExecute(result: Int?) {
-                viewState.setToNewWallet(walletsList.value!!.size)
+                viewState.setToNewWallet(localWalletsList.size - 1)
                 updateWalletsListViewState()
             }
 
@@ -78,19 +73,19 @@ class InfoPresenter(val owner: LifecycleOwner) : MvpPresenter<InfoView>() {
         viewState.setupWalletsList(wallets)
     }*/
 
-  /*  private inner class addWalletTask : AsyncTask<Void,Void, List<Wallet>>() {
+    /*  private inner class addWalletTask : AsyncTask<Void,Void, List<Wallet>>() {
 
-        override fun doInBackground(vararg params: Void?): List<Wallet>? {
+          override fun doInBackground(vararg params: Void?): List<Wallet>? {
 
-            walletDao.insert(wallet = Wallet())
-            return walletDao.findAll()
-        }
+              walletDao.insert(wallet = Wallet())
+              return walletDao.findAll()
+          }
 
-        override fun onPostExecute(wallets: List<Wallet>?) {
-            viewState.setupWalletsList(wallets = wallets!!)
-            viewState.setToNewWallet(lastPos = wallets.size-1)
-                        }
-    }*/
+          override fun onPostExecute(wallets: List<Wallet>?) {
+              viewState.setupWalletsList(wallets = wallets!!)
+              viewState.setToNewWallet(lastPos = wallets.size-1)
+                          }
+      }*/
 
     /*private inner class loadWalletsTask : AsyncTask<Void, Void, List<Wallet>>() {
 

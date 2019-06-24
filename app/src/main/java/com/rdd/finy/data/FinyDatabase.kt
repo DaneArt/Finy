@@ -4,7 +4,7 @@ import android.arch.persistence.room.Database
 import android.arch.persistence.room.RoomDatabase
 
 
-@Database(entities = [Wallet::class], version = 2, exportSchema = false)
+@Database(entities = [Wallet::class], version = 3, exportSchema = false)
 abstract class FinyDatabase : RoomDatabase() {
 
 

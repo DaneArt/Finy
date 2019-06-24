@@ -98,6 +98,12 @@ class WalletFragment : MvpAppCompatFragment(), WalletView {
 
     }
 
+    override fun onPause() {
+        super.onPause()
+        val walletId: Long = arguments!!.getLong(WALLET_ID_ARG)
+        walletPresenter.loadWalletById(walletId)
+    }
+
     override fun startEditingWallet() {
         walletEditBtn.visibility = View.INVISIBLE
         walletDeleteBtn.visibility = View.VISIBLE

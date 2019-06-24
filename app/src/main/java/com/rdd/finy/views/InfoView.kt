@@ -14,7 +14,5 @@ interface InfoView : MvpView {
 
     fun setToNewWallet(lastPos : Int)
 
-    fun updateViewStatus()
-    fun endLoadingFromDB()
 
 }
