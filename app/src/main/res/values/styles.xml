@@ -13,4 +13,13 @@
         <item name="android:layout_height">@dimen/icon_dimen</item>
         <item name="android:background">@null</item>
     </style>
+
+    <style name="WalletBalanceBar" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="colorButtonNormal">#f50057</item>
+        <item name="colorControlActivated">#33691e</item>
+        <item name="colorControlHighlight">#ff6d00</item>
+        <item name="android:progressDrawable">@drawable/wallet_budjet_bar</item>
+        <item name="android:minWidth">200dp</item>
+        <item name="android:text">Text</item>
+    </style>
 </resources>

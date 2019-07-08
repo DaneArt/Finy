@@ -1,16 +1,17 @@
 package com.rdd.finy.data
 
-import android.arch.persistence.room.*
+import androidx.room.*
 import io.reactivex.Flowable
+import io.reactivex.Single
 
 @Dao
 interface WalletDao {
 
     @Query("SELECT * FROM Wallet WHERE id=:id")
-    fun findById(id: Long): Flowable<Wallet>
+    fun getWalletById(id: Long): Single<Wallet>
 
     @Query("SELECT * FROM Wallet")
-    fun findAll(): Flowable<List<Wallet>>
+    fun getAllWallets(): Flowable<List<Wallet>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(wallet: Wallet): Long

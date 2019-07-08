@@ -1,86 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="144dp">
 
-    <android.support.v7.widget.CardView
-            android:id="@+id/wallet_back"
+<androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/icon_dimen"
+        android:layout_gravity="center"
+        android:layout_margin="8dp">
+
+    <RelativeLayout
+            android:id="@+id/rl_wallet_background"
             android:layout_width="match_parent"
-            android:layout_height="144dp"
-            android:focusable="false"
-            android:clickable="false"
-            android:layout_margin="8dp">
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true">
 
-        <RelativeLayout
+        <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/rbtn_wallet_activation"
+                android:layout_width="@dimen/icon_dimen"
+                android:layout_height="@dimen/icon_dimen"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"/>
+
+        <ProgressBar
+                android:id="@+id/pb_wallet_balance"
+                style="@style/WalletBalanceBar"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="@dimen/icon_dimen"
+                android:layout_alignParentTop="true"
+                android:progress="30"
+                android:secondaryProgress="70"
+                android:theme="@style/WalletBalanceBar"
+                android:visibility="invisible"/>
 
-                android:orientation="vertical">
+        <TextView
+                android:id="@+id/txt_wallet_title"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/icon_dimen"
+                android:layout_alignTop="@+id/pb_wallet_balance"
+                android:layout_alignBottom="@+id/pb_wallet_balance"
+                android:layout_margin="6dp"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"/>
 
-            <EditText
-                    android:id="@+id/wallet_nameTxt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentStart="true"
-                    android:textColor="@android:color/black"
-                    android:textSize="24sp"
-                    android:enabled="false"
-                    tools:text="Test"/>
-
-            <EditText
-                    android:id="@+id/wallet_countTxt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:layout_below="@+id/wallet_nameTxt"
-                    android:layout_alignParentStart="true"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                    android:enabled="false"
-                    tools:text="Test"
-            />
-
-            <ImageButton
-                    android:id="@+id/wallet_edit"
-                    style="@style/iconStyle"
-                    android:layout_margin="8dp"
-                    android:src="@android:drawable/ic_menu_edit"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-            />
-
-            <ImageButton
-                    android:id="@+id/wallet_delete"
-                    style="@style/iconStyle"
-                    android:src="@android:drawable/ic_menu_delete"
-                    android:layout_toStartOf="@+id/wallet_edit"
-                    android:visibility="invisible"
-                    android:layout_margin = "8dp"/>
-
-            <ImageButton
-                    android:id="@+id/wallet_confirmChanges"
-                    style="@style/iconStyle"
-                    android:layout_toStartOf="@+id/wallet_declineChanges"
-                    android:layout_alignParentBottom="true"
-                    android:src="@android:drawable/ic_menu_manage"
-                    android:visibility="invisible"
-                    android:layout_margin="8dp"/>
-
-            <ImageButton
-                    android:id="@+id/wallet_declineChanges"
-                    style="@style/iconStyle"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_margin="8dp"
-                    android:visibility="invisible"
-                    android:src="@android:drawable/ic_menu_close_clear_cancel"
-            />
-        </RelativeLayout>
-
-
-    </android.support.v7.widget.CardView>
-
-</LinearLayout>
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

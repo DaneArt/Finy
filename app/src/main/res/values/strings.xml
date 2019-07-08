@@ -1,4 +1,20 @@
 <resources>
     <string name="app_name">Finy</string>
-    <string name="wallet_add">addWallet</string>
+    <string name="wallet_add_btn_menu">addWallet</string>
+    <string name="money_add_btn">Add</string>
+    <string name="money_remove_btn">Remove</string>
+    <string name="setup_wallet_title_txt">Title</string>
+    <string name="setup_wallet_balance_txt">Balance</string>
+    <string name="setup_wallet_upper_divider_txt">Upper divider</string>
+    <string name="setup_wallet_bottom_divider_txt">Bottom divider</string>
+    <string name="wallet_setup_new_title_dialog">Setup new wallet</string>
+    <string name="control_money_count_txt">How much?</string>
+    <string name="control_source_of_money">From</string>
+    <string name="control_destination_wallets">To wallets</string>
+    <string name="control_destination_for_history">To</string>
+    <string name="total_balance_menu">Total Balance: %f</string>
+    <string name="save_wallet_error">Wallet couldn\'t be saved. Balance should be less than upper divider and more then
+        bottom divider.Check it and try again
+    </string>
+    <string name="setup_delete_wallet_txt">DELETE</string>
 </resources>

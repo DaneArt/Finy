@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "742241926814",
+    "firebase_url": "https://finy-helper.firebaseio.com",
+    "project_id": "finy-helper",
+    "storage_bucket": "finy-helper.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:742241926814:android:88a7815086abb26e",
+        "android_client_info": {
+          "package_name": "com.rdd.finy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "742241926814-vq7osmbq459sepnkgksklhe3au0c6ugr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCb219FfD2YnWzCew5-r8zaRkSKGWTp9Fg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "742241926814-vq7osmbq459sepnkgksklhe3au0c6ugr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

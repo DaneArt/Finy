@@ -1,18 +1,13 @@
 package com.rdd.finy.views
 
-import com.arellomobile.mvp.MvpView
-import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy
-import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
-import com.rdd.finy.data.Wallet
 
-@StateStrategyType(value =  AddToEndSingleStrategy::class)
+import moxy.MvpView
+import moxy.viewstate.strategy.AddToEndSingleStrategy
+import moxy.viewstate.strategy.StateStrategyType
+
+@StateStrategyType(value = AddToEndSingleStrategy::class)
 interface InfoView : MvpView {
 
-    fun setupEmptyWalletsList()
-
-    fun setupWalletsList(wallets : List<Wallet>)
-
-    fun setToNewWallet(lastPos : Int)
-
+    fun showControlMoneyDialog(isAddingMoney : Boolean)
 
 }

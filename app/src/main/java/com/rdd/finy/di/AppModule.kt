@@ -1,9 +1,10 @@
 package com.rdd.finy.di
 
-import android.arch.persistence.room.Room
 import android.content.Context
+import androidx.room.Room
 import com.rdd.finy.data.FinyDatabase
 import com.rdd.finy.data.WalletDao
+import com.rdd.finy.data.WalletRepository
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -25,7 +26,11 @@ class AppModule(val context: Context) {
             .build()
     }
 
-    @Singleton
+    @Provides
+    fun provideWalletRepository(walletDao: WalletDao):WalletRepository{
+        return WalletRepository(walletDao)
+    }
+
     @Provides
     fun provideWalletDao(database: FinyDatabase): WalletDao{
         return database.walletDao()

@@ -1,12 +1,11 @@
 package com.rdd.finy.data
 
-import android.arch.persistence.room.Database
-import android.arch.persistence.room.RoomDatabase
+import androidx.room.Database
+import androidx.room.RoomDatabase
 
 
-@Database(entities = [Wallet::class], version = 3, exportSchema = false)
+@Database(entities = [Wallet::class], version = 1, exportSchema = false)
 abstract class FinyDatabase : RoomDatabase() {
-
 
     abstract fun walletDao(): WalletDao
 

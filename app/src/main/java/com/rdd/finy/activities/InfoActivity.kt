@@ -1,75 +1,75 @@
 package com.rdd.finy.activities
 
 import android.os.Bundle
-import android.support.v4.view.ViewPager
-import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
-import com.arellomobile.mvp.MvpAppCompatActivity
-import com.arellomobile.mvp.presenter.InjectPresenter
-import com.arellomobile.mvp.presenter.ProvidePresenter
+import android.widget.Button
+import com.rdd.finy.App
 import com.rdd.finy.R
 import com.rdd.finy.adapters.WalletsAdapter
 import com.rdd.finy.data.Wallet
+import com.rdd.finy.data.WalletRepository
+import com.rdd.finy.fragments.ControlMoneyDialog
+import com.rdd.finy.fragments.SetupWalletDialog
+import com.rdd.finy.fragments.WalletsContainerFragment
 import com.rdd.finy.presenters.InfoPresenter
 import com.rdd.finy.views.InfoView
+import moxy.MvpAppCompatActivity
+import moxy.presenter.InjectPresenter
+import javax.inject.Inject
 
-class InfoActivity : MvpAppCompatActivity(), InfoView {
+class InfoActivity : MvpAppCompatActivity(), InfoView,WalletsAdapter.Callbacks {
 
-    private val TAG = InfoActivity::class.java.simpleName
+    private val DIALOG_CONTROL_MONEY = "controlMoneyDialog"
+
+    init {
+        App.app()?.appComponent()?.inject(this@InfoActivity)
+    }
+
+    @Inject
+    lateinit var walletRepository: WalletRepository
 
     @InjectPresenter
     lateinit var infoPresenter: InfoPresenter
 
-    @ProvidePresenter
-    fun provideInfoPresenter():InfoPresenter{
-        return InfoPresenter(this)
-    }
-
-    private lateinit var walletsPager: ViewPager
-    private lateinit var walletsAdapter: WalletsAdapter
+    private lateinit var addMoneyBtn : Button
+    private lateinit var removeMoneyBtn : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_info)
-        walletsPager = findViewById(R.id.wallets_VPager)
 
-        walletsAdapter = WalletsAdapter(supportFragmentManager)
-        walletsPager.adapter = walletsAdapter
-        infoPresenter.loadWalletsFromDB()
-        infoPresenter.updateWalletsListViewState()
-    }
+        addMoneyBtn = findViewById(R.id.btn_show_insert_money_dialog)
+        removeMoneyBtn = findViewById(R.id.btn_show_remove_money_dialog)
 
-    override fun onResume() {
-        super.onResume()
-        infoPresenter.updateWalletsListViewState()
-    }
-
-    override fun setupEmptyWalletsList() {
-        walletsAdapter.setupWallets(emptyList())
-    }
-
-    override fun setupWalletsList(wallets: List<Wallet>) {
-        walletsAdapter.setupWallets(wallets)
-        Log.e(TAG,"Wallets list was set to adapter")
-    }
-
-    override fun setToNewWallet(lastPos : Int) {
-        walletsPager.setCurrentItem(lastPos,true)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_wallet, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-
-        if (item?.itemId == R.id.menu_addWallet ){
-            infoPresenter.addWallet()
-            return true
+        addMoneyBtn.setOnClickListener {
+            infoPresenter.addMoney()
         }
 
-        return super.onOptionsItemSelected(item)
+        removeMoneyBtn.setOnClickListener {
+            infoPresenter.removeMoney()
+        }
+
+        val manager = supportFragmentManager
+        val fragment = WalletsContainerFragment()
+        manager.beginTransaction()
+            .add(R.id.container_wallets_fragment,fragment)
+            .commit()
     }
+
+    override fun showControlMoneyDialog(isAddingMoney : Boolean) {
+        val manager = supportFragmentManager
+        val dialog = ControlMoneyDialog.newInstance(isAddingMoney)
+        dialog.show(manager, DIALOG_CONTROL_MONEY)
+    }
+
+    override fun onShowSetupWalletDialog(walletId: Long) {
+        val manager = supportFragmentManager
+        val dialog = SetupWalletDialog.newInstance(walletId)
+        dialog.show(manager, WalletsContainerFragment.DIALOG_WALLET_STATE)
+    }
+
+
+    override fun onUpdateWallet(wallet: Wallet) {
+        walletRepository.updateWallet(wallet)
+    }
+
 }

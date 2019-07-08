@@ -7,10 +7,33 @@
         android:orientation="vertical"
         tools:context=".activities.InfoActivity">
 
-    <android.support.v4.view.ViewPager
-            android:id="@+id/wallets_VPager"
+    <FrameLayout
+            android:id="@+id/container_wallets_fragment"
+            android:name="com.rdd.finy.fragments.WalletsContainerFragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
 
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_weight="1">
+
+        <Button android:id="@+id/btn_show_insert_money_dialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/money_add_btn"
+                android:layout_margin="8dp"/>
+
+        <Button
+                android:id="@+id/btn_show_remove_money_dialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/money_remove_btn"
+                android:layout_margin="8dp"/>
+
+    </LinearLayout>
 
 </LinearLayout>

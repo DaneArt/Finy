@@ -1,4 +1,4 @@
-package com.rdd.finy.helpers
+package com.rdd.finy
 
 import android.app.Application
 import com.rdd.finy.di.AppComponent
@@ -6,11 +6,11 @@ import com.rdd.finy.di.AppModule
 import com.rdd.finy.di.DaggerAppComponent
 
 
-class FinyApp : Application() {
+class App : Application() {
 
     companion object{
-        private var app: FinyApp? = null
-        fun app(): FinyApp? {
+        private var app: App? = null
+        fun app(): App? {
             return app
         }
     }
@@ -21,7 +21,8 @@ class FinyApp : Application() {
         super.onCreate()
         app = this
         appComponent = DaggerAppComponent.builder()
-            .appModule(AppModule(applicationContext)).build()
+            .appModule(AppModule(applicationContext))
+                .build()
     }
 
 
