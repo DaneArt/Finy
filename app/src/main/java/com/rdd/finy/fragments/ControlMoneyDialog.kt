@@ -24,6 +24,8 @@ class ControlMoneyDialog : MvpAppCompatDialogFragment(), ControlMoneyView {
     private lateinit var controlSourceDestinationTxt: TextView
     private lateinit var controlWalletsSourceDestinationTxt : TextView
 
+    private val REQUEST_CONTROL_WALLETS = 1
+
     companion object{
 
         private const val ARG_CONTROL_FLAG = "controlMoneyFlag"
@@ -47,6 +49,13 @@ class ControlMoneyDialog : MvpAppCompatDialogFragment(), ControlMoneyView {
         controlWalletsSourceDestinationBtn = view.findViewById(R.id.btn_control_wallets)
         controlSourceDestinationTxt = view.findViewById(R.id.txt_control_for_history)
         controlWalletsSourceDestinationTxt = view.findViewById(R.id.txt_control_wallets)
+
+        controlWalletsSourceDestinationBtn.setOnClickListener {
+            val manager = fragmentManager
+            val dialog = ControlWalletsDialog()
+            dialog.setTargetFragment(this@ControlMoneyDialog,REQUEST_CONTROL_WALLETS)
+            dialog.show(manager!!,null)
+        }
 
         if(arguments!!.getBoolean(ARG_CONTROL_FLAG)){
             setupInsertView()

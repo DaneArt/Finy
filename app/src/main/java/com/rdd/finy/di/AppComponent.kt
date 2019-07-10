@@ -1,6 +1,7 @@
 package com.rdd.finy.di
 
 import com.rdd.finy.activities.InfoActivity
+import com.rdd.finy.fragments.ControlWalletsDialog
 import com.rdd.finy.fragments.SetupWalletDialog
 import com.rdd.finy.fragments.WalletsContainerFragment
 import dagger.Component
@@ -19,5 +20,6 @@ interface AppComponent {
 
     //Dialogs
     fun inject(setupWalletDialog: SetupWalletDialog)
+    fun inject(controlWalletsDialog: ControlWalletsDialog)
 
 }

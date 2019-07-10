@@ -141,14 +141,20 @@ class SetupWalletDialog : MvpAppCompatDialogFragment(), SetupWalletDialogView {
     private fun prepareResultWallet() {
         if (setupWalletBalanceEdit.text.toString() != "")
             localWallet.balance = setupWalletBalanceEdit.text.toString().toDouble()
+        else
+            localWallet.balance = 0.0
 
         localWallet.title = setupWalletTitleEdit.text.toString()
 
         if (setupWalletUpperDividerEdit.text.toString() != "")
             localWallet.upperDivider = setupWalletUpperDividerEdit.text.toString().toDouble()
+        else
+            localWallet.upperDivider = -1.0
 
         if (setupWalletBottomDividerEdit.text.toString() != "")
             localWallet.bottomDivider = setupWalletBottomDividerEdit.text.toString().toDouble()
+        else
+            localWallet.bottomDivider = 0.0
     }
 
     private fun sendResult() {

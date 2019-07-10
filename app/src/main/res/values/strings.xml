@@ -17,4 +17,7 @@
         bottom divider.Check it and try again
     </string>
     <string name="setup_delete_wallet_txt">DELETE</string>
+    <string name="control_wallets_count">Wallets chosen: %d</string>
+    <string name="control_wallets_title">Allocate money to wallet</string>
+    <string name="without_title">Without title</string>
 </resources>

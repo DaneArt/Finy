@@ -14,8 +14,7 @@ class Wallet(@PrimaryKey(autoGenerate = true)
              var backColor: Int = Color.MAGENTA,
              var bottomDivider: Double = 0.0,
              var upperDivider: Double = -1.0,
-             var isActive: Boolean = true,
-             var isBalanceShown: Boolean = false)
+             var isActive: Boolean = true)
 {
 
     val hasUpperDivider : Boolean

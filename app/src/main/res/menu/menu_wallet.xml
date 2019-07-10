@@ -2,15 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-            android:id="@+id/txt_menu_total_balance"
-            android:title="@string/total_balance_menu"
-            app:showAsAction="ifRoom"/>
-
-    <item
             android:title="@string/wallet_add_btn_menu"
             android:icon="@android:drawable/ic_input_add"
-            app:showAsAction="always"
+            app:showAsAction="ifRoom"
             android:id="@+id/btn_menu_create_wallet"/>
-
-
 </menu>

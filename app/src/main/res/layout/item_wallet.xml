@@ -1,46 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.cardview.widget.CardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/icon_dimen"
-        android:layout_gravity="center"
-        android:layout_margin="8dp">
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/icon_dimen"
+    android:layout_gravity="center"
+    android:layout_margin="8dp">
 
     <RelativeLayout
-            android:id="@+id/rl_wallet_background"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true">
+        android:id="@+id/rl_wallet_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true">
 
         <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/rbtn_wallet_activation"
-                android:layout_width="@dimen/icon_dimen"
-                android:layout_height="@dimen/icon_dimen"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"/>
+            android:id="@+id/rbtn_wallet_activation"
+            android:layout_width="@dimen/icon_dimen"
+            android:layout_height="@dimen/icon_dimen"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true" />
 
         <ProgressBar
-                android:id="@+id/pb_wallet_balance"
-                style="@style/WalletBalanceBar"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/icon_dimen"
-                android:layout_alignParentTop="true"
-                android:progress="30"
-                android:secondaryProgress="70"
-                android:theme="@style/WalletBalanceBar"
-                android:visibility="invisible"/>
+            android:id="@+id/pb_wallet_balance"
+            style="@style/WalletBalanceBar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/icon_dimen"
+            android:layout_alignParentTop="true"
+            android:progress="30"
+            android:secondaryProgress="70"
+            android:theme="@style/WalletBalanceBar"
+            android:visibility="invisible" />
 
         <TextView
-                android:id="@+id/txt_wallet_title"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/icon_dimen"
-                android:layout_alignTop="@+id/pb_wallet_balance"
-                android:layout_alignBottom="@+id/pb_wallet_balance"
-                android:layout_margin="6dp"
-                android:textAlignment="center"
-                android:textColor="@android:color/black"/>
+            android:id="@+id/txt_wallet_title"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/icon_dimen"
+            android:layout_alignTop="@+id/pb_wallet_balance"
+            android:layout_alignBottom="@+id/pb_wallet_balance"
+            android:layout_margin="6dp"
+            android:text="@string/without_title"
+            android:textAlignment="center"
+            android:textColor="@android:color/black" />
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

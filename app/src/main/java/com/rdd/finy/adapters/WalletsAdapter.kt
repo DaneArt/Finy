@@ -65,12 +65,11 @@ class WalletsAdapter(private val context: Context) :
 
             setupBalanceBarProgress()
 
-            titleTxt.text = localWallet.title
+            if(localWallet.title!="") titleTxt.text = localWallet.title
 
             isActiveRadBtn.isChecked = localWallet.isActive
 
             viewBackground.setOnClickListener {
-                localWallet.isBalanceShown = !localWallet.isBalanceShown
                 callbacks.onUpdateWallet(wallet = localWallet)
                 setupViewStateVisibility()
             }
@@ -100,7 +99,7 @@ class WalletsAdapter(private val context: Context) :
         }
 
         private fun setupViewStateVisibility(){
-            if(localWallet.isBalanceShown){
+            if(balanceBar.visibility == View.INVISIBLE){
                 setBalanceViewVisible()
             }else{
                 setTitleViewVisible()

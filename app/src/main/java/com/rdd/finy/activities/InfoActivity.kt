@@ -14,9 +14,11 @@ import com.rdd.finy.presenters.InfoPresenter
 import com.rdd.finy.views.InfoView
 import moxy.MvpAppCompatActivity
 import moxy.presenter.InjectPresenter
+import moxy.presenter.ProvidePresenter
 import javax.inject.Inject
 
 class InfoActivity : MvpAppCompatActivity(), InfoView,WalletsAdapter.Callbacks {
+
 
     private val DIALOG_CONTROL_MONEY = "controlMoneyDialog"
 
@@ -30,8 +32,14 @@ class InfoActivity : MvpAppCompatActivity(), InfoView,WalletsAdapter.Callbacks {
     @InjectPresenter
     lateinit var infoPresenter: InfoPresenter
 
+    @ProvidePresenter
+    fun provideInfoPresenter():InfoPresenter{
+        return InfoPresenter(walletRepository)
+    }
+
     private lateinit var addMoneyBtn : Button
     private lateinit var removeMoneyBtn : Button
+    private lateinit var toolbar: androidx.appcompat.widget.Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +47,9 @@ class InfoActivity : MvpAppCompatActivity(), InfoView,WalletsAdapter.Callbacks {
 
         addMoneyBtn = findViewById(R.id.btn_show_insert_money_dialog)
         removeMoneyBtn = findViewById(R.id.btn_show_remove_money_dialog)
+        toolbar = findViewById(R.id.toolbar_info)
+
+        setSupportActionBar(toolbar)
 
         addMoneyBtn.setOnClickListener {
             infoPresenter.addMoney()
@@ -47,6 +58,8 @@ class InfoActivity : MvpAppCompatActivity(), InfoView,WalletsAdapter.Callbacks {
         removeMoneyBtn.setOnClickListener {
             infoPresenter.removeMoney()
         }
+
+        infoPresenter.setupTotalBalance()
 
         val manager = supportFragmentManager
         val fragment = WalletsContainerFragment()
@@ -61,12 +74,15 @@ class InfoActivity : MvpAppCompatActivity(), InfoView,WalletsAdapter.Callbacks {
         dialog.show(manager, DIALOG_CONTROL_MONEY)
     }
 
+    override fun updateTotalBalanceState(totalBalance: Double) {
+        supportActionBar?.title = getString(R.string.total_balance_menu,totalBalance)
+    }
+
     override fun onShowSetupWalletDialog(walletId: Long) {
         val manager = supportFragmentManager
         val dialog = SetupWalletDialog.newInstance(walletId)
         dialog.show(manager, WalletsContainerFragment.DIALOG_WALLET_STATE)
     }
-
 
     override fun onUpdateWallet(wallet: Wallet) {
         walletRepository.updateWallet(wallet)
