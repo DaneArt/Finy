@@ -31,7 +31,7 @@ class ControlWalletsPresenter(val walletRepository: WalletRepository) : MvpPrese
     }
 
     private fun updateViewState() {
-        viewState.setupWalletsList(localWalletsList)
+
     }
 
     fun disposeWalletsList() {

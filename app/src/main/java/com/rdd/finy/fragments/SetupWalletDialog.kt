@@ -3,6 +3,7 @@ package com.rdd.finy.fragments
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
@@ -24,7 +25,7 @@ class SetupWalletDialog : MvpAppCompatDialogFragment(), SetupWalletDialogView {
 
     private val TAG = SetupWalletDialog::class.java.simpleName
 
-    init{
+    init {
         App.app()?.appComponent()?.inject(this@SetupWalletDialog)
     }
 
@@ -35,7 +36,7 @@ class SetupWalletDialog : MvpAppCompatDialogFragment(), SetupWalletDialogView {
     lateinit var setupWalletPresenter: SetupWalletPresenter
 
     @ProvidePresenter
-    fun provideSetupWalletPresenter(): SetupWalletPresenter{
+    fun provideSetupWalletPresenter(): SetupWalletPresenter {
         return SetupWalletPresenter(walletRepository)
     }
 
@@ -43,12 +44,12 @@ class SetupWalletDialog : MvpAppCompatDialogFragment(), SetupWalletDialogView {
     private lateinit var setupWalletBalanceEdit: EditText
     private lateinit var setupWalletUpperDividerEdit: EditText
     private lateinit var setupWalletBottomDividerEdit: EditText
-    private lateinit var deleteWalletBtn : Button
+    private lateinit var deleteWalletBtn: Button
 
-    private lateinit var localWallet: Wallet
+    private var localWallet: Wallet = Wallet()
+    private var isCreatingWallet = true
 
     companion object {
-        private var isCreatingWallet = true
 
         private const val ARG_WALLET_ID = "walletId"
 
@@ -58,12 +59,14 @@ class SetupWalletDialog : MvpAppCompatDialogFragment(), SetupWalletDialogView {
             val fragment = SetupWalletDialog()
             fragment.arguments = args
 
-            isCreatingWallet = false
             return fragment
         }
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+
+        isCreatingWallet = arguments==null
+
         val view = LayoutInflater.from(activity)
             .inflate(R.layout.dialog_setup_wallet, null)
 
@@ -78,8 +81,11 @@ class SetupWalletDialog : MvpAppCompatDialogFragment(), SetupWalletDialogView {
             dialog?.dismiss()
         }
 
+        var dialogTitle = if (isCreatingWallet) getString(R.string.wallet_setup_new_title_dialog) else localWallet.title
+
         val dialog = AlertDialog.Builder(activity)
             .setView(view)
+            .setTitle(dialogTitle)
             .setPositiveButton(android.R.string.ok, null)
             .setNegativeButton(android.R.string.cancel) { _, _ ->
                 dismiss()
@@ -112,8 +118,10 @@ class SetupWalletDialog : MvpAppCompatDialogFragment(), SetupWalletDialogView {
         if (arguments != null) {
             val walletId = arguments!!.getLong(ARG_WALLET_ID)
             setupWalletPresenter.setupEditViewWithWalletFromDB(walletId)
+            Log.e(TAG, "Edit wallet setup")
         } else {
             setupCreateView()
+            Log.e(TAG, "Create wallet setup")
         }
 
     }
@@ -133,9 +141,6 @@ class SetupWalletDialog : MvpAppCompatDialogFragment(), SetupWalletDialogView {
             setupWalletBottomDividerEdit.setText(localWallet.bottomDivider.toString())
 
         deleteWalletBtn.visibility = View.VISIBLE
-
-        val dialogTitle = if (isCreatingWallet) getString(R.string.wallet_setup_new_title_dialog) else localWallet.title
-        dialog?.setTitle(dialogTitle)
     }
 
     private fun prepareResultWallet() {
@@ -158,6 +163,7 @@ class SetupWalletDialog : MvpAppCompatDialogFragment(), SetupWalletDialogView {
     }
 
     private fun sendResult() {
+        Log.e(TAG, "Result sent, $isCreatingWallet")
         if (isCreatingWallet) {
             walletRepository.insertWallet(localWallet)
         } else {

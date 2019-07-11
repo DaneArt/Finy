@@ -1,6 +1,8 @@
 package com.rdd.finy.activities
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import com.rdd.finy.App
 import com.rdd.finy.R
@@ -37,6 +39,10 @@ class InfoActivity : MvpAppCompatActivity(), InfoView,WalletsAdapter.Callbacks {
         return InfoPresenter(walletRepository)
     }
 
+    companion object{
+        const val DIALOG_WALLET_STATE = "walletState"
+    }
+
     private lateinit var addMoneyBtn : Button
     private lateinit var removeMoneyBtn : Button
     private lateinit var toolbar: androidx.appcompat.widget.Toolbar
@@ -68,6 +74,22 @@ class InfoActivity : MvpAppCompatActivity(), InfoView,WalletsAdapter.Callbacks {
             .commit()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_wallet,menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when(item?.itemId){
+            R.id.btn_menu_create_wallet ->{
+                val manager = supportFragmentManager
+                val dialog = SetupWalletDialog()
+                dialog.show(manager, DIALOG_WALLET_STATE)
+            }
+        }
+        return true
+    }
+
     override fun showControlMoneyDialog(isAddingMoney : Boolean) {
         val manager = supportFragmentManager
         val dialog = ControlMoneyDialog.newInstance(isAddingMoney)
@@ -81,7 +103,7 @@ class InfoActivity : MvpAppCompatActivity(), InfoView,WalletsAdapter.Callbacks {
     override fun onShowSetupWalletDialog(walletId: Long) {
         val manager = supportFragmentManager
         val dialog = SetupWalletDialog.newInstance(walletId)
-        dialog.show(manager, WalletsContainerFragment.DIALOG_WALLET_STATE)
+        dialog.show(manager, DIALOG_WALLET_STATE)
     }
 
     override fun onUpdateWallet(wallet: Wallet) {

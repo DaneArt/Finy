@@ -20,22 +20,27 @@ class ControlMoneyTest {
     var infoRule: ActivityTestRule<InfoActivity> = ActivityTestRule(InfoActivity::class.java)
 
     @Test
-    fun tryToOpenInsertDialog(){
+    fun tryToOpenAddMoneyDialog() {
         onView(withId(R.id.btn_show_insert_money_dialog))
             .perform(click())
 
-        onView(withText("To wallets"))
-            .check(matches(isDisplayed()))
+        onView(withId(R.id.txt_control_for_history))
+            .check(matches(withText("From")))
+        onView(withId(R.id.txt_control_wallets))
+            .check(matches(withText("To wallets")))
     }
 
     @Test
-    fun tryToOpenRemoveDialog(){
+    fun tryToOpenRemoveMoneyDialog() {
         onView(withId(R.id.btn_show_remove_money_dialog))
             .perform(click())
 
-        onView(withText("From"))
-            .check(matches(isDisplayed()))
+        onView(withId(R.id.txt_control_for_history))
+            .check(matches(withText("To")))
+        onView(withId(R.id.txt_control_wallets))
+            .check(matches(withText("From")))
     }
+
 
     @Test
     fun tryToOpenWalletsList(){
