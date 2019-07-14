@@ -12,4 +12,8 @@ interface InfoView : MvpView {
 
     fun updateTotalBalanceState(totalBalance : Double)
 
+    fun expandFAB()
+
+    fun hideFAB()
+
 }

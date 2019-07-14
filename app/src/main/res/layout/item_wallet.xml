@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/icon_dimen"
-    android:layout_gravity="center"
-    android:layout_margin="8dp">
+<androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/icon_dimen"
+        android:layout_gravity="center"
+        android:elevation="0dp"
+        android:layout_margin="8dp">
 
     <RelativeLayout
         android:id="@+id/rl_wallet_background"

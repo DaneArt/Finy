@@ -1,7 +1,6 @@
 package com.rdd.finy.data
 
 import android.os.AsyncTask
-import android.util.Log
 import io.reactivex.Flowable
 import io.reactivex.Single
 
@@ -34,21 +33,18 @@ class WalletRepository(val walletDao: WalletDao) {
     private class InsertWalletAsyncTask(val walletDao: WalletDao) : AsyncTask<Wallet, Unit, Unit>() {
         override fun doInBackground(vararg wallet: Wallet?) {
             walletDao.insert(wallet[0]!!)
-            Log.e(TAG, "Insert successful")
         }
     }
 
     private class UpdateWalletAsyncTask(val walletDao: WalletDao) : AsyncTask<Wallet, Unit, Unit>() {
         override fun doInBackground(vararg wallet: Wallet?) {
             walletDao.update(wallet[0]!!)
-            Log.e(TAG, "Update successful")
         }
     }
 
     private class DeleteWalletAsyncTask(val walletDao: WalletDao) : AsyncTask<Wallet, Unit, Unit>() {
         override fun doInBackground(vararg wallet: Wallet?) {
             walletDao.delete(wallet[0]!!)
-            Log.e(TAG, "Delete successful")
         }
     }
 

@@ -44,12 +44,9 @@ class WalletsAdapter(private val context: Context) :
     }
 
     fun updateWalletInList(wallet: Wallet) {
-//        val pos = walletsSourceList.indexOf(wallet)
-//        Log.e(TAG, "Wallet pos $pos")
-//        if (pos!=-1) {
-//            walletsSourceList[pos] = wallet
-//            notifyItemChanged(pos)
-//        }
+        val position: Int = walletsSourceList.map { it.id }.indexOf(wallet.id)
+        walletsSourceList[position] = wallet
+        notifyItemChanged(position,null)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WalletViewHolder {
