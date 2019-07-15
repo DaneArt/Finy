@@ -13,7 +13,7 @@ import com.rdd.finy.R
 import com.rdd.finy.data.Wallet
 
 class WalletsAdapter(private val context: Context) :
-    RecyclerView.Adapter<WalletsAdapter.WalletViewHolder>() {
+        RecyclerView.Adapter<WalletsAdapter.WalletViewHolder>() {
 
     private val TAG = WalletsAdapter::class.java.simpleName
 
@@ -39,14 +39,18 @@ class WalletsAdapter(private val context: Context) :
 
     fun removeWalletFromList(walletId: Long) {
         val position: Int = walletsSourceList.map { it.id }.indexOf(walletId)
-        walletsSourceList.removeAt(position)
-        notifyItemRemoved(position)
+        if (position != -1) {
+            walletsSourceList.removeAt(position)
+            notifyItemRemoved(position)
+        }
     }
 
     fun updateWalletInList(wallet: Wallet) {
         val position: Int = walletsSourceList.map { it.id }.indexOf(wallet.id)
-        walletsSourceList[position] = wallet
-        notifyItemChanged(position,null)
+        if (position != -1) {
+            walletsSourceList[position] = wallet
+            notifyItemChanged(position, null)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WalletViewHolder {
@@ -66,9 +70,9 @@ class WalletsAdapter(private val context: Context) :
     }
 
     inner class WalletViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
-        RecyclerView.ViewHolder(inflater.inflate(R.layout.item_wallet, parent, false)) {
+            RecyclerView.ViewHolder(inflater.inflate(R.layout.item_wallet, parent, false)) {
 
-        private val viewBackground: RelativeLayout = itemView.findViewById(R.id.rl_wallet_background)
+        private val background: RelativeLayout = itemView.findViewById(R.id.background_wallet)
         private val isActiveRadBtn: RadioButton = itemView.findViewById(R.id.rbtn_wallet_activation)
         private val balanceBar: ProgressBar = itemView.findViewById(R.id.pb_wallet_balance)
         private val titleTxt: TextView = itemView.findViewById(R.id.txt_wallet_title)
@@ -85,7 +89,7 @@ class WalletsAdapter(private val context: Context) :
 
             isActiveRadBtn.isChecked = localWallet.isActive
 
-            viewBackground.setOnClickListener {
+            background.setOnClickListener {
                 localWallet.isBalanceShown = !localWallet.isBalanceShown
                 callbacks.onUpdateWallet(wallet = localWallet)
                 setupViewStateVisibility()
@@ -97,7 +101,7 @@ class WalletsAdapter(private val context: Context) :
                 isActiveRadBtn.isChecked = localWallet.isActive
             }
 
-            viewBackground.setOnLongClickListener {
+            background.setOnLongClickListener {
                 callbacks.onShowSetupWalletDialog(wallet.id)
                 true
             }
@@ -106,26 +110,31 @@ class WalletsAdapter(private val context: Context) :
         }
 
         private fun setupBalanceBarProgress() {
-            balanceBar.progress = localWallet.bottomDivider.toInt()
+
             if (localWallet.hasUpperDivider) {
                 balanceBar.max = localWallet.upperDivider.toInt()
             } else {
                 balanceBar.max = localWallet.balance.toInt()
             }
+
+            balanceBar.progress = localWallet.bottomDivider.toInt()
             balanceBar.secondaryProgress = localWallet.balance.toInt()
         }
 
         private fun setupViewStateVisibility() {
+
             if (localWallet.isBalanceShown) {
                 setBalanceViewVisible()
             } else {
                 setTitleViewVisible()
             }
+
+            setupBalanceBarProgress()
         }
 
         private fun setBalanceViewVisible() {
-            isActiveRadBtn.visibility = View.GONE
             balanceBar.visibility = View.VISIBLE
+            isActiveRadBtn.visibility = View.INVISIBLE
 
             val balanceTitle = if (localWallet.hasUpperDivider) {
                 "${localWallet.balance}/${localWallet.upperDivider}"
@@ -134,14 +143,14 @@ class WalletsAdapter(private val context: Context) :
             }
             titleTxt.text = balanceTitle
 
-            setupBalanceBarProgress()
         }
 
         private fun setTitleViewVisible() {
+            balanceBar.visibility = View.INVISIBLE
             isActiveRadBtn.visibility = View.VISIBLE
-            balanceBar.visibility = View.GONE
             titleTxt.text = localWallet.title
         }
 
     }
+
 }

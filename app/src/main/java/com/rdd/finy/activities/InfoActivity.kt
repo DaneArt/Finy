@@ -160,7 +160,6 @@ class InfoActivity : MvpAppCompatActivity(), InfoView, WalletsAdapter.Callbacks 
         controlMoneyInsertFab.isClickable = false
         Log.e(TAG, "Insert is ${controlMoneyInsertFab.isEnabled}")
 
-
         controlMoneyMainFab.setImageResource(R.drawable.ic_control_money_turn_on)
         controlMoneyMainFab.startAnimation(hide_main_fab)
     }

@@ -4,7 +4,7 @@ import android.os.AsyncTask
 import io.reactivex.Flowable
 import io.reactivex.Single
 
-class WalletRepository(val walletDao: WalletDao) {
+class WalletRepository(private val walletDao: WalletDao) {
     companion object {
 
         private val TAG = WalletRepository::class.java.simpleName

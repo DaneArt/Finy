@@ -20,6 +20,10 @@ class MoneyWalletsAdapter(private val context: Context) :
 
     private var activeWalletsList: ArrayList<Wallet> = arrayListOf()
 
+    fun getActiveWallets() : ArrayList<Wallet>{
+        return activeWalletsList
+    }
+
     fun setupWalletsList(wallets: List<Wallet>) {
         walletsSourceList.clear()
         walletsSourceList.addAll(wallets)

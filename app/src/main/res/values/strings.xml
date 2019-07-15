@@ -20,4 +20,8 @@
     <string name="control_wallets_count">Wallets chosen: %d</string>
     <string name="control_wallets_title">Allocate money to wallet</string>
     <string name="without_title">Without title</string>
+    <string name="add_money_title">Adding money</string>
+    <string name="remove_money_title">Removing money</string>
+    <string name="hint_currency">CUR</string>
+    <string name="hint_control_item_money">Concrete or in %</string>
 </resources>

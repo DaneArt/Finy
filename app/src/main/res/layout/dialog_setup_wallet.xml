@@ -1,138 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:gravity="center"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="8dp"
+    android:gravity="center"
+    android:orientation="vertical">
 
     <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/setup_wallet_title_txt"
-                android:textColor="@android:color/black"
-                android:layout_margin="8dp"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="@string/setup_wallet_title_txt"
+            android:textColor="@android:color/black" />
 
         <EditText
-                android:id="@+id/etxt_setup_wallet_title"
-                android:layout_width="match_parent"
-                android:layout_margin="8dp"
-                android:layout_height="wrap_content"/>
+            android:id="@+id/etxt_setup_wallet_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp" />
     </LinearLayout>
 
     <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/setup_wallet_balance_txt"
-                android:textAlignment="viewStart"
-                android:textColor="@android:color/black"
-                android:layout_margin="8dp"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="@string/setup_wallet_balance_txt"
+            android:textAlignment="viewStart"
+            android:textColor="@android:color/black" />
 
         <EditText
-                android:id="@+id/etxt_setup_wallet_balance"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="numberSigned|number|numberDecimal"
-                android:layout_margin="8dp"
-                android:layout_weight="1"/>
+            android:id="@+id/etxt_setup_wallet_balance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:inputType="numberSigned|number|numberDecimal" />
 
         <EditText
-                android:id="@+id/etxt_setup_wallet_currency"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-            android:hint="CUR"
-                android:layout_margin="8dp"
-                android:layout_weight="2"/>
+            android:id="@+id/etxt_setup_wallet_currency"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="2"
+            android:hint="@string/hint_currency" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/etxt_setup_wallet_upper_divider"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-        <EditText
-                android:id="@+id/etxt_setup_wallet_upper_divider"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:inputType="numberSigned|number|numberDecimal"
-                android:layout_weight="1"
-                android:hint="@string/setup_wallet_upper_divider_txt"/>
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:hint="@string/setup_wallet_upper_divider_txt"
+            android:inputType="numberSigned|number|numberDecimal" />
 
 
         <EditText
-                android:id="@+id/etxt_setup_wallet_bottom_divider"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:inputType="numberSigned|number|numberDecimal"
-                android:layout_weight="1"
-                android:hint="@string/setup_wallet_bottom_divider_txt"/>
+            android:id="@+id/etxt_setup_wallet_bottom_divider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:hint="@string/setup_wallet_bottom_divider_txt"
+            android:inputType="numberSigned|number|numberDecimal" />
     </LinearLayout>
 
     <GridLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-    android:columnCount="3">
+        android:columnCount="3">
 
         <androidx.appcompat.widget.AppCompatImageView
-                android:layout_height="60dp"
-                android:layout_width="60dp"
-                android:layout_margin="16dp"
-                android:src="@android:color/holo_orange_light"
-        />
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_margin="16dp"
+            android:src="@android:color/holo_orange_light" />
+
         <androidx.appcompat.widget.AppCompatImageView
-                android:layout_height="60dp"
-                android:layout_width="60dp"
-                android:layout_margin="16dp"
-                android:src="@android:color/holo_orange_light"
-        />
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_margin="16dp"
+            android:src="@android:color/holo_orange_light" />
+
         <androidx.appcompat.widget.AppCompatImageView
-                android:layout_height="60dp"
-                android:layout_width="60dp"
-                android:layout_margin="16dp"
-                android:src="@android:color/holo_orange_light"
-        />
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_margin="16dp"
+            android:src="@android:color/holo_orange_light" />
+
         <androidx.appcompat.widget.AppCompatImageView
-                android:layout_height="60dp"
-                android:layout_width="60dp"
-                android:layout_margin="16dp"
-                android:src="@android:color/holo_orange_light"
-        />
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_margin="16dp"
+            android:src="@android:color/holo_orange_light" />
+
         <androidx.appcompat.widget.AppCompatImageView
-                android:layout_height="60dp"
-                android:layout_width="60dp"
-                android:layout_margin="16dp"
-                android:src="@android:color/holo_orange_light"
-        />
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_margin="16dp"
+            android:src="@android:color/holo_orange_light" />
+
         <androidx.appcompat.widget.AppCompatImageView
-                android:layout_height="60dp"
-                android:layout_width="60dp"
-                android:layout_margin="16dp"
-                android:src="@android:color/holo_orange_light"
-        />
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_margin="16dp"
+            android:src="@android:color/holo_orange_light" />
 
 
     </GridLayout>
 
 
     <Button
-            android:id="@+id/btn_setup_wallet_delete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/holo_red_dark"
-            android:text="@string/setup_delete_wallet_txt"
-            android:visibility="gone"/>
+        android:id="@+id/btn_setup_wallet_delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_red_dark"
+        android:text="@string/setup_delete_wallet_txt"
+        android:visibility="gone" />
 
 </LinearLayout>
