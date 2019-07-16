@@ -18,6 +18,10 @@ class WalletRepository(private val walletDao: WalletDao) {
         return walletDao.getWalletById(id = id)
     }
 
+    fun updateWallets(wallets: List<Wallet>){
+        UpdateWalletsAsyncTask(walletDao = walletDao).execute(wallets)
+    }
+
     fun insertWallet(wallet: Wallet) {
         InsertWalletAsyncTask(walletDao = walletDao).execute(wallet)
     }
@@ -28,6 +32,12 @@ class WalletRepository(private val walletDao: WalletDao) {
 
     fun deleteWallet(wallet: Wallet) {
         DeleteWalletAsyncTask(walletDao = walletDao).execute(wallet)
+    }
+
+    private class UpdateWalletsAsyncTask(val walletDao: WalletDao) : AsyncTask<List<Wallet>, Unit, Unit>() {
+        override fun doInBackground(vararg wallets: List<Wallet>?) {
+            walletDao.update(wallets[0]!!)
+        }
     }
 
     private class InsertWalletAsyncTask(val walletDao: WalletDao) : AsyncTask<Wallet, Unit, Unit>() {

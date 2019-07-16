@@ -1,6 +1,8 @@
 package com.rdd.finy.adapters
 
 import android.content.Context
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,25 +12,33 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.rdd.finy.R
 import com.rdd.finy.data.Wallet
+import io.reactivex.subjects.PublishSubject
+
 
 class MoneyWalletsAdapter(private val context: Context) :
         RecyclerView.Adapter<MoneyWalletsAdapter.MoneyWalletViewHolder>() {
 
     private val TAG = WalletsAdapter::class.java.simpleName
 
-    private var walletsSourceList:ArrayList<Wallet> = arrayListOf()
+    private var walletsSourceList: ArrayList<Wallet> = arrayListOf()
+    private var activeWalletsList: HashMap<Wallet, Double> = hashMapOf()
+    private val sizeSubject: PublishSubject<Int> = PublishSubject.create()
 
-    private var activeWalletsList: ArrayList<Wallet> = arrayListOf()
+    private var userBalance: Double = .0
 
-    fun getActiveWallets() : ArrayList<Wallet>{
-        return activeWalletsList
+    fun setUserBalance(balance: Double) {
+        userBalance = balance
+    }
+
+    fun getActiveWalletsSize(): PublishSubject<Int> {
+        return sizeSubject
     }
 
     fun setupWalletsList(wallets: List<Wallet>) {
         walletsSourceList.clear()
         walletsSourceList.addAll(wallets)
+        Log.e(TAG, "Update wallets list")
         notifyDataSetChanged()
-        Log.e(TAG,"Data set changed! size ${walletsSourceList.size}")
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoneyWalletViewHolder {
@@ -45,26 +55,64 @@ class MoneyWalletsAdapter(private val context: Context) :
         holder.bind(wallet)
     }
 
-    inner class MoneyWalletViewHolder(inflater: LayoutInflater, parent: ViewGroup) : RecyclerView.ViewHolder(inflater.inflate(R.layout.item_control_wallet, parent, false)) {
+    fun getActiveWallets(): HashMap<Wallet, Double> {
+        return activeWalletsList
+    }
 
-        private val walletCheckBox: CheckBox = itemView.findViewById(R.id.check_money_wallet)
-        private val walletTitleTextView: TextView = itemView.findViewById(R.id.txt_money_wallet_title)
-        private val walletMoneyCountEditTextView: EditText = itemView.findViewById(R.id.edit_money_count)
+    inner class MoneyWalletViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
+            RecyclerView.ViewHolder(
+                    inflater.inflate(
+                            R.layout.item_control_wallet,
+                            parent,
+                            false)) {
+
+        private val walletCheck: CheckBox = itemView.findViewById(R.id.check_money_wallet)
+        private val walletTitleTxt: TextView = itemView.findViewById(R.id.txt_money_wallet_title)
+        private val walletMoneyCountEdit: EditText = itemView.findViewById(R.id.edit_money_count)
 
         fun bind(wallet: Wallet) {
 
-            walletCheckBox.isChecked = activeWalletsList.contains(wallet)
-            walletCheckBox.setOnCheckedChangeListener { buttonView, isChecked ->
-                if(buttonView.isPressed){
-                    if(isChecked){
-                        activeWalletsList.add(wallet)
-                    }else{
+            walletCheck.isChecked = activeWalletsList.contains(wallet)
+            walletMoneyCountEdit.isEnabled = walletCheck.isChecked
+
+            walletCheck.setOnCheckedChangeListener { buttonView, isChecked ->
+                if (buttonView.isPressed) {
+                    if (isChecked) {
+                        activeWalletsList[wallet] = .0
+                        walletMoneyCountEdit.isEnabled = true
+                    } else {
                         activeWalletsList.remove(wallet)
+                        walletMoneyCountEdit.isEnabled = false
+
                     }
+                    sizeSubject.onNext(activeWalletsList.size)
                 }
             }
 
-            if(wallet.title!="")walletTitleTextView.text = wallet.title
+            walletMoneyCountEdit.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                    if (s!!.isNotBlank()) {
+                        if (s.contains("%")) {
+                            activeWalletsList[wallet] =
+                                    s.toString().dropLast(1).toDouble() / 100 * userBalance
+                        } else {
+                            activeWalletsList[wallet] = s.toString().toDouble()
+                        }
+
+                    }
+                }
+
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+                }
+
+            })
+
+            if (wallet.title != "") walletTitleTxt.text = wallet.title
 
         }
 

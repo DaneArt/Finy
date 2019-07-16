@@ -35,6 +35,13 @@ class Wallet(@PrimaryKey(autoGenerate = true)
         return true
     }
 
+    fun couldBeCalculated(value : Double): Boolean{
+        if(hasUpperDivider && (balance+value)>upperDivider) return false
+        if((balance+value)<bottomDivider) return false
+        return true
+    }
+
+
     override fun equals(other: Any?): Boolean {
 
         val wallet: Wallet = other as Wallet

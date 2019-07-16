@@ -13,4 +13,10 @@ interface ControlMoneyView : MvpView {
     fun setupRemoveView()
 
     fun setupSourceList(wallets : List<Wallet>)
+
+    fun setupRvVisibility()
+
+    fun openWalletsList()
+
+    fun closeWalletsList()
 }

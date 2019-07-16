@@ -14,12 +14,15 @@ interface WalletDao {
     fun getAllWallets(): Flowable<List<Wallet>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(wallet: Wallet): Long
+    fun insert(wallet: Wallet)
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    fun update(wallet: Wallet): Int
+    fun update(wallets:List<Wallet>)
+
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    fun update(wallet: Wallet)
 
     @Delete
-    fun delete(wallet: Wallet): Int
+    fun delete(wallet: Wallet)
 
 }

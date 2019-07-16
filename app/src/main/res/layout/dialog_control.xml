@@ -64,17 +64,6 @@
 
     </LinearLayout>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_control_wallets_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </ScrollView>
-
+    <include layout="@layout/money_wallets_list_control" />
 
 </LinearLayout>

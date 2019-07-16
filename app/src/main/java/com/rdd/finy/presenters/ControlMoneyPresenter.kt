@@ -1,7 +1,6 @@
 package com.rdd.finy.presenters
 
 import com.rdd.finy.App
-import com.rdd.finy.data.Wallet
 import com.rdd.finy.data.WalletRepository
 import com.rdd.finy.views.ControlMoneyView
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -22,17 +21,16 @@ class ControlMoneyPresenter : MvpPresenter<ControlMoneyView>() {
 
     private lateinit var walletsDisposable: Disposable
 
-    private val sourceWalletsList : ArrayList<Wallet> = arrayListOf()
-    private val activeWalletsList : ArrayList<Wallet> = arrayListOf()
-
     fun loadWalletsFromDB() {
 
         walletsDisposable = walletRepository.getAllWallets()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     viewState.setupSourceList(it)
+                    walletsDisposable.dispose()
                 }, {
 
                 })
+
     }
 }
