@@ -3,6 +3,6 @@
 
     <item
             app:showAsAction="always"
-            android:icon="@android:drawable/ic_input_add"
+            android:icon="@drawable/ic_control_money_add"
             android:id="@+id/btn_menu_create_wallet"/>
 </menu>

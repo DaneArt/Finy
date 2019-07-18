@@ -24,11 +24,11 @@
                 android:textColor="@android:color/black" />
 
             <EditText
-                android:id="@+id/edit_control_balance"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1" />
+                    android:id="@+id/edit_control_balance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1" android:inputType="numberSigned|numberDecimal"/>
 
             <EditText
                 android:id="@+id/edit_control_currency"

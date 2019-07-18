@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Finy</string>
+    <string name="add_money_title">Ввод денег</string>
+    <string name="control_money_count_txt">Сколько?</string>
+    <string name="control_source_of_money">Источник</string>
+    <string name="control_destination_for_history">Получатель</string>
+    <string name="control_wallets_count">Кошельков выбрано: %d</string>
+    <string name="control_wallets_title">Распределите деньги</string>
+    <string name="hint_control_item_money">Суммма или в %</string>
+    <string name="hint_currency">ВАЛ</string>
+    <string name="remove_money_title">Вывод денег</string>
+    <string name="save_wallet_error">Кошелек не может быть сохранен.</string>
+    <string name="setup_delete_wallet_txt">УДАЛИТЬ</string>
+    <string name="setup_wallet_balance_txt">Баланс</string>
+    <string name="setup_wallet_bottom_divider_txt">Нижняя граница</string>
+    <string name="setup_wallet_title_txt">Наименование</string>
+    <string name="setup_wallet_upper_divider_txt">Верхняя граница</string>
+    <string name="total_balance_menu">Общий баланс</string>
+    <string name="wallet_setup_new_title_dialog">Создать кошелек</string>
+    <string name="without_title">Безымянный</string>
+</resources>

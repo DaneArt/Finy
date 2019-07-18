@@ -13,25 +13,26 @@ class AddCalculator(override var activeWallets: HashMap<Wallet, Double>) : Calcu
     private lateinit var disposable: Disposable
     override fun calculate() {
         disposable = walletsRepository.getAllWallets()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { wallets ->
-                    autoCalcWallets.addAll(
-                            wallets.filter { wallet ->
-                                !activeWallets.map {
-                                    it.key.id
-                                }.contains(wallet.id)
-                            })
-                    calcActive()
-                    calcOthers()
-                    sendResultToDB()
-                    disposable.dispose()
-                }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { wallets ->
+                autoCalcWallets.addAll(
+                    wallets.filter { wallet ->
+                        !activeWallets.map {
+                            it.key.id
+                        }.contains(wallet.id)
+                    })
+                calcActive()
+                calcOthers()
+                sendResultToDB()
+                disposable.dispose()
+            }
     }
 
     override fun calcActive() {
         for (wallet in activeWallets) {
             if (wallet.value + summaryBalance < userBalance
-                    && wallet.key.couldBeCalculated(wallet.value)) {
+                && wallet.key.couldBeCalculated(wallet.value)
+            ) {
                 wallet.key.balance += wallet.value
                 summaryBalance += wallet.value
                 Log.e(TAG, "Add money to active. Summary: $summaryBalance. Value: ${wallet.value}")
@@ -52,7 +53,10 @@ class AddCalculator(override var activeWallets: HashMap<Wallet, Double>) : Calcu
         val othersWithDiv = autoCalcWallets.filter { it.hasUpperDivider }
         val othersWithoutDiv = autoCalcWallets.filter { !it.hasUpperDivider }
 
-        Log.e(TAG, "Sorted array: ${Arrays.toString(autoCalcWallets.map { it.upperDivider - it.balance }.toDoubleArray())}")
+        Log.e(
+            TAG,
+            "Sorted array: ${Arrays.toString(autoCalcWallets.map { it.upperDivider - it.balance }.toDoubleArray())}"
+        )
 
         for (wallet in othersWithDiv) {
             val value: Double = othersBalance / othersCount
@@ -65,12 +69,21 @@ class AddCalculator(override var activeWallets: HashMap<Wallet, Double>) : Calcu
             }
         }
 
-        val value: Double = othersBalance / othersCount
+        if (othersWithoutDiv.isNotEmpty()) {
+            val value: Double = othersBalance / othersCount
 
-        for (wallet in othersWithoutDiv) wallet.balance += value
+            for (wallet in othersWithoutDiv) wallet.balance += value
+        } else if (othersBalance > 0) {
+            val extraWallet = Wallet()
+            extraWallet.title = "Extra"
+            extraWallet.balance = othersBalance
 
+            walletsRepository.insertWallet(extraWallet)
+        }
         autoCalcWallets.addAll(othersWithDiv)
         autoCalcWallets.addAll(othersWithoutDiv)
+
+
     }
 
 

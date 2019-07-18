@@ -18,10 +18,15 @@ import com.rdd.finy.fragments.SetupWalletDialog
 import com.rdd.finy.fragments.WalletsContainerFragment
 import com.rdd.finy.presenters.InfoPresenter
 import com.rdd.finy.views.InfoView
+import lecho.lib.hellocharts.model.PieChartData
+import lecho.lib.hellocharts.model.SliceValue
+import lecho.lib.hellocharts.util.ChartUtils
+import lecho.lib.hellocharts.view.PieChartView
 import moxy.MvpAppCompatActivity
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import javax.inject.Inject
+
 
 class InfoActivity : MvpAppCompatActivity(), InfoView, WalletsAdapter.Callbacks {
 
@@ -51,9 +56,12 @@ class InfoActivity : MvpAppCompatActivity(), InfoView, WalletsAdapter.Callbacks 
     private lateinit var controlMoneyMainFab: FloatingActionButton
     private lateinit var controlMoneyRemoveFab: FloatingActionButton
     private lateinit var controlMoneyInsertFab: FloatingActionButton
-    private lateinit var toolbar: androidx.appcompat.widget.Toolbar
+    private lateinit var statsBalanceDiag: PieChartView
 
     private var FAB_status = false
+
+    private var totalBalance: Double = .0
+    private lateinit var statsDiagData: PieChartData
 
     private lateinit var show_remove_fab: Animation
     private lateinit var hide_remove_fab: Animation
@@ -69,7 +77,8 @@ class InfoActivity : MvpAppCompatActivity(), InfoView, WalletsAdapter.Callbacks 
         controlMoneyMainFab = findViewById(R.id.fab_control_main)
         controlMoneyRemoveFab = findViewById(R.id.fab_control_remove)
         controlMoneyInsertFab = findViewById(R.id.fab_control_insert)
-        toolbar = findViewById(R.id.toolbar_info)
+
+        statsBalanceDiag = findViewById(R.id.diagram_balance)
 
         show_remove_fab = AnimationUtils.loadAnimation(applicationContext, R.anim.remove_fab_show)
         hide_remove_fab = AnimationUtils.loadAnimation(applicationContext, R.anim.remove_fab_hide)
@@ -78,7 +87,7 @@ class InfoActivity : MvpAppCompatActivity(), InfoView, WalletsAdapter.Callbacks 
         show_insert_fab = AnimationUtils.loadAnimation(applicationContext, R.anim.insert_fab_show)
         hide_insert_fab = AnimationUtils.loadAnimation(applicationContext, R.anim.insert_fab_hide)
 
-        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         controlMoneyMainFab.setOnClickListener {
             FAB_status = if (!FAB_status) {
@@ -100,13 +109,34 @@ class InfoActivity : MvpAppCompatActivity(), InfoView, WalletsAdapter.Callbacks 
             Log.e(TAG, "Insert clicked")
         }
 
-        infoPresenter.setupTotalBalance()
+        infoPresenter.loadWalletsData()
 
         val manager = supportFragmentManager
         val fragment = WalletsContainerFragment()
         manager.beginTransaction()
                 .add(R.id.container_wallets_fragment, fragment)
                 .commit()
+    }
+
+    override fun updateStatsDiagramState(walletsData: List<Wallet>) {
+
+        val values = ArrayList<SliceValue>()
+        for (wallet in walletsData) {
+            val sliceValue = SliceValue(wallet.balance.toFloat(), ChartUtils.pickColor())
+            values.add(sliceValue)
+        }
+
+        statsDiagData = PieChartData(values)
+        statsDiagData.setHasLabels(true)
+        statsDiagData.setHasLabelsOnlyForSelected(true)
+        statsDiagData.setHasLabelsOutside(false)
+        statsDiagData.setHasCenterCircle(true)
+
+        statsDiagData.centerText1 = getString(R.string.total_balance_menu)
+
+        statsDiagData.centerText2 = totalBalance.toString()
+
+        statsBalanceDiag.pieChartData = statsDiagData
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -171,7 +201,7 @@ class InfoActivity : MvpAppCompatActivity(), InfoView, WalletsAdapter.Callbacks 
     }
 
     override fun updateTotalBalanceState(totalBalance: Double) {
-        supportActionBar?.title = getString(R.string.total_balance_menu, totalBalance)
+        this.totalBalance = totalBalance
     }
 
     override fun onShowSetupWalletDialog(walletId: Long) {

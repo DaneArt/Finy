@@ -156,7 +156,7 @@ class SetupWalletDialog : MvpAppCompatDialogFragment(), SetupWalletDialogView {
         else
             localWallet.upperDivider = -1.0
 
-        if (setupWalletBottomDividerEdit.text.toString() != "")
+        if (setupWalletBottomDividerEdit.text.toString() != "" )
             localWallet.bottomDivider = setupWalletBottomDividerEdit.text.toString().toDouble()
         else
             localWallet.bottomDivider = 0.0

@@ -60,6 +60,13 @@ class RemoveCalculator(override var activeWallets: HashMap<Wallet, Double>) :Cal
             Log.e(TAG, "Remove money from with div. Balance: $userBalance. Value: $value")
         }
 
+        if(userBalance>0){
+            val extraWallet = Wallet()
+            extraWallet.title = "Extra"
+            extraWallet.balance = -userBalance
+            walletsRepository.insertWallet(extraWallet)
+        }
+
     }
 
 }

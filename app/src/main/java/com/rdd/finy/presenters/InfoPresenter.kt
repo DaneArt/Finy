@@ -17,8 +17,7 @@ class InfoPresenter(val walletRepository: WalletRepository) : MvpPresenter<InfoV
         viewState.showControlMoneyDialog(isAddingMoney = true)
     }
 
-    fun setupTotalBalance() {
-
+    fun loadWalletsData(){
         walletRepository.getAllWallets()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
@@ -27,7 +26,9 @@ class InfoPresenter(val walletRepository: WalletRepository) : MvpPresenter<InfoV
                     totalBalance +=wallet.balance
                 }
                 viewState.updateTotalBalanceState(totalBalance)
-            }
 
+                viewState.updateStatsDiagramState(it)
+            }
     }
+
 }
