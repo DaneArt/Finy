@@ -2,8 +2,8 @@ package com.rdd.finy.helpers
 
 import android.util.Log
 import com.rdd.finy.App
-import com.rdd.finy.data.Wallet
-import com.rdd.finy.data.WalletRepository
+import com.rdd.finy.app.models.Wallet
+import com.rdd.finy.data.repositories.WalletRepository
 import java.util.*
 import javax.inject.Inject
 

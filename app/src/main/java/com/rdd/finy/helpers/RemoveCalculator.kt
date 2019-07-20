@@ -1,7 +1,7 @@
 package com.rdd.finy.helpers
 
 import android.util.Log
-import com.rdd.finy.data.Wallet
+import com.rdd.finy.app.models.Wallet
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 

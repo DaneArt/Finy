@@ -1,6 +1,6 @@
 package com.rdd.finy
 
-import com.rdd.finy.data.Wallet
+import com.rdd.finy.app.models.Wallet
 import junit.framework.Assert.assertEquals
 import org.junit.Test
 

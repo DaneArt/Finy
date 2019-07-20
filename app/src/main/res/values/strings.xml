@@ -7,7 +7,7 @@
     <string name="wallet_setup_new_title_dialog">Setup new wallet</string>
     <string name="control_money_count_txt">How much?</string>
     <string name="control_destination_for_history">Destination</string>
-    <string name="total_balance_menu">Total Balance</string>
+    <string name="total_balance_menu">Total Balance %.2f %n</string>
     <string name="save_wallet_error">Wallet couldn\'t be saved.
     </string>
     <string name="setup_delete_wallet_txt">DELETE</string>
@@ -19,4 +19,8 @@
     <string name="hint_currency">CUR</string>
     <string name="hint_control_item_money">Concrete or in %</string>
     <string name="control_source_of_money">Source</string>
+    <string name="stats_view">Statistics</string>
+    <string name="history_view">History</string>
+    <string name="balance" translatable="false">%.2f %n</string>
+    <string name="balance_with_div" translatable="false">%.2f %n / %.2f %n</string>
 </resources>

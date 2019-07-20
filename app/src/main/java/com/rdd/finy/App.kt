@@ -1,9 +1,9 @@
 package com.rdd.finy
 
 import android.app.Application
-import com.rdd.finy.di.AppComponent
-import com.rdd.finy.di.AppModule
-import com.rdd.finy.di.DaggerAppComponent
+import com.rdd.finy.app.di.AppComponent
+import com.rdd.finy.app.di.AppModule
+import com.rdd.finy.app.di.DaggerAppComponent
 
 
 class App : Application() {

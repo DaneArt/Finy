@@ -3,11 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:background="@color/colorPrimaryLight"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorPrimary"
         android:layout_margin="8dp"
         android:elevation="3dp">
 
@@ -21,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="8dp"
                 android:text="@string/control_money_count_txt"
-                android:textColor="@android:color/black" />
+                android:textColor="@color/textColorWhite" />
 
             <EditText
                     android:id="@+id/edit_control_balance"
@@ -30,40 +32,40 @@
                     android:layout_marginStart="8dp"
                     android:layout_weight="1" android:inputType="numberSigned|numberDecimal"/>
 
-            <EditText
-                android:id="@+id/edit_control_currency"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1.8"
-                android:hint="@string/hint_currency" />
+            <!--<EditText-->
+                <!--android:id="@+id/edit_control_currency"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginStart="8dp"-->
+                <!--android:layout_weight="1.8"-->
+                <!--android:hint="@string/hint_currency" />-->
 
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:orientation="horizontal">
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_margin="8dp"-->
+        <!--android:orientation="horizontal">-->
 
-        <TextView
-            android:id="@+id/txt_control_for_history"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/control_source_of_money"
-            android:textAlignment="viewStart"
-            android:textColor="@android:color/black" />
+        <!--<TextView-->
+            <!--android:id="@+id/txt_control_for_history"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@string/control_source_of_money"-->
+            <!--android:textAlignment="viewStart"-->
+            <!--android:textColor="@color/textColor" />-->
 
-        <EditText
-            android:id="@+id/etxt_control_for_history"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp" />
+        <!--<EditText-->
+            <!--android:id="@+id/etxt_control_for_history"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginStart="8dp" />-->
 
-    </LinearLayout>
+    <!--</LinearLayout>-->
 
-    <include layout="@layout/money_wallets_list_control" />
+    <include layout="@layout/view_wallets_control" />
 
 </LinearLayout>

@@ -8,10 +8,10 @@ import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
-import com.rdd.finy.activities.InfoActivity
+import com.rdd.finy.app.activities.InfoActivity
 
-import com.rdd.finy.adapters.WalletsAdapter
-import com.rdd.finy.data.Wallet
+import com.rdd.finy.app.adapters.WalletsAdapter
+import com.rdd.finy.app.models.Wallet
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -35,7 +35,11 @@ class InfoActivityTest {
     @Test
     fun setWalletsListToAdapter() {
         val walletsAdapter = WalletsAdapter(infoRule.activity)
-        val walletsList = arrayListOf<Wallet>(Wallet(), Wallet(), Wallet())
+        val walletsList = arrayListOf<Wallet>(
+            Wallet(),
+            Wallet(),
+            Wallet()
+        )
 
         walletsAdapter.setupWalletsList(walletsList)
     }

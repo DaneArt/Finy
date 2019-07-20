@@ -1,7 +1,7 @@
 package com.rdd.finy.helpers
 
 import android.util.Log
-import com.rdd.finy.data.Wallet
+import com.rdd.finy.app.models.Wallet
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import java.util.*
@@ -30,7 +30,7 @@ class AddCalculator(override var activeWallets: HashMap<Wallet, Double>) : Calcu
 
     override fun calcActive() {
         for (wallet in activeWallets) {
-            if (wallet.value + summaryBalance < userBalance
+            if (wallet.value + summaryBalance <= userBalance
                 && wallet.key.couldBeCalculated(wallet.value)
             ) {
                 wallet.key.balance += wallet.value

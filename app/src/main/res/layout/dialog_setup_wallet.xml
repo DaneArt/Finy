@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="8dp"
+    android:background="@color/colorPrimaryLight"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -16,13 +16,14 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:text="@string/setup_wallet_title_txt"
-            android:textColor="@android:color/black" />
+            android:textColor="@color/textColorBlack" />
 
         <EditText
             android:id="@+id/etxt_setup_wallet_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp" />
+            android:layout_margin="8dp"
+            android:textColor="@color/textColorWhite" />
     </LinearLayout>
 
     <LinearLayout
@@ -36,7 +37,7 @@
             android:layout_margin="8dp"
             android:text="@string/setup_wallet_balance_txt"
             android:textAlignment="viewStart"
-            android:textColor="@android:color/black" />
+            android:textColor="@color/textColorBlack" />
 
         <EditText
             android:id="@+id/etxt_setup_wallet_balance"
@@ -44,15 +45,16 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:layout_weight="1"
-            android:inputType="numberSigned|number|numberDecimal" />
+            android:inputType="numberSigned|number|numberDecimal"
+            android:textColor="@color/textColorBlack" />
 
-        <EditText
-            android:id="@+id/etxt_setup_wallet_currency"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:layout_weight="2"
-            android:hint="@string/hint_currency" />
+        <!--<EditText-->
+        <!--android:id="@+id/etxt_setup_wallet_currency"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_margin="8dp"-->
+        <!--android:layout_weight="2"-->
+        <!--android:hint="@string/hint_currency" />-->
 
     </LinearLayout>
 
@@ -68,7 +70,8 @@
             android:layout_margin="8dp"
             android:layout_weight="1"
             android:hint="@string/setup_wallet_upper_divider_txt"
-            android:inputType="numberSigned|number|numberDecimal" />
+            android:inputType="numberSigned|number|numberDecimal"
+            android:textColor="@color/textColorBlack" />
 
 
         <EditText
@@ -78,50 +81,51 @@
             android:layout_margin="8dp"
             android:layout_weight="1"
             android:hint="@string/setup_wallet_bottom_divider_txt"
-            android:inputType="numberSigned|number|numberDecimal" />
+            android:inputType="numberSigned|number|numberDecimal"
+            android:textColor="@color/textColorBlack" />
     </LinearLayout>
 
     <GridLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:columnCount="3">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:columnCount="3">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_margin="16dp"
-            android:src="@android:color/holo_orange_light" />
+    <Ima
+    android:layout_width="60dp"
+    android:layout_height="60dp"
+    android:layout_margin="16dp"
+    android:src="@android:color/holo_red_light" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_margin="16dp"
-            android:src="@android:color/holo_orange_light" />
+    <androidx.appcompat.widget.AppCompatImageView
+    android:layout_width="60dp"
+    android:layout_height="60dp"
+    android:layout_margin="16dp"
+    android:src="@android:color/holo_purple" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_margin="16dp"
-            android:src="@android:color/holo_orange_light" />
+    <androidx.appcompat.widget.AppCompatImageView
+    android:layout_width="60dp"
+    android:layout_height="60dp"
+    android:layout_margin="16dp"
+    android:src="@android:color/holo_blue_light" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_margin="16dp"
-            android:src="@android:color/holo_orange_light" />
+    <androidx.appcompat.widget.AppCompatImageView
+    android:layout_width="60dp"
+    android:layout_height="60dp"
+    android:layout_margin="16dp"
+    android:src="@android:color/holo_green_light" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_margin="16dp"
-            android:src="@android:color/holo_orange_light" />
+    <androidx.appcompat.widget.AppCompatImageView
+    android:layout_width="60dp"
+    android:layout_height="60dp"
+    android:layout_margin="16dp"
+    android:src="@android:color/holo_orange_light" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_margin="16dp"
-            android:src="@android:color/holo_orange_light" />
+    <androidx.appcompat.widget.AppCompatImageView
+    android:layout_width="60dp"
+    android:layout_height="60dp"
+    android:layout_margin="16dp"
+    android:src="@android:color/holo_orange_dark" />
 
 
     </GridLayout>

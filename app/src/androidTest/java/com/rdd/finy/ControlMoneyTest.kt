@@ -6,7 +6,7 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
-import com.rdd.finy.activities.InfoActivity
+import com.rdd.finy.app.activities.InfoActivity
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith

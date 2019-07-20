@@ -16,9 +16,9 @@
     </style>
 
     <style name="WalletBalanceBar" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">
-        <item name="colorButtonNormal">#f50057</item>
-        <item name="colorControlActivated">#33691e</item>
-        <item name="colorControlHighlight">#ff6d00</item>
+        <item name="android:colorControlNormal">#c67100</item>
+        <item name="colorControlActivated">#ffd149</item>
+        <item name="colorControlHighlight">#ffa000</item>
         <item name="android:progressDrawable">@drawable/wallet_budjet_bar</item>
         <item name="android:minWidth">200dp</item>
         <item name="android:text">Text</item>
