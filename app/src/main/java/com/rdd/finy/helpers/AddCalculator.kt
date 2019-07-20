@@ -6,7 +6,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import java.util.*
 
-class AddCalculator(override var activeWallets: HashMap<Wallet, Double>) : CalculatorBehaviour() {
+class AddCalculator(override var activeWallets: HashMap<Wallet, Double>) : CalculatorBeverage() {
 
     private val TAG = AddCalculator::class.java.simpleName
 

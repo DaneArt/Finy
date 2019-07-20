@@ -5,7 +5,7 @@ import com.rdd.finy.app.models.Wallet
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 
-class RemoveCalculator(override var activeWallets: HashMap<Wallet, Double>) :CalculatorBehaviour(){
+class RemoveCalculator(override var activeWallets: HashMap<Wallet, Double>) : CalculatorBeverage() {
 
     private val TAG = RemoveCalculator::class.java.simpleName
 

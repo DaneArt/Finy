@@ -35,7 +35,7 @@ class InfoActivityTest {
     @Test
     fun setWalletsListToAdapter() {
         val walletsAdapter = WalletsAdapter(infoRule.activity)
-        val walletsList = arrayListOf<Wallet>(
+        val walletsList = arrayListOf(
             Wallet(),
             Wallet(),
             Wallet()

@@ -15,7 +15,7 @@ import com.rdd.finy.R
 import com.rdd.finy.app.models.Wallet
 
 class WalletsAdapter(private val context: Context) :
-    RecyclerView.Adapter<WalletsAdapter.WalletViewHolder>() {
+        RecyclerView.Adapter<WalletsAdapter.WalletViewHolder>() {
 
     private val TAG = WalletsAdapter::class.java.simpleName
 
@@ -72,20 +72,20 @@ class WalletsAdapter(private val context: Context) :
     }
 
     inner class WalletViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
-        RecyclerView.ViewHolder(inflater.inflate(R.layout.item_wallet, parent, false)) {
+            RecyclerView.ViewHolder(inflater.inflate(R.layout.item_wallet, parent, false)) {
 
         init {
             ButterKnife.bind(this, itemView)
         }
 
         @BindView(R.id.background_wallet)
-        private lateinit var background: RelativeLayout
+        lateinit var background: RelativeLayout
         @BindView(R.id.rbtn_wallet_activation)
-        private lateinit var isActiveRadBtn: RadioButton
+        lateinit var isActiveRadBtn: RadioButton
         @BindView(R.id.pb_wallet_balance)
-        private lateinit var balanceBar: ProgressBar
+        lateinit var balanceBar: ProgressBar
         @BindView(R.id.txt_wallet_title)
-        private lateinit var titleTxt: TextView
+        lateinit var titleText: TextView
 
         private var localWallet: Wallet = Wallet()
 
@@ -95,7 +95,7 @@ class WalletsAdapter(private val context: Context) :
 
             setupBalanceBarProgress()
 
-            if (localWallet.title != "") titleTxt.text = localWallet.title
+            if (localWallet.title != "") titleText.text = localWallet.title
 
             isActiveRadBtn.isChecked = localWallet.isActive
 
@@ -151,14 +151,14 @@ class WalletsAdapter(private val context: Context) :
             } else {
                 context.getString(R.string.balance, localWallet.balance)
             }
-            titleTxt.text = balanceTitle
+            titleText.text = balanceTitle
 
         }
 
         private fun setTitleViewVisible() {
             balanceBar.visibility = View.INVISIBLE
             isActiveRadBtn.visibility = View.VISIBLE
-            titleTxt.text = localWallet.title
+            titleText.text = localWallet.title
         }
 
     }

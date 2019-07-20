@@ -20,12 +20,12 @@ class InfoPresenter(private val walletRepository: WalletRepository) : MvpPresent
 
     private lateinit var walletsDisposable: Disposable
     fun loadWalletsData(){
-        walletsDisposable = walletRepository.getAllWallets()
+        walletsDisposable = walletRepository.getAllWalletsBalances()
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {wallets ->
+                .subscribe { balances ->
                 var totalBalance = 0.0
-                for (wallet in wallets){
-                    totalBalance +=wallet.balance
+                    for (balance in balances) {
+                        totalBalance += balance
                 }
                 viewState.updateTotalBalanceState(totalBalance)
             }

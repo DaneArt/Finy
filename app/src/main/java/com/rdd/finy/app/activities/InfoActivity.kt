@@ -28,7 +28,7 @@ import moxy.presenter.ProvidePresenter
 import javax.inject.Inject
 
 
-class InfoActivity : MvpAppCompatActivity(), InfoView,WalletsAdapter.Callbacks {
+class InfoActivity : MvpAppCompatActivity(), InfoView, WalletsAdapter.Callbacks {
 
     private val DIALOG_CONTROL_MONEY = "controlMoneyDialog"
 
@@ -54,11 +54,11 @@ class InfoActivity : MvpAppCompatActivity(), InfoView,WalletsAdapter.Callbacks {
     }
 
     @BindView(R.id.fab_control_main)
-    private lateinit var controlMoneyMainFab: FloatingActionButton
+    lateinit var controlMoneyMainFab: FloatingActionButton
     @BindView(R.id.fab_control_remove)
-    private lateinit var controlMoneyRemoveFab: FloatingActionButton
+    lateinit var controlMoneyRemoveFab: FloatingActionButton
     @BindView(R.id.fab_control_insert)
-    private lateinit var controlMoneyInsertFab: FloatingActionButton
+    lateinit var controlMoneyInsertFab: FloatingActionButton
 
     private var statusFAB = false
 
@@ -90,7 +90,7 @@ class InfoActivity : MvpAppCompatActivity(), InfoView,WalletsAdapter.Callbacks {
     }
 
     @OnClick(R.id.fab_control_main)
-    override fun changeFabsViewState(){
+    override fun changeFabsViewState() {
         statusFAB = if (!statusFAB) {
             expandFAB()
             true
@@ -101,12 +101,12 @@ class InfoActivity : MvpAppCompatActivity(), InfoView,WalletsAdapter.Callbacks {
     }
 
     @OnClick(R.id.fab_control_insert)
-    override fun insertMoney(){
+    override fun insertMoney() {
         infoPresenter.addMoney()
     }
 
     @OnClick(R.id.fab_control_remove)
-    override fun removeMoney(){
+    override fun removeMoney() {
         infoPresenter.removeMoney()
     }
 
@@ -118,32 +118,6 @@ class InfoActivity : MvpAppCompatActivity(), InfoView,WalletsAdapter.Callbacks {
         showInsertFab = AnimationUtils.loadAnimation(applicationContext, R.anim.insert_fab_show)
         hideInsertFab = AnimationUtils.loadAnimation(applicationContext, R.anim.insert_fab_hide)
     }
-
-    /*fun updateStatsDiagramState(walletsData: List<Wallet>) {
-
-        val values = ArrayList<SliceValue>()
-        for (wallet in walletsData) {
-            val sliceValue = SliceValue(wallet.balance.toFloat(), ChartUtils.pickColor())
-            values.add(sliceValue)
-        }
-
-        statsChartData = PieChartData(values)
-        statsChartData.setHasLabels(true)
-        statsChartData.setHasLabelsOnlyForSelected(true)
-        statsChartData.setHasLabelsOutside(false)
-        statsChartData.setHasCenterCircle(true)
-
-        statsChartData.slicesSpacing = 6
-
-        statsChartData.centerText1 = getString(R.string.total_balance_menu)
-        statsChartData.centerText1Color = resources.getColor(R.color.textColor)
-        statsChartData.centerText1FontSize = 20
-
-        statsChartData.centerText2 = totalBalance.toString()
-        statsChartData.centerText2Color = resources.getColor(R.color.textColor)
-
-        statsBalanceChart.pieChartData = statsChartData
-    }*/
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_wallet, menu)

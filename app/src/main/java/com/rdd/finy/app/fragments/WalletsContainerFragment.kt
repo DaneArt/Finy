@@ -1,11 +1,13 @@
 package com.rdd.finy.app.fragments
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.rdd.finy.App
 import com.rdd.finy.R
@@ -35,7 +37,7 @@ class WalletsContainerFragment : BaseFragment(), WalletsContainerView {
     lateinit var walletsContainerPresenter: WalletsContainerPresenter
 
     @ProvidePresenter
-    fun provideWalletsContainerPresenter():WalletsContainerPresenter{
+    fun provideWalletsContainerPresenter(): WalletsContainerPresenter {
         return WalletsContainerPresenter(walletRepository)
     }
 
@@ -54,7 +56,12 @@ class WalletsContainerFragment : BaseFragment(), WalletsContainerView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        walletsRView.layoutManager = GridLayoutManager(context, 2)
+        val orientation = context?.resources?.configuration?.orientation
+
+        if (orientation == Configuration.ORIENTATION_PORTRAIT)
+            walletsRView.layoutManager = GridLayoutManager(context, 2)
+        else if (orientation == Configuration.ORIENTATION_LANDSCAPE)
+            walletsRView.layoutManager = LinearLayoutManager(context)
 
         walletsAdapter = WalletsAdapter(context!!)
         walletsRView.adapter = walletsAdapter
@@ -88,6 +95,6 @@ class WalletsContainerFragment : BaseFragment(), WalletsContainerView {
     }
 
     override fun showError(message: String) {
-        Toast.makeText(context,message, Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 }

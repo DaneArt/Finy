@@ -7,15 +7,15 @@ import com.rdd.finy.data.repositories.WalletRepository
 import java.util.*
 import javax.inject.Inject
 
-abstract class CalculatorBehaviour(
+abstract class CalculatorBeverage(
         var userBalance: Double = .0,
         var summaryBalance: Double = .0
 ) {
 
-    private  val TAG = CalculatorBehaviour::class.java.simpleName
+    private val TAG = CalculatorBeverage::class.java.simpleName
 
     init {
-        App.app()?.appComponent()?.inject(this@CalculatorBehaviour)
+        App.app()?.appComponent()?.inject(this@CalculatorBeverage)
     }
 
     @Inject

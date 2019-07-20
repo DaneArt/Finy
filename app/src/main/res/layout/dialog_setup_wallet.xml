@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:textColor="@color/textColorWhite" />
+            android:textColor="@color/textColorBlack" />
     </LinearLayout>
 
     <LinearLayout
@@ -85,50 +85,50 @@
             android:textColor="@color/textColorBlack" />
     </LinearLayout>
 
-    <GridLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:columnCount="3">
+    <!--<GridLayout-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:columnCount="3">-->
 
-    <Ima
-    android:layout_width="60dp"
-    android:layout_height="60dp"
-    android:layout_margin="16dp"
-    android:src="@android:color/holo_red_light" />
+    <!--<Ima-->
+    <!--android:layout_width="60dp"-->
+    <!--android:layout_height="60dp"-->
+    <!--android:layout_margin="16dp"-->
+    <!--android:src="@android:color/holo_red_light" />-->
 
-    <androidx.appcompat.widget.AppCompatImageView
-    android:layout_width="60dp"
-    android:layout_height="60dp"
-    android:layout_margin="16dp"
-    android:src="@android:color/holo_purple" />
+    <!--<androidx.appcompat.widget.AppCompatImageView-->
+    <!--android:layout_width="60dp"-->
+    <!--android:layout_height="60dp"-->
+    <!--android:layout_margin="16dp"-->
+    <!--android:src="@android:color/holo_purple" />-->
 
-    <androidx.appcompat.widget.AppCompatImageView
-    android:layout_width="60dp"
-    android:layout_height="60dp"
-    android:layout_margin="16dp"
-    android:src="@android:color/holo_blue_light" />
+    <!--<androidx.appcompat.widget.AppCompatImageView-->
+    <!--android:layout_width="60dp"-->
+    <!--android:layout_height="60dp"-->
+    <!--android:layout_margin="16dp"-->
+    <!--android:src="@android:color/holo_blue_light" />-->
 
-    <androidx.appcompat.widget.AppCompatImageView
-    android:layout_width="60dp"
-    android:layout_height="60dp"
-    android:layout_margin="16dp"
-    android:src="@android:color/holo_green_light" />
+    <!--<androidx.appcompat.widget.AppCompatImageView-->
+    <!--android:layout_width="60dp"-->
+    <!--android:layout_height="60dp"-->
+    <!--android:layout_margin="16dp"-->
+    <!--android:src="@android:color/holo_green_light" />-->
 
-    <androidx.appcompat.widget.AppCompatImageView
-    android:layout_width="60dp"
-    android:layout_height="60dp"
-    android:layout_margin="16dp"
-    android:src="@android:color/holo_orange_light" />
+    <!--<androidx.appcompat.widget.AppCompatImageView-->
+    <!--android:layout_width="60dp"-->
+    <!--android:layout_height="60dp"-->
+    <!--android:layout_margin="16dp"-->
+    <!--android:src="@android:color/holo_orange_light" />-->
 
-    <androidx.appcompat.widget.AppCompatImageView
-    android:layout_width="60dp"
-    android:layout_height="60dp"
-    android:layout_margin="16dp"
-    android:src="@android:color/holo_orange_dark" />
+    <!--<androidx.appcompat.widget.AppCompatImageView-->
+    <!--android:layout_width="60dp"-->
+    <!--android:layout_height="60dp"-->
+    <!--android:layout_margin="16dp"-->
+    <!--android:src="@android:color/holo_orange_dark" />-->
 
 
-    </GridLayout>
+    <!--</GridLayout>-->
 
 
     <Button

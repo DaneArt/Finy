@@ -20,6 +20,14 @@ class WalletRepository(private val walletDao: WalletDao) {
         return walletDao.getWalletById(id = id)
     }
 
+    fun getAllWalletsBalances(): Flowable<DoubleArray> {
+        return walletDao.getAllWalletsBalances()
+    }
+
+    fun getActiveWalletsBalances(): Flowable<DoubleArray> {
+        return walletDao.getActiveWalletsBalances()
+    }
+
     fun updateWallets(wallets: List<Wallet>){
         UpdateWalletsAsyncTask(walletDao = walletDao).execute(wallets)
     }

@@ -25,7 +25,7 @@ import com.rdd.finy.app.models.Wallet
 import com.rdd.finy.app.presenters.ControlMoneyPresenter
 import com.rdd.finy.app.views.ControlMoneyView
 import com.rdd.finy.helpers.AddCalculator
-import com.rdd.finy.helpers.CalculatorBehaviour
+import com.rdd.finy.helpers.CalculatorBeverage
 import com.rdd.finy.helpers.RemoveCalculator
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -41,17 +41,17 @@ class ControlMoneyDialog : MvpAppCompatDialogFragment(), ControlMoneyView {
     lateinit var controlMoneyPresenter: ControlMoneyPresenter
 
     @BindView(R.id.edit_control_balance)
-    private lateinit var controlBalanceEdit: EditText
-//    private lateinit var controlHistoryEdit: EditText
+    lateinit var controlBalanceEdit: EditText
+    //    private lateinit var controlHistoryEdit: EditText
 //    private lateinit var controlHistoryTxt: TextView
     @BindView(R.id.txt_stats)
-    private lateinit var controlWalletsCountTxt: TextView
+    lateinit var controlWalletsCountTxt: TextView
     @BindView(R.id.im_stats)
-    private lateinit var controlWalletsCountImView: ImageView
+    lateinit var controlWalletsCountImView: ImageView
     @BindView(R.id.stats_back)
-    private lateinit var controlStateViewBtn: LinearLayout
+    lateinit var controlStateViewBtn: LinearLayout
     @BindView(R.id.rv_money_wallets)
-    private lateinit var walletsListRv: RecyclerView
+    lateinit var walletsListRv: RecyclerView
 
     private lateinit var walletsAdapter: MoneyWalletsAdapter
 
@@ -78,7 +78,7 @@ class ControlMoneyDialog : MvpAppCompatDialogFragment(), ControlMoneyView {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val view = LayoutInflater.from(activity).inflate(R.layout.dialog_control, null)
 
-        ButterKnife.bind(this,view)
+        ButterKnife.bind(this, view)
 
         openAnim = AnimationUtils.loadAnimation(context, R.anim.open_wallets_list)
         closeAnim = AnimationUtils.loadAnimation(context, R.anim.close_wallets_list)
@@ -104,7 +104,7 @@ class ControlMoneyDialog : MvpAppCompatDialogFragment(), ControlMoneyView {
         })
 
         controlWalletsCountTxt.text = getString(R.string.control_wallets_count,
-            0)
+                0)
 
         if (arguments!!.getBoolean(ARG_CONTROL_FLAG)) {
             setupInsertView()
@@ -119,12 +119,12 @@ class ControlMoneyDialog : MvpAppCompatDialogFragment(), ControlMoneyView {
         controlMoneyPresenter.loadWalletsFromDB()
 
         controlMoneyPresenter.attachDisposable(walletsAdapter.getActiveWalletsSize()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { count ->
-                controlWalletsCountTxt.text = getString(R.string.control_wallets_count,
-                    count)
-            })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { count ->
+                    controlWalletsCountTxt.text = getString(R.string.control_wallets_count,
+                            count)
+                })
 
         val dialog = AlertDialog.Builder(activity)
                 .setView(view)
@@ -139,7 +139,7 @@ class ControlMoneyDialog : MvpAppCompatDialogFragment(), ControlMoneyView {
         dialog.setOnShowListener {
             val positiveButton = (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE)
             positiveButton.setOnClickListener {
-                val calculator: CalculatorBehaviour
+                val calculator: CalculatorBeverage
 
                 if (arguments!!.getBoolean(ARG_CONTROL_FLAG)) {
                     calculator = AddCalculator(walletsAdapter.getActiveWallets())
@@ -161,7 +161,7 @@ class ControlMoneyDialog : MvpAppCompatDialogFragment(), ControlMoneyView {
     }
 
     @OnClick(R.id.stats_back)
-    fun controlRvVisibility(){
+    fun controlRvVisibility() {
         rvVisibility = !rvVisibility
         setupRvVisibility()
     }

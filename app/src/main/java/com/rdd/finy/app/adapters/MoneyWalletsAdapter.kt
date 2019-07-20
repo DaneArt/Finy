@@ -18,7 +18,7 @@ import io.reactivex.subjects.PublishSubject
 
 
 class MoneyWalletsAdapter(private val context: Context) :
-    RecyclerView.Adapter<MoneyWalletsAdapter.MoneyWalletViewHolder>() {
+        RecyclerView.Adapter<MoneyWalletsAdapter.MoneyWalletViewHolder>() {
 
     private val TAG = WalletsAdapter::class.java.simpleName
 
@@ -63,26 +63,26 @@ class MoneyWalletsAdapter(private val context: Context) :
 
 
     inner class MoneyWalletViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
-        RecyclerView.ViewHolder(
-            inflater.inflate(
-                R.layout.item_control_wallet,
-                parent,
-                false
-            )
-        ) {
+            RecyclerView.ViewHolder(
+                    inflater.inflate(
+                            R.layout.item_control_wallet,
+                            parent,
+                            false
+                    )
+            ) {
 
         init {
             ButterKnife.bind(this, itemView)
         }
 
         @BindView(R.id.check_money_wallet)
-        private lateinit var walletCheck: CheckBox
+        lateinit var walletCheck: CheckBox
 
         @BindView(R.id.txt_money_wallet_title)
-        private lateinit var walletTitleTxt: TextView
+        lateinit var walletTitleTxt: TextView
 
         @BindView(R.id.edit_money_count)
-        private lateinit var walletMoneyCountEdit: EditText
+        lateinit var walletMoneyCountEdit: EditText
 
         fun bind(wallet: Wallet) {
 
@@ -108,7 +108,7 @@ class MoneyWalletsAdapter(private val context: Context) :
                     if (s!!.isNotBlank()) {
                         if (s.contains("%")) {
                             activeWalletsList[wallet] =
-                                s.toString().dropLast(1).toDouble() / 100 * userBalance
+                                    s.toString().dropLast(1).toDouble() / 100 * userBalance
                         } else {
                             activeWalletsList[wallet] = s.toString().toDouble()
                         }

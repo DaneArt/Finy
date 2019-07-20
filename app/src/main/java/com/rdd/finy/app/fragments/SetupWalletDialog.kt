@@ -44,15 +44,15 @@ class SetupWalletDialog : MvpAppCompatDialogFragment(), SetupWalletDialogView {
     }
 
     @BindView(R.id.etxt_setup_wallet_title)
-    private lateinit var setupWalletTitleEdit: EditText
+    lateinit var setupWalletTitleEdit: EditText
     @BindView(R.id.etxt_setup_wallet_balance)
-    private lateinit var setupWalletBalanceEdit: EditText
+    lateinit var setupWalletBalanceEdit: EditText
     @BindView(R.id.etxt_setup_wallet_upper_divider)
-    private lateinit var setupWalletUpperDividerEdit: EditText
+    lateinit var setupWalletUpperDividerEdit: EditText
     @BindView(R.id.etxt_setup_wallet_bottom_divider)
-    private lateinit var setupWalletBottomDividerEdit: EditText
+    lateinit var setupWalletBottomDividerEdit: EditText
     @BindView(R.id.btn_setup_wallet_delete)
-    private lateinit var deleteWalletBtn: Button
+    lateinit var deleteWalletBtn: Button
 
     private var localWallet: Wallet = Wallet()
     private var isCreatingWallet = true

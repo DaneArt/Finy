@@ -23,4 +23,5 @@
     <string name="history_view">History</string>
     <string name="balance" translatable="false">%.2f %n</string>
     <string name="balance_with_div" translatable="false">%.2f %n / %.2f %n</string>
+    <string name="no_active_wallets_with_positive_balance">There is no active wallets with positive balance</string>
 </resources>
