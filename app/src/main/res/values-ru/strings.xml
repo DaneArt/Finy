@@ -16,7 +16,7 @@
     <string name="setup_wallet_bottom_divider_txt">Нижняя граница</string>
     <string name="setup_wallet_title_txt">Наименование</string>
     <string name="setup_wallet_upper_divider_txt">Верхняя граница</string>
-    <string name="total_balance_menu">Общий баланс %.2f %n</string>
+    <string name="total_balance_menu">Общий баланс %d1.%d2</string>
     <string name="wallet_setup_new_title_dialog">Создать кошелек</string>
     <string name="without_title">Безымянный</string>
     <string name="stats_view">Статистика</string>

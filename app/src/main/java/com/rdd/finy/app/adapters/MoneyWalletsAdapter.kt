@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -23,12 +24,12 @@ class MoneyWalletsAdapter(private val context: Context) :
     private val TAG = WalletsAdapter::class.java.simpleName
 
     private var walletsSourceList: ArrayList<Wallet> = arrayListOf()
-    private var activeWalletsList: HashMap<Wallet, Double> = hashMapOf()
+    private var activeWalletsList: HashMap<Wallet, Int> = hashMapOf()
     private val sizeSubject: PublishSubject<Int> = PublishSubject.create()
 
-    private var userBalance: Double = .0
+    private var userBalance: Int = 0
 
-    fun setUserBalance(balance: Double) {
+    fun setUserBalance(balance: Int) {
         userBalance = balance
     }
 
@@ -36,7 +37,7 @@ class MoneyWalletsAdapter(private val context: Context) :
         return sizeSubject
     }
 
-    fun getActiveWallets(): HashMap<Wallet, Double> {
+    fun getActiveWallets(): HashMap<Wallet, Int> {
         return activeWalletsList
     }
 
@@ -84,7 +85,11 @@ class MoneyWalletsAdapter(private val context: Context) :
         @BindView(R.id.edit_money_count)
         lateinit var walletMoneyCountEdit: EditText
 
+        private lateinit var localWallet: Wallet
+
         fun bind(wallet: Wallet) {
+
+            localWallet = wallet
 
             walletCheck.isChecked = activeWalletsList.contains(wallet)
             walletMoneyCountEdit.isEnabled = walletCheck.isChecked
@@ -92,7 +97,7 @@ class MoneyWalletsAdapter(private val context: Context) :
             walletCheck.setOnCheckedChangeListener { buttonView, isChecked ->
                 if (buttonView.isPressed) {
                     if (isChecked) {
-                        activeWalletsList[wallet] = .0
+                        activeWalletsList[wallet] = 0
                         walletMoneyCountEdit.isEnabled = true
                     } else {
                         activeWalletsList.remove(wallet)
@@ -106,13 +111,7 @@ class MoneyWalletsAdapter(private val context: Context) :
             walletMoneyCountEdit.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
                     if (s!!.isNotBlank()) {
-                        if (s.contains("%")) {
-                            activeWalletsList[wallet] =
-                                    s.toString().dropLast(1).toDouble() / 100 * userBalance
-                        } else {
-                            activeWalletsList[wallet] = s.toString().toDouble()
-                        }
-
+                        configureUserInput(s.toString())
                     }
                 }
 
@@ -126,10 +125,35 @@ class MoneyWalletsAdapter(private val context: Context) :
 
             })
 
-            if (wallet.title != "") walletTitleTxt.text = wallet.title
-
+            if (wallet.title.isNotBlank()) walletTitleTxt.text = wallet.title
         }
 
+        fun configureUserInput(input: String) {
+            try {
+                activeWalletsList[localWallet] =
+                    when {
+                        input.contains("%") ->
+                            input.dropLast(1).toInt() / 100 * userBalance
+
+                        input.contains(".") || input.contains(",") ->
+                            configureDecimalInput(input)
+
+                        else -> input.toInt()
+                    }
+
+            } catch (e: Exception) {
+                Toast.makeText(
+                    context,
+                    context.getString(R.string.wrong_input_for_money_adapter),
+                    Toast.LENGTH_LONG
+                )
+                    .show()
+            }
+        }
+
+        private fun configureDecimalInput(input: String): Int {
+            return 1
+        }
 
     }
 }

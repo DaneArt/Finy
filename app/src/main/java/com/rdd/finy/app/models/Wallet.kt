@@ -4,54 +4,66 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-class Wallet(@PrimaryKey(autoGenerate = true)
-              var id: Long = 0,
-             var title: String = "",
-             //var currency: String = Currency.getInstance(Locale.US).displayName,
-             var balance: Double = 0.0,
-             //var backColor: Int = Color.MAGENTA,
-             var bottomDivider: Double = 0.0,
-             var upperDivider: Double = -1.0,
-             var isActive: Boolean = true,
-             var isBalanceShown: Boolean = false)
-{
+class Wallet(
+    @PrimaryKey(autoGenerate = true)
+    var id: Long = 0,
+    var title: String = "",
+    var isActive: Boolean = true
+    //var currency: String = Currency.getInstance(Locale.US).displayName,
+    //var backColor: Int = Color.MAGENTA,
+) {
 
-    val hasUpperDivider : Boolean
-    get() {
-        return upperDivider >= 0.0
+    constructor(
+        balance: Int,
+        upperDivider: Int, bottomDivider: Int
+    ) : this() {
+        this.balance = balance
+        this.bottomDivider = bottomDivider
+        this.upperDivider = upperDivider
     }
 
-    val hasBottomDivider: Boolean
-    get(){
-        return bottomDivider > 0.0
-    }
+    var balance: Int = 0
+        set(value) {
+            field = when {
+                upperDivider != null && value > upperDivider!! -> throw Exception("Upper divider should be more or equals balance")
+                bottomDivider != null && value < bottomDivider!! -> throw Exception("Bottom divider should be less or equals balance")
+                else -> value
+            }
+        }
+    var upperDivider: Int? = null
+        set(value) {
+            value?.let { arg ->
+                if (arg < balance)
+                    throw Exception("Upper divider should be more than bottom and balance")
+                else if (bottomDivider != null && arg < bottomDivider!!)
+                    throw Exception("Upper divider should be more than bottom and balance")
+                else field = arg
+            }
 
-    val couldBeSaved: Boolean
-    get(){
-        if(upperDivider<balance && hasUpperDivider)return false
-        if(bottomDivider>balance && hasBottomDivider)return false
-        return true
-    }
+        }
+    var bottomDivider: Int? = null
+        set(value) {
+            if (value != null) {
+                if (value > balance)
+                    throw Exception("Bottom divider should be less than upper and balance")
+                else if (upperDivider != null && value > upperDivider!!)
+                    throw Exception("Bottom divider should be less than upper and balance")
+                else field = value
+            }
 
-    fun couldBeCalculated(value : Double): Boolean{
-        if(hasUpperDivider && (balance+value)>upperDivider) return false
-        if((balance+value)<bottomDivider) return false
-        return true
-    }
+        }
 
+//    override fun equals(other: Any?): Boolean {
+//
+//        val wallet: Wallet = other as Wallet
+//
+//        return wallet.id == this.id &&
+//                wallet.balance == this.balance &&
+//                wallet.title == this.title &&
+////                wallet.currency == this.currency &&
+////                wallet.backColor == this.backColor &&
+//                wallet.upperDivider == this.upperDivider &&
+//                wallet.bottomDivider == this.bottomDivider
+//    }
 
-    override fun equals(other: Any?): Boolean {
-
-        val wallet: Wallet = other as Wallet
-
-        return wallet.id == this.id &&
-                wallet.balance == this.balance &&
-                wallet.title == this.title &&
-//                wallet.currency == this.currency &&
-//                wallet.backColor == this.backColor &&
-                wallet.upperDivider == this.upperDivider &&
-                wallet.bottomDivider == this.bottomDivider &&
-                wallet.isActive == this.isActive &&
-                wallet.isBalanceShown == this.isBalanceShown
-    }
 }

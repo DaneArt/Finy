@@ -19,19 +19,19 @@ class InfoPresenter(private val walletRepository: WalletRepository) : MvpPresent
     }
 
     private lateinit var walletsDisposable: Disposable
-    fun loadWalletsData(){
+    fun loadWalletsData() {
         walletsDisposable = walletRepository.getAllWalletsBalances()
             .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { balances ->
-                var totalBalance = 0.0
+                    var totalBalance = 0
                     for (balance in balances) {
                         totalBalance += balance
+                    }
+                    viewState.updateTotalBalanceState(totalBalance)
                 }
-                viewState.updateTotalBalanceState(totalBalance)
-            }
     }
 
-    fun destroyDisposable(){
+    fun destroyDisposable() {
         walletsDisposable.dispose()
     }
 

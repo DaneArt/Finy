@@ -37,14 +37,19 @@ class BalanceChartPresenter(private val context: Context) : MvpPresenter<Balance
                 })
     }
 
-    private fun updateStatsDiagramState(balances: DoubleArray) {
+    private fun updateStatsDiagramState(balances: IntArray) {
 
         val statsChartData: PieChartData
 
         val values = ArrayList<SliceValue>()
 
-        for (balance in balances.filter { it > 0.0 }) {
-            val sliceValue = SliceValue(balance.toFloat(), ChartUtils.pickColor())
+        for (balance in balances.filter { it > 0 }) {
+
+
+            val sliceValue = SliceValue(
+                (balance / 100) + (balance % 100 / 100f),
+                ChartUtils.pickColor()
+            )
             values.add(sliceValue)
         }
 

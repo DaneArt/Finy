@@ -20,11 +20,11 @@ class WalletRepository(private val walletDao: WalletDao) {
         return walletDao.getWalletById(id = id)
     }
 
-    fun getAllWalletsBalances(): Flowable<DoubleArray> {
+    fun getAllWalletsBalances(): Flowable<IntArray> {
         return walletDao.getAllWalletsBalances()
     }
 
-    fun getActiveWalletsBalances(): Flowable<DoubleArray> {
+    fun getActiveWalletsBalances(): Flowable<IntArray> {
         return walletDao.getActiveWalletsBalances()
     }
 

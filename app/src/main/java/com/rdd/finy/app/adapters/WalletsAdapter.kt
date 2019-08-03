@@ -2,7 +2,6 @@ package com.rdd.finy.app.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.RadioButton
@@ -68,7 +67,7 @@ class WalletsAdapter(private val context: Context) :
     override fun onBindViewHolder(holder: WalletViewHolder, position: Int) {
         val wallet = walletsSourceList[position]
 
-        holder.bind(wallet)
+//        holder.bind(wallet)
     }
 
     inner class WalletViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
@@ -87,15 +86,15 @@ class WalletsAdapter(private val context: Context) :
         @BindView(R.id.txt_wallet_title)
         lateinit var titleText: TextView
 
-        private var localWallet: Wallet = Wallet()
+        private lateinit var localWallet: Wallet
 
-        fun bind(wallet: Wallet) {
+        /*fun bind(wallet: Wallet) {
 
             localWallet = wallet
 
             setupBalanceBarProgress()
 
-            if (localWallet.title != "") titleText.text = localWallet.title
+            if (localWallet.title.isNotBlank()) titleText.text = localWallet.title
 
             isActiveRadBtn.isChecked = localWallet.isActive
 
@@ -122,13 +121,13 @@ class WalletsAdapter(private val context: Context) :
         private fun setupBalanceBarProgress() {
 
             if (localWallet.hasUpperDivider) {
-                balanceBar.max = localWallet.upperDivider.toInt()
+                balanceBar.max = localWallet.upperDivider/100
             } else {
-                balanceBar.max = localWallet.balance.toInt()
+                balanceBar.max = localWallet.balance/100
             }
 
-            balanceBar.progress = localWallet.bottomDivider.toInt()
-            balanceBar.secondaryProgress = localWallet.balance.toInt()
+            balanceBar.progress = localWallet.bottomDivider/100
+            balanceBar.secondaryProgress = localWallet.balance/100
         }
 
         private fun setupViewStateVisibility() {
@@ -160,7 +159,7 @@ class WalletsAdapter(private val context: Context) :
             isActiveRadBtn.visibility = View.VISIBLE
             titleText.text = localWallet.title
         }
-
+*/
     }
 
 }

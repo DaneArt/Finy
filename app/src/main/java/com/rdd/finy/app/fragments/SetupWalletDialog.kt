@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
@@ -96,7 +95,7 @@ class SetupWalletDialog : MvpAppCompatDialogFragment(), SetupWalletDialogView {
             val positiveButton = (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE)
             positiveButton.setOnClickListener {
                 prepareResultWallet()
-                if (localWallet.couldBeSaved) {
+                /*if (localWallet.couldBeSaved) {
                     sendResult()
                     dialog.dismiss()
                 } else {
@@ -105,7 +104,7 @@ class SetupWalletDialog : MvpAppCompatDialogFragment(), SetupWalletDialogView {
                         getString(R.string.save_wallet_error),
                         Toast.LENGTH_LONG
                     ).show()
-                }
+                }*/
             }
         }
 
@@ -141,31 +140,31 @@ class SetupWalletDialog : MvpAppCompatDialogFragment(), SetupWalletDialogView {
 
         setupWalletTitleEdit.setText(localWallet.title)
         setupWalletBalanceEdit.setText(localWallet.balance.toString())
-        if (localWallet.hasUpperDivider)
+        /*if (localWallet.hasUpperDivider)
             setupWalletUpperDividerEdit.setText(localWallet.upperDivider.toString())
         if (localWallet.hasBottomDivider)
-            setupWalletBottomDividerEdit.setText(localWallet.bottomDivider.toString())
+            setupWalletBottomDividerEdit.setText(localWallet.bottomDivider.toString())*/
 
         deleteWalletBtn.visibility = View.VISIBLE
     }
 
     private fun prepareResultWallet() {
         if (setupWalletBalanceEdit.text.toString() != "")
-            localWallet.balance = setupWalletBalanceEdit.text.toString().toDouble()
+            localWallet.balance = setupWalletBalanceEdit.text.toString().toInt()
         else
-            localWallet.balance = 0.0
+            localWallet.balance = 0
 
         localWallet.title = setupWalletTitleEdit.text.toString()
 
         if (setupWalletUpperDividerEdit.text.toString() != "")
-            localWallet.upperDivider = setupWalletUpperDividerEdit.text.toString().toDouble()
+            localWallet.upperDivider = setupWalletUpperDividerEdit.text.toString().toInt()
         else
-            localWallet.upperDivider = -1.0
+            localWallet.upperDivider = -1
 
         if (setupWalletBottomDividerEdit.text.toString() != "" )
-            localWallet.bottomDivider = setupWalletBottomDividerEdit.text.toString().toDouble()
+            localWallet.bottomDivider = setupWalletBottomDividerEdit.text.toString().toInt()
         else
-            localWallet.bottomDivider = 0.0
+            localWallet.bottomDivider = 0
     }
 
     private fun sendResult() {

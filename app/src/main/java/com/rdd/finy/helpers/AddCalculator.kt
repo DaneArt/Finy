@@ -1,90 +1,63 @@
 package com.rdd.finy.helpers
 
-import android.util.Log
 import com.rdd.finy.app.models.Wallet
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import java.util.*
 
-class AddCalculator(override var activeWallets: HashMap<Wallet, Double>) : CalculatorBeverage() {
+class AddCalculator(
+    override var userBalance: Int,
+    override var userConfigWallets: HashMap<Wallet, Int>,
+    override var otherWallets: List<Wallet>
+) : CalculatorBeverage() {
+    override fun getCalculatedResult(): List<Wallet> {
 
-    private val TAG = AddCalculator::class.java.simpleName
+        if (userConfigWallets.isNotEmpty())
+            calculateUserConfigWallets()
+        if (otherWallets.isNotEmpty())
+            calculateOtherWallets()
 
-    private lateinit var disposable: Disposable
-    override fun calculate() {
-        disposable = walletsRepository.getAllWallets()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { wallets ->
-                autoCalcWallets.addAll(
-                    wallets.filter { wallet ->
-                        !activeWallets.map {
-                            it.key.id
-                        }.contains(wallet.id)
-                    })
-                calcActive()
-                calcOthers()
-                sendResultToDB()
-                disposable.dispose()
-            }
+        return otherWallets + userConfigWallets.keys
     }
 
-    override fun calcActive() {
-        for (wallet in activeWallets) {
-            if (wallet.value + summaryBalance <= userBalance
-                && wallet.key.couldBeCalculated(wallet.value)
-            ) {
-                wallet.key.balance += wallet.value
-                summaryBalance += wallet.value
-                Log.e(TAG, "Add money to active. Summary: $summaryBalance. Value: ${wallet.value}")
+    override fun calculateUserConfigWallets() {
+        var diff: Int
+
+        for (item in userConfigWallets) {
+
+            if (item.key.upperDivider != null) {
+                diff = item.key.upperDivider!! - item.key.balance
+
+                if (diff < item.value) {
+                    item.key.balance = item.key.upperDivider!!
+                    userBalance -= diff
+                }
             } else {
-                autoCalcWallets.add(wallet.key)
-                activeWallets.remove(wallet.key)
+                item.key.balance += item.value
+                userBalance -= item.value
             }
         }
 
     }
 
-    override fun calcOthers() {
-        var othersBalance = userBalance - summaryBalance
-        var othersCount = autoCalcWallets.size
+    override fun calculateOtherWallets() {
+        var partsCount = otherWallets.size
+        var part: Int
+        var diff: Int
 
-        autoCalcWallets.sortBy { it.upperDivider - it.balance }
+        for (wallet in otherWallets) {
 
-        val othersWithDiv = autoCalcWallets.filter { it.hasUpperDivider }
-        val othersWithoutDiv = autoCalcWallets.filter { !it.hasUpperDivider }
+            part = userBalance / partsCount + userBalance % partsCount
 
-        Log.e(
-            TAG,
-            "Sorted array: ${Arrays.toString(autoCalcWallets.map { it.upperDivider - it.balance }.toDoubleArray())}"
-        )
-
-        for (wallet in othersWithDiv) {
-            val value: Double = othersBalance / othersCount
-            if (wallet.couldBeCalculated(value)) {
-                wallet.balance += value
+            if (wallet.upperDivider != null) {
+                diff = wallet.upperDivider!! - wallet.balance
+                if (diff < part) {
+                    wallet.balance = wallet.upperDivider!!
+                    userBalance -= diff
+                }
             } else {
-                othersBalance -= wallet.upperDivider - wallet.balance
-                wallet.balance = wallet.upperDivider
-                othersCount--
+                wallet.balance += part
+                userBalance -= part
             }
+
+            partsCount--
         }
-
-        if (othersWithoutDiv.isNotEmpty()) {
-            val value: Double = othersBalance / othersCount
-
-            for (wallet in othersWithoutDiv) wallet.balance += value
-        } else if (othersBalance > 0) {
-            val extraWallet = Wallet()
-            extraWallet.title = "Extra"
-            extraWallet.balance = othersBalance
-
-            walletsRepository.insertWallet(extraWallet)
-        }
-        autoCalcWallets.addAll(othersWithDiv)
-        autoCalcWallets.addAll(othersWithoutDiv)
-
-
     }
-
-
 }

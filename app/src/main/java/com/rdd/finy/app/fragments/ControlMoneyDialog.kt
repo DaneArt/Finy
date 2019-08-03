@@ -5,7 +5,6 @@ import android.app.Dialog
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.Animation
@@ -24,9 +23,7 @@ import com.rdd.finy.app.adapters.MoneyWalletsAdapter
 import com.rdd.finy.app.models.Wallet
 import com.rdd.finy.app.presenters.ControlMoneyPresenter
 import com.rdd.finy.app.views.ControlMoneyView
-import com.rdd.finy.helpers.AddCalculator
 import com.rdd.finy.helpers.CalculatorBeverage
-import com.rdd.finy.helpers.RemoveCalculator
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import moxy.MvpAppCompatDialogFragment
@@ -90,7 +87,7 @@ class ControlMoneyDialog : MvpAppCompatDialogFragment(), ControlMoneyView {
 
         controlBalanceEdit.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                if (s!!.isNotBlank()) walletsAdapter.setUserBalance(s.toString().toDouble())
+
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -141,18 +138,18 @@ class ControlMoneyDialog : MvpAppCompatDialogFragment(), ControlMoneyView {
             positiveButton.setOnClickListener {
                 val calculator: CalculatorBeverage
 
-                if (arguments!!.getBoolean(ARG_CONTROL_FLAG)) {
-                    calculator = AddCalculator(walletsAdapter.getActiveWallets())
-                    Log.e(TAG, "Add money calc")
-                } else {
-                    calculator = RemoveCalculator(walletsAdapter.getActiveWallets())
-                    Log.e(TAG, "Remove money calc")
-                }
-
-                if (controlBalanceEdit.text.isNotBlank()) {
-                    calculator.userBalance = controlBalanceEdit.text.toString().toDouble()
-                    calculator.calculate()
-                }
+//                if (arguments!!.getBoolean(ARG_CONTROL_FLAG)) {
+//                    calculator = AddCalculator(walletsAdapter.getActiveWallets())
+//                    Log.e(TAG, "Add money calc")
+//                } else {
+//                    calculator = RemoveCalculator(walletsAdapter.getActiveWallets())
+//                    Log.e(TAG, "Remove money calc")
+//                }
+//
+//                if (controlBalanceEdit.text.isNotBlank()) {
+//                    calculator.userBalance = controlBalanceEdit.text.toString().toDouble()
+//                    calculator.calculate()
+//                }
                 dismiss()
             }
         }

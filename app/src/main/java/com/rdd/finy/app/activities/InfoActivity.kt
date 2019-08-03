@@ -179,8 +179,13 @@ class InfoActivity : MvpAppCompatActivity(), InfoView, WalletsAdapter.Callbacks 
         dialog.show(manager, DIALOG_CONTROL_MONEY)
     }
 
-    override fun updateTotalBalanceState(totalBalance: Double) {
-        supportActionBar?.title = getString(R.string.total_balance_menu, totalBalance)
+    override fun updateTotalBalanceState(totalBalance: Int) {
+        supportActionBar?.title =
+            getString(
+                R.string.total_balance_menu,
+                totalBalance / 100,
+                totalBalance % 100
+            )
     }
 
     override fun onShowSetupWalletDialog(walletId: Long) {

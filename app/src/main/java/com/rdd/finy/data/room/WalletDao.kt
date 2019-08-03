@@ -15,10 +15,10 @@ interface WalletDao {
     fun getAllWallets(): Flowable<List<Wallet>>
 
     @Query("SELECT balance FROM Wallet")
-    fun getAllWalletsBalances(): Flowable<DoubleArray>
+    fun getAllWalletsBalances(): Flowable<IntArray>
 
     @Query("SELECT balance FROM Wallet WHERE isActive = 1")
-    fun getActiveWalletsBalances(): Flowable<DoubleArray>
+    fun getActiveWalletsBalances(): Flowable<IntArray>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(wallet: Wallet)
