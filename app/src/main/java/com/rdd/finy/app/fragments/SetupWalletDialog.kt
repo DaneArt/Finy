@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
@@ -16,7 +17,7 @@ import com.rdd.finy.R
 import com.rdd.finy.app.models.Wallet
 import com.rdd.finy.app.presenters.SetupWalletPresenter
 import com.rdd.finy.app.views.SetupWalletDialogView
-import com.rdd.finy.data.repositories.WalletRepository
+import com.rdd.finy.data.repositories.WalletRepositoryImpl
 import moxy.MvpAppCompatDialogFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -32,14 +33,14 @@ class SetupWalletDialog : MvpAppCompatDialogFragment(), SetupWalletDialogView {
     }
 
     @Inject
-    lateinit var walletRepository: WalletRepository
+    lateinit var walletRepositoryImpl: WalletRepositoryImpl
 
     @InjectPresenter
     lateinit var setupWalletPresenter: SetupWalletPresenter
 
     @ProvidePresenter
     fun provideSetupWalletPresenter(): SetupWalletPresenter {
-        return SetupWalletPresenter(walletRepository)
+        return SetupWalletPresenter(walletRepositoryImpl)
     }
 
     @BindView(R.id.etxt_setup_wallet_title)
@@ -72,24 +73,28 @@ class SetupWalletDialog : MvpAppCompatDialogFragment(), SetupWalletDialogView {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
-        isCreatingWallet = arguments==null
+        isCreatingWallet = arguments == null
 
         val view = LayoutInflater.from(activity)
             .inflate(R.layout.dialog_setup_wallet, null)
-        ButterKnife.bind(this,view)
+        ButterKnife.bind(this, view)
 
-        var dialogTitle = if (isCreatingWallet) getString(R.string.wallet_setup_new_title_dialog) else localWallet.title
 
-        val dialog = AlertDialog.Builder(activity)
-            .setView(view)
-            .setTitle(dialogTitle)
+        val builder = AlertDialog.Builder(activity, R.style.AddWalletStyle)
+
+        val dialogTitle = if (isCreatingWallet)
+            getString(R.string.wallet_setup_new_title_dialog)
+        else getString(R.string.wallet_edit_title_dialog)
+
+        view.findViewById<TextView>(R.id.txt_setup_wallet_dialog_title).text = dialogTitle
+
+        builder.setView(view)
             .setPositiveButton(android.R.string.ok, null)
             .setNegativeButton(android.R.string.cancel) { _, _ ->
                 dismiss()
             }
-            .create()
 
-        dialog.window.setBackgroundDrawableResource(R.color.colorPrimaryLight)
+        val dialog = builder.create()
 
         dialog.setOnShowListener {
             val positiveButton = (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE)
@@ -114,8 +119,8 @@ class SetupWalletDialog : MvpAppCompatDialogFragment(), SetupWalletDialogView {
     }
 
     @OnClick(R.id.btn_setup_wallet_delete)
-    fun deleteWallet(){
-        walletRepository.deleteWallet(localWallet)
+    fun deleteWallet() {
+        walletRepositoryImpl.delete(localWallet)
         dialog?.dismiss()
     }
 
@@ -161,7 +166,7 @@ class SetupWalletDialog : MvpAppCompatDialogFragment(), SetupWalletDialogView {
         else
             localWallet.upperDivider = -1
 
-        if (setupWalletBottomDividerEdit.text.toString() != "" )
+        if (setupWalletBottomDividerEdit.text.toString() != "")
             localWallet.bottomDivider = setupWalletBottomDividerEdit.text.toString().toInt()
         else
             localWallet.bottomDivider = 0
@@ -170,9 +175,9 @@ class SetupWalletDialog : MvpAppCompatDialogFragment(), SetupWalletDialogView {
     private fun sendResult() {
         Log.e(TAG, "Result sent, $isCreatingWallet")
         if (isCreatingWallet) {
-            walletRepository.insertWallet(localWallet)
+            walletRepositoryImpl.insert(localWallet)
         } else {
-            walletRepository.updateWallet(localWallet)
+            walletRepositoryImpl.update(localWallet)
         }
     }
 }

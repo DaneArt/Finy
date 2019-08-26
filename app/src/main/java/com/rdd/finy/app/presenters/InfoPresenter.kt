@@ -1,26 +1,18 @@
 package com.rdd.finy.app.presenters
 
 import com.rdd.finy.app.views.InfoView
-import com.rdd.finy.data.repositories.WalletRepository
+import com.rdd.finy.data.repositories.WalletRepositoryImpl
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import moxy.InjectViewState
 import moxy.MvpPresenter
 
 @InjectViewState
-class InfoPresenter(private val walletRepository: WalletRepository) : MvpPresenter<InfoView>() {
-
-    fun removeMoney() {
-        viewState.showControlMoneyDialog(isAddingMoney = false)
-    }
-
-    fun addMoney() {
-        viewState.showControlMoneyDialog(isAddingMoney = true)
-    }
+class InfoPresenter(private val walletRepositoryImpl: WalletRepositoryImpl) : MvpPresenter<InfoView>() {
 
     private lateinit var walletsDisposable: Disposable
     fun loadWalletsData() {
-        walletsDisposable = walletRepository.getAllWalletsBalances()
+        walletsDisposable = walletRepositoryImpl.getAllWalletsBalances()
             .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { balances ->
                     var totalBalance = 0

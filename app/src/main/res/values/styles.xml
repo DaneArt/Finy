@@ -14,14 +14,20 @@
         <item name="android:layout_height">@dimen/icon_dimen</item>
         <item name="android:background">@null</item>
     </style>
-
+    >
     <style name="WalletBalanceBar" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">
-        <item name="android:colorControlNormal">#c67100</item>
-        <item name="colorControlActivated">#ffd149</item>
-        <item name="colorControlHighlight">#ffa000</item>
+        <item name="android:colorControlNormal">#232E90</item>
+        <item name="colorControlActivated">#4759F9</item>
+        <item name="colorControlHighlight">#3543C3</item>
         <item name="android:progressDrawable">@drawable/wallet_budjet_bar</item>
         <item name="android:minWidth">200dp</item>
         <item name="android:text">Text</item>
+    </style>
+
+
+    <style name="CardViewStyle" parent="@style/CardView.Light">
+        <item name="cardCornerRadius">4dp</item>
+        <item name="cardElevation">4dp</item>
     </style>
 
     <style name="WalletsCountButton" parent="Widget.AppCompat.Button.Borderless">
@@ -30,4 +36,32 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+
+    <style name="AddWalletAnimation.Window" parent="@android:style/Animation.Activity">
+        <item name="android:windowEnterAnimation">@anim/open_add_wallet</item>
+        <item name="android:windowExitAnimation">@anim/close_add_wallet</item>
+    </style>
+
+    <style name="AddWalletStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowAnimationStyle">@style/AddWalletAnimation.Window</item>
+    </style>
+
+    <style name="AddMoneyAnimation.Window" parent="@android:style/Animation.Activity">
+        <item name="android:windowEnterAnimation">@anim/open_add_money</item>
+        <item name="android:windowExitAnimation">@anim/close_add_money</item>
+    </style>
+
+    <style name="AddMoneyStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowAnimationStyle">@style/AddMoneyAnimation.Window</item>
+    </style>
+
+    <style name="RemoveMoneyAnimation.Window" parent="@android:style/Animation.Activity">
+        <item name="android:windowEnterAnimation">@anim/open_remove_money</item>
+        <item name="android:windowExitAnimation">@anim/close_remove_money</item>
+    </style>
+
+    <style name="RemoveMoneyStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowAnimationStyle">@style/RemoveMoneyAnimation.Window</item>
+    </style>
+
 </resources>

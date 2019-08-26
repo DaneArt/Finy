@@ -75,14 +75,15 @@ dependencies {
 
     testImplementation 'junit:junit:4.12'
     implementation 'com.android.support:multidex:1.0.3'
-    androidTestImplementation 'androidx.test:runner:1.3.0-alpha01'
-    androidTestImplementation 'androidx.test:rules:1.3.0-alpha01'
+    androidTestImplementation 'androidx.test:runner:1.3.0-alpha02'
+    androidTestImplementation 'androidx.test:rules:1.3.0-alpha02'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
-    implementation 'androidx.test.espresso:espresso-accessibility:3.3.0-alpha01'
-    implementation 'androidx.test.espresso:espresso-contrib:3.3.0-alpha01'
-    implementation 'androidx.test.espresso:espresso-intents:3.3.0-alpha01'
-    debugImplementation 'androidx.fragment:fragment-testing:1.2.0-alpha01'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0-alpha01'
+    implementation 'androidx.test.espresso:espresso-accessibility:3.3.0-alpha02'
+    implementation 'androidx.test.espresso:espresso-contrib:3.3.0-alpha02'
+    implementation 'androidx.test.espresso:espresso-intents:3.3.0-alpha02'
+    debugImplementation 'androidx.fragment:fragment-testing:1.2.0-alpha02'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0-alpha02'
+    implementation 'com.google.android.material:material:1.0.0'
 
 }

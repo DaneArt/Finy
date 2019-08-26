@@ -13,5 +13,6 @@ abstract class CalculatorBeverage {
     abstract fun getCalculatedResult(): List<Wallet>
     abstract fun calculateUserConfigWallets()
     abstract fun calculateOtherWallets()
+    abstract fun setupExtraWallet()
 
 }

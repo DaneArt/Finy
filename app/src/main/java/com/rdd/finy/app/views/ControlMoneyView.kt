@@ -8,10 +8,6 @@ import moxy.viewstate.strategy.StateStrategyType
 @StateStrategyType(value = SingleStateStrategy::class)
 interface ControlMoneyView : MvpView {
 
-    fun setupInsertView()
-
-    fun setupRemoveView()
-
     fun setupSourceList(wallets : List<Wallet>)
 
     fun setupRvVisibility()
@@ -19,4 +15,6 @@ interface ControlMoneyView : MvpView {
     fun openWalletsList()
 
     fun closeWalletsList()
+
+    fun loadAnimations()
 }

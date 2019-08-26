@@ -12,18 +12,4 @@ interface InfoView : MvpView {
 
     fun updateTotalBalanceState(totalBalance: Int)
 
-    fun expandFAB()
-
-    fun hideFAB()
-
-    fun prepareAnims()
-
-    fun changeFabsViewState()
-
-    fun insertMoney()
-
-    fun removeMoney()
-
-
-
 }

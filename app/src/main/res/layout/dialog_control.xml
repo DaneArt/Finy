@@ -3,15 +3,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:background="@color/colorPrimaryLight"
     android:orientation="vertical">
 
+    <TextView
+            android:id="@+id/txt_control_money_dialog_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="@color/textColorWhite"
+            android:padding="8dp"
+            android:textSize="22sp"
+            android:background="@color/colorPrimaryDark"/>
+
     <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/colorPrimary"
-        android:layout_margin="8dp"
-        android:elevation="3dp">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -19,11 +26,11 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingStart="8dp"
-                android:text="@string/control_money_count_txt"
-                android:textColor="@color/textColorWhite" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="8dp"
+                    android:text="@string/control_money_count_txt"
+                    android:textColor="@color/textColorBlack"/>
 
             <EditText
                     android:id="@+id/edit_control_balance"

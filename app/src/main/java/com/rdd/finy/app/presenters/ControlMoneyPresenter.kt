@@ -2,7 +2,7 @@ package com.rdd.finy.app.presenters
 
 import com.rdd.finy.App
 import com.rdd.finy.app.views.ControlMoneyView
-import com.rdd.finy.data.repositories.WalletRepository
+import com.rdd.finy.data.repositories.WalletRepositoryImpl
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -14,7 +14,7 @@ import javax.inject.Inject
 class ControlMoneyPresenter : MvpPresenter<ControlMoneyView>() {
 
     @Inject
-    lateinit var walletRepository: WalletRepository
+    lateinit var walletRepositoryImpl: WalletRepositoryImpl
 
     init {
         App.app()?.appComponent()?.inject(this)
@@ -25,7 +25,7 @@ class ControlMoneyPresenter : MvpPresenter<ControlMoneyView>() {
     fun loadWalletsFromDB() {
 
         disposables.add(
-            walletRepository.getAllWallets()
+            walletRepositoryImpl.getAll()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     viewState.setupSourceList(it)

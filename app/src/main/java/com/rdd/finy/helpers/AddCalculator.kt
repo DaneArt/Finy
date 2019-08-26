@@ -7,12 +7,15 @@ class AddCalculator(
     override var userConfigWallets: HashMap<Wallet, Int>,
     override var otherWallets: List<Wallet>
 ) : CalculatorBeverage() {
+
     override fun getCalculatedResult(): List<Wallet> {
 
         if (userConfigWallets.isNotEmpty())
             calculateUserConfigWallets()
         if (otherWallets.isNotEmpty())
             calculateOtherWallets()
+        if (userBalance != 0)
+            setupExtraWallet()
 
         return otherWallets + userConfigWallets.keys
     }
@@ -29,6 +32,9 @@ class AddCalculator(
                     item.key.balance = item.key.upperDivider!!
                     userBalance -= diff
                 }
+            } else if (userBalance < item.value) {
+                item.key.balance = userBalance
+                userBalance = 0
             } else {
                 item.key.balance += item.value
                 userBalance -= item.value
@@ -51,6 +57,9 @@ class AddCalculator(
                 if (diff < part) {
                     wallet.balance = wallet.upperDivider!!
                     userBalance -= diff
+                } else {
+                    wallet.balance += part
+                    userBalance -= part
                 }
             } else {
                 wallet.balance += part
@@ -60,4 +69,12 @@ class AddCalculator(
             partsCount--
         }
     }
+
+    override fun setupExtraWallet() {
+        val extraWallet = Wallet(title = "Extra")
+        extraWallet.balance = userBalance
+
+        userConfigWallets[extraWallet] = 0
+    }
+
 }

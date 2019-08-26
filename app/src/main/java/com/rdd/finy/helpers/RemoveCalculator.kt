@@ -7,16 +7,71 @@ class RemoveCalculator(
     override var userConfigWallets: HashMap<Wallet, Int>,
     override var otherWallets: List<Wallet>
 ) : CalculatorBeverage() {
+
     override fun getCalculatedResult(): List<Wallet> {
-        throw UnsupportedOperationException()
+        if (userConfigWallets.isNotEmpty())
+            calculateUserConfigWallets()
+        if (otherWallets.isNotEmpty())
+            calculateOtherWallets()
+        if (userBalance > 0)
+            setupExtraWallet()
+
+        return otherWallets + userConfigWallets.keys
     }
 
     override fun calculateUserConfigWallets() {
-        throw UnsupportedOperationException()
+        var diff: Int
+
+        for (item in userConfigWallets) {
+
+            if (item.key.bottomDivider != null) {
+                diff = item.key.balance - item.key.bottomDivider!!
+
+                if (diff < item.value) {
+                    item.key.balance = item.key.bottomDivider!!
+                    userBalance -= diff
+                }
+            } else if (userBalance < item.value) {
+                item.key.balance = userBalance
+                userBalance = 0
+            } else {
+                item.key.balance -= item.value
+                userBalance -= item.value
+            }
+        }
     }
 
     override fun calculateOtherWallets() {
-        throw UnsupportedOperationException()
+        var partsCount = otherWallets.size
+        var part: Int
+        var diff: Int
+
+        for (wallet in otherWallets) {
+
+            part = userBalance / partsCount + userBalance % partsCount
+
+            if (wallet.bottomDivider != null) {
+                diff = wallet.balance - wallet.bottomDivider!!
+                if (diff < part) {
+                    wallet.balance = wallet.bottomDivider!!
+                    userBalance -= diff
+                } else {
+                    wallet.balance -= part
+                    userBalance -= part
+                }
+            } else {
+                wallet.balance -= part
+                userBalance -= part
+            }
+
+            partsCount--
+        }
     }
 
+    override fun setupExtraWallet() {
+        val extraWallet = Wallet(title = "Extra")
+        extraWallet.balance = -userBalance
+
+        userConfigWallets[extraWallet] = 0
+    }
 }

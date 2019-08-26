@@ -15,7 +15,7 @@ import com.rdd.finy.app.adapters.WalletsAdapter
 import com.rdd.finy.app.models.Wallet
 import com.rdd.finy.app.presenters.WalletsContainerPresenter
 import com.rdd.finy.app.views.WalletsContainerView
-import com.rdd.finy.data.repositories.WalletRepository
+import com.rdd.finy.data.repositories.WalletRepositoryImpl
 import io.reactivex.disposables.Disposable
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -31,14 +31,14 @@ class WalletsContainerFragment : BaseFragment(), WalletsContainerView {
     }
 
     @Inject
-    lateinit var walletRepository: WalletRepository
+    lateinit var walletRepositoryImpl: WalletRepositoryImpl
 
     @InjectPresenter
     lateinit var walletsContainerPresenter: WalletsContainerPresenter
 
     @ProvidePresenter
     fun provideWalletsContainerPresenter(): WalletsContainerPresenter {
-        return WalletsContainerPresenter(walletRepository)
+        return WalletsContainerPresenter(walletRepositoryImpl)
     }
 
     private lateinit var walletsRView: RecyclerView

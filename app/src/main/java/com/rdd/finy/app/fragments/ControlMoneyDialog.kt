@@ -39,8 +39,6 @@ class ControlMoneyDialog : MvpAppCompatDialogFragment(), ControlMoneyView {
 
     @BindView(R.id.edit_control_balance)
     lateinit var controlBalanceEdit: EditText
-    //    private lateinit var controlHistoryEdit: EditText
-//    private lateinit var controlHistoryTxt: TextView
     @BindView(R.id.txt_stats)
     lateinit var controlWalletsCountTxt: TextView
     @BindView(R.id.im_stats)
@@ -73,15 +71,13 @@ class ControlMoneyDialog : MvpAppCompatDialogFragment(), ControlMoneyView {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val view = LayoutInflater.from(activity).inflate(R.layout.dialog_control, null)
 
+        val view = LayoutInflater.from(activity).inflate(R.layout.dialog_control, null)
         ButterKnife.bind(this, view)
 
-        openAnim = AnimationUtils.loadAnimation(context, R.anim.open_wallets_list)
-        closeAnim = AnimationUtils.loadAnimation(context, R.anim.close_wallets_list)
+        loadAnimations()
 
         walletsAdapter = MoneyWalletsAdapter(context!!)
-
         walletsListRv.adapter = walletsAdapter
         walletsListRv.layoutManager = LinearLayoutManager(context)
 
@@ -103,18 +99,7 @@ class ControlMoneyDialog : MvpAppCompatDialogFragment(), ControlMoneyView {
         controlWalletsCountTxt.text = getString(R.string.control_wallets_count,
                 0)
 
-        if (arguments!!.getBoolean(ARG_CONTROL_FLAG)) {
-            setupInsertView()
-        } else {
-            setupRemoveView()
-        }
-
-        val title = if (arguments!!.getBoolean(ARG_CONTROL_FLAG))
-            getString(R.string.add_money_title)
-        else getString(R.string.remove_money_title)
-
         controlMoneyPresenter.loadWalletsFromDB()
-
         controlMoneyPresenter.attachDisposable(walletsAdapter.getActiveWalletsSize()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -123,15 +108,25 @@ class ControlMoneyDialog : MvpAppCompatDialogFragment(), ControlMoneyView {
                             count)
                 })
 
-        val dialog = AlertDialog.Builder(activity)
-                .setView(view)
-                .setTitle(title)
-                .setCancelable(false)
+
+        val builder = if (arguments!!.getBoolean("controlMoneyFlag")) {
+            AlertDialog.Builder(activity, R.style.AddMoneyStyle)
+        } else {
+            AlertDialog.Builder(activity, R.style.RemoveMoneyStyle)
+        }
+
+        val title = if (arguments!!.getBoolean(ARG_CONTROL_FLAG))
+            getString(R.string.add_money_title)
+        else getString(R.string.remove_money_title)
+        view.findViewById<TextView>(R.id.txt_control_money_dialog_title).text = title
+
+        builder.setView(view)
                 .setPositiveButton(android.R.string.ok, null)
                 .setNegativeButton(android.R.string.cancel) { _, _ ->
                     dismiss()
                 }
-                .create()
+
+        val dialog = builder.create()
 
         dialog.setOnShowListener {
             val positiveButton = (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE)
@@ -155,6 +150,11 @@ class ControlMoneyDialog : MvpAppCompatDialogFragment(), ControlMoneyView {
         }
 
         return dialog
+    }
+
+    override fun loadAnimations() {
+        openAnim = AnimationUtils.loadAnimation(context, R.anim.open_wallets_list)
+        closeAnim = AnimationUtils.loadAnimation(context, R.anim.close_wallets_list)
     }
 
     @OnClick(R.id.stats_back)
@@ -185,14 +185,6 @@ class ControlMoneyDialog : MvpAppCompatDialogFragment(), ControlMoneyView {
 
     override fun setupSourceList(wallets: List<Wallet>) {
         walletsAdapter.setupWalletsList(wallets)
-    }
-
-    override fun setupInsertView() {
-        //controlHistoryTxt.text = getString(R.string.control_source_of_money)
-    }
-
-    override fun setupRemoveView() {
-        //controlHistoryTxt.text = getString(R.string.control_destination_for_history)
     }
 
     override fun onDestroy() {

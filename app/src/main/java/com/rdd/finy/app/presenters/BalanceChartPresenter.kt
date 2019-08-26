@@ -3,7 +3,7 @@ package com.rdd.finy.app.presenters
 import android.content.Context
 import com.rdd.finy.App
 import com.rdd.finy.app.views.BalanceChartView
-import com.rdd.finy.data.repositories.WalletRepository
+import com.rdd.finy.data.repositories.WalletRepositoryImpl
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import lecho.lib.hellocharts.model.PieChartData
@@ -23,12 +23,12 @@ class BalanceChartPresenter(private val context: Context) : MvpPresenter<Balance
     }
 
     @Inject
-    lateinit var walletsRepository: WalletRepository
+    lateinit var walletsRepositoryImpl: WalletRepositoryImpl
 
     private lateinit var disposable: Disposable
 
     fun loadChartData() {
-        disposable = walletsRepository.getActiveWalletsBalances()
+        disposable = walletsRepositoryImpl.getActiveWalletsBalances()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ balances ->
                     updateStatsDiagramState(balances = balances)

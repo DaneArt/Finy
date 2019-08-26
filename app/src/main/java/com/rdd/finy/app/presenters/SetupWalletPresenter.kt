@@ -2,7 +2,7 @@ package com.rdd.finy.app.presenters
 
 import com.rdd.finy.app.models.Wallet
 import com.rdd.finy.app.views.SetupWalletDialogView
-import com.rdd.finy.data.repositories.WalletRepository
+import com.rdd.finy.data.repositories.WalletRepositoryImpl
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -11,10 +11,11 @@ import moxy.InjectViewState
 import moxy.MvpPresenter
 
 @InjectViewState
-class SetupWalletPresenter(private val walletRepository: WalletRepository) : MvpPresenter<SetupWalletDialogView>() {
+class SetupWalletPresenter(private val walletRepositoryImpl: WalletRepositoryImpl) :
+    MvpPresenter<SetupWalletDialogView>() {
 
     fun setupEditViewWithWalletFromDB(walletId: Long) {
-        walletRepository.getWalletById(walletId)
+        walletRepositoryImpl.getById(walletId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : SingleObserver<Wallet> {

@@ -2,7 +2,7 @@ package com.rdd.finy.app.di
 
 import android.content.Context
 import androidx.room.Room
-import com.rdd.finy.data.repositories.WalletRepository
+import com.rdd.finy.data.repositories.WalletRepositoryImpl
 import com.rdd.finy.data.room.FinyDatabase
 import com.rdd.finy.data.room.WalletDao
 import dagger.Module
@@ -27,8 +27,8 @@ class AppModule(val context: Context) {
     }
 
     @Provides
-    fun provideWalletRepository(walletDao: WalletDao): WalletRepository {
-        return WalletRepository(walletDao)
+    fun provideWalletRepository(walletDao: WalletDao): WalletRepositoryImpl {
+        return WalletRepositoryImpl(walletDao)
     }
 
     @Provides

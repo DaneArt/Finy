@@ -4,25 +4,26 @@
     <string name="setup_wallet_balance_txt">Balance</string>
     <string name="setup_wallet_upper_divider_txt">Upper divider</string>
     <string name="setup_wallet_bottom_divider_txt">Bottom divider</string>
-    <string name="wallet_setup_new_title_dialog">Setup new wallet</string>
-    <string name="control_money_count_txt">How much?</string>
+    <string name="wallet_setup_new_title_dialog">Create wallet</string>
+    <string name="control_money_count_txt">Amount</string>
     <string name="control_destination_for_history">Destination</string>
-    <string name="total_balance_menu">Total Balance %d1.%d2</string>
+    <string name="total_balance_menu">Total Balance %d</string>
     <string name="save_wallet_error">Wallet couldn\'t be saved.
     </string>
     <string name="setup_delete_wallet_txt">DELETE</string>
     <string name="control_wallets_count">Wallets chosen: %d</string>
-    <string name="control_wallets_title">Allocate money to wallet</string>
-    <string name="without_title">Without title</string>
+    <string name="control_wallets_title">Distribute money</string>
+    <string name="without_title">Unnamed</string>
     <string name="add_money_title">Adding money</string>
     <string name="remove_money_title">Removing money</string>
     <string name="hint_currency">CUR</string>
     <string name="hint_control_item_money">Concrete or in %</string>
     <string name="control_source_of_money">Source</string>
-    <string name="stats_view">Statistics</string>
+    <string name="stats_view">Statistic</string>
     <string name="history_view">History</string>
     <string name="balance" translatable="false">%.2f %n</string>
     <string name="balance_with_div" translatable="false">%.2f %n / %.2f %n</string>
     <string name="no_active_wallets_with_positive_balance">There is no active wallets with positive balance</string>
-    <string name="wrong_input_for_money_adapter">Wrong input format. It could contains only 0-9, %, .</string>
+    <string name="wallet_edit_title_dialog">Edit wallet</string>
+    <string name="wrong_input_for_money_adapter">Wrong input format. It could contains only 0–9, %, .</string>
 </resources>

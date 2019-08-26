@@ -4,14 +4,15 @@ package com.rdd.finy.app.presenters
 import android.util.Log
 import com.rdd.finy.app.models.Wallet
 import com.rdd.finy.app.views.WalletsContainerView
-import com.rdd.finy.data.repositories.WalletRepository
+import com.rdd.finy.data.repositories.WalletRepositoryImpl
 import io.reactivex.android.schedulers.AndroidSchedulers
 import moxy.InjectViewState
 import moxy.MvpPresenter
 import java.util.*
 
 @InjectViewState
-class WalletsContainerPresenter(private val walletRepository: WalletRepository) : MvpPresenter<WalletsContainerView>() {
+class WalletsContainerPresenter(private val walletRepositoryImpl: WalletRepositoryImpl) :
+    MvpPresenter<WalletsContainerView>() {
 
     private val TAG = WalletsContainerPresenter::class.java.simpleName
 
@@ -21,7 +22,7 @@ class WalletsContainerPresenter(private val walletRepository: WalletRepository) 
     fun loadWalletsFromDB() {
 
         viewState.attachNewDisposable(
-            walletRepository.getAllWallets()
+            walletRepositoryImpl.getAll()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { walletsFromDB ->
