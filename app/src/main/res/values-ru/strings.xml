@@ -13,9 +13,9 @@
     <string name="save_wallet_error">Кошелек не может быть сохранен.</string>
     <string name="setup_delete_wallet_txt">УДАЛИТЬ</string>
     <string name="setup_wallet_balance_txt">Баланс</string>
-    <string name="setup_wallet_bottom_divider_txt">Нижняя граница</string>
+    <string name="setup_wallet_bottom_divider_txt">Нижняя</string>
     <string name="setup_wallet_title_txt">Наименование</string>
-    <string name="setup_wallet_upper_divider_txt">Верхняя граница</string>
+    <string name="setup_wallet_upper_divider_txt">Верхняя</string>
     <string name="total_balance_menu">Общий баланс %d</string>
     <string name="wallet_setup_new_title_dialog">Создать кошелек</string>
     <string name="without_title">Безымянный</string>
@@ -24,4 +24,5 @@
     <string name="no_active_wallets_with_positive_balance">Не выбрано кошельков с положительным балансом</string>
     <string name="wrong_input_for_money_adapter">Текстовые поля могут содержать только: 0–9, %, .</string>
     <string name="wallet_edit_title_dialog">Редактирование кошелька</string>
+    <string name="dividers_title">Ограничения</string>
 </resources>

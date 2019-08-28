@@ -10,10 +10,10 @@ import io.reactivex.Single
 interface WalletDao : BaseDao<Wallet> {
 
     @Query("SELECT balance FROM Wallet")
-    fun getAllWalletsBalances(): Flowable<IntArray>
+    fun getAllWalletsBalances(): Flowable<LongArray>
 
     @Query("SELECT balance FROM Wallet WHERE isActive = 1")
-    fun getActiveWalletsBalances(): Flowable<IntArray>
+    fun getActiveWalletsBalances(): Flowable<LongArray>
 
     @Query("SELECT * FROM Wallet WHERE id=:id")
     override fun getById(id: Long): Single<Wallet>

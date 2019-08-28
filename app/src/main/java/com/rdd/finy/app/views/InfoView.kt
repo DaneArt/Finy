@@ -10,6 +10,6 @@ interface InfoView : MvpView {
 
     fun showControlMoneyDialog(isAddingMoney : Boolean)
 
-    fun updateTotalBalanceState(totalBalance: Int)
+    fun updateTotalBalanceState(totalBalance: Long)
 
 }

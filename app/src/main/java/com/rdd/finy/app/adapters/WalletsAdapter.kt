@@ -2,16 +2,17 @@ package com.rdd.finy.app.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.RadioButton
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.rdd.finy.R
 import com.rdd.finy.app.models.Wallet
+import java.lang.Math.abs
 
 class WalletsAdapter(private val context: Context) :
         RecyclerView.Adapter<WalletsAdapter.WalletViewHolder>() {
@@ -19,6 +20,7 @@ class WalletsAdapter(private val context: Context) :
     private val TAG = WalletsAdapter::class.java.simpleName
 
     private var walletsSourceList: ArrayList<Wallet> = arrayListOf()
+    private var balancedWalletsList: ArrayList<Wallet> = arrayListOf()
 
     private lateinit var callbacks: Callbacks
 
@@ -67,7 +69,7 @@ class WalletsAdapter(private val context: Context) :
     override fun onBindViewHolder(holder: WalletViewHolder, position: Int) {
         val wallet = walletsSourceList[position]
 
-//        holder.bind(wallet)
+        holder.bind(wallet)
     }
 
     inner class WalletViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
@@ -77,18 +79,18 @@ class WalletsAdapter(private val context: Context) :
             ButterKnife.bind(this, itemView)
         }
 
-        @BindView(R.id.background_wallet)
-        lateinit var background: RelativeLayout
         @BindView(R.id.rbtn_wallet_activation)
         lateinit var isActiveRadBtn: RadioButton
         @BindView(R.id.pb_wallet_balance)
         lateinit var balanceBar: ProgressBar
         @BindView(R.id.txt_wallet_title)
         lateinit var titleText: TextView
+        @BindView(R.id.txt_wallet_balance)
+        lateinit var balanceText: TextView
 
         private lateinit var localWallet: Wallet
 
-        /*fun bind(wallet: Wallet) {
+        fun bind(wallet: Wallet) {
 
             localWallet = wallet
 
@@ -98,9 +100,7 @@ class WalletsAdapter(private val context: Context) :
 
             isActiveRadBtn.isChecked = localWallet.isActive
 
-            background.setOnClickListener {
-                localWallet.isBalanceShown = !localWallet.isBalanceShown
-                callbacks.onUpdateWallet(wallet = localWallet)
+            titleText.setOnClickListener {
                 setupViewStateVisibility()
             }
 
@@ -110,7 +110,7 @@ class WalletsAdapter(private val context: Context) :
                 isActiveRadBtn.isChecked = localWallet.isActive
             }
 
-            background.setOnLongClickListener {
+            titleText.setOnLongClickListener {
                 callbacks.onShowSetupWalletDialog(wallet.id)
                 true
             }
@@ -120,19 +120,30 @@ class WalletsAdapter(private val context: Context) :
 
         private fun setupBalanceBarProgress() {
 
-            if (localWallet.hasUpperDivider) {
-                balanceBar.max = localWallet.upperDivider/100
+            val reserve = if (localWallet.bottomDivider != null) {
+                localWallet.bottomDivider!!.toInt()
             } else {
-                balanceBar.max = localWallet.balance/100
+                0
             }
 
-            balanceBar.progress = localWallet.bottomDivider/100
-            balanceBar.secondaryProgress = localWallet.balance/100
+            val activeBalance = abs(reserve) + abs(localWallet.balance.toInt() - reserve)
+
+            val maximumBalance = if (localWallet.upperDivider != null) {
+                activeBalance + (localWallet.upperDivider!!.toInt() - localWallet.balance.toInt())
+            } else {
+                activeBalance
+            }
+
+            balanceBar.progress = abs(reserve)
+
+            balanceBar.secondaryProgress = activeBalance
+
+            balanceBar.max = maximumBalance
         }
 
         private fun setupViewStateVisibility() {
 
-            if (localWallet.isBalanceShown) {
+            if (!balancedWalletsList.contains(localWallet)) {
                 setBalanceViewVisible()
             } else {
                 setTitleViewVisible()
@@ -143,23 +154,27 @@ class WalletsAdapter(private val context: Context) :
 
         private fun setBalanceViewVisible() {
             balanceBar.visibility = View.VISIBLE
-            isActiveRadBtn.visibility = View.INVISIBLE
+            balanceText.visibility = View.VISIBLE
 
-            val balanceTitle = if (localWallet.hasUpperDivider) {
-                context.getString(R.string.balance_with_div, localWallet.balance, localWallet.upperDivider)
+            val balanceTitle = if (localWallet.upperDivider != null) {
+                val balance = "${localWallet.balance / 100}.${localWallet.balance % 100}"
+                val upperDivider = "${localWallet.upperDivider!! / 100}.${localWallet.upperDivider!! % 100}"
+                "$balance / $upperDivider"
             } else {
-                context.getString(R.string.balance, localWallet.balance)
+                "${localWallet.balance / 100}.${localWallet.balance % 100}"
             }
-            titleText.text = balanceTitle
+            balanceText.text = balanceTitle
 
+            balancedWalletsList.add(localWallet)
         }
 
         private fun setTitleViewVisible() {
-            balanceBar.visibility = View.INVISIBLE
-            isActiveRadBtn.visibility = View.VISIBLE
-            titleText.text = localWallet.title
+            balanceBar.visibility = View.GONE
+            balanceText.visibility = View.GONE
+
+            balancedWalletsList.remove(localWallet)
         }
-*/
+
     }
 
 }

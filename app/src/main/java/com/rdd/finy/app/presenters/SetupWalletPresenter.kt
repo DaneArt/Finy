@@ -12,24 +12,45 @@ import moxy.MvpPresenter
 
 @InjectViewState
 class SetupWalletPresenter(private val walletRepositoryImpl: WalletRepositoryImpl) :
-    MvpPresenter<SetupWalletDialogView>() {
+        MvpPresenter<SetupWalletDialogView>() {
+
+    fun getSaveableMoney(userInput: String): Long {
+        val balance = userInput.split(".")
+        var resultBalance = (balance[0].toLong() * 100)
+        if (balance.size > 1 && balance[1].isNotBlank()) {
+            val kop = balance[1].toLong()
+            resultBalance += if (kop < 100)
+                kop
+            else
+                kop.toString().subSequence(0, 2).toString().toLong()
+        }
+        return resultBalance
+    }
 
     fun setupEditViewWithWalletFromDB(walletId: Long) {
         walletRepositoryImpl.getById(walletId)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : SingleObserver<Wallet> {
-                override fun onSuccess(wallet: Wallet) {
-                    viewState.setupEditView(wallet)
-                }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : SingleObserver<Wallet> {
+                    override fun onSuccess(wallet: Wallet) {
+                        viewState.setupEditView(wallet)
+                    }
 
-                override fun onSubscribe(d: Disposable) {
+                    override fun onSubscribe(d: Disposable) {
 
-                }
+                    }
 
-                override fun onError(error: Throwable) {
-                }
-            })
+                    override fun onError(error: Throwable) {
+                    }
+                })
     }
+
+    fun buildBalanceString(value: Long): String =
+            if (value < 0) {
+                "${(value / 100)}.${(value % 100 * (-1))}"
+            } else {
+                "${(value / 100)}.${(value % 100)}"
+            }
+
 
 }

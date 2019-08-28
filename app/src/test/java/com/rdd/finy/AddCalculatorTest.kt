@@ -14,9 +14,9 @@ class AddCalculatorTest {
     private lateinit var addCalc: CalculatorBeverage
 
     private fun `prepare Calculator`(
-        userInput: Int,
-        userConfigWallet: HashMap<Wallet, Int>,
-        otherWallets: List<Wallet>
+            userInput: Long,
+            userConfigWallet: HashMap<Wallet, Long>,
+            otherWallets: List<Wallet>
     ) {
         addCalc = AddCalculator(
             userBalance = userInput, userConfigWallets = userConfigWallet,
@@ -25,7 +25,7 @@ class AddCalculatorTest {
     }
 
     private fun `prepare Calculator only with ideal userConfig wallets`() {
-        val usersWallets = hashMapOf<Wallet, Int>()
+        val usersWallets = hashMapOf<Wallet, Long>()
         usersWallets[Wallet(id = 1)] = 200
         usersWallets[Wallet(id = 2)] = 300
         `prepare Calculator`(userInput = 500, userConfigWallet = usersWallets, otherWallets = emptyList())
@@ -39,7 +39,7 @@ class AddCalculatorTest {
     }
 
     private fun `prepare Calculator with ideal both walletLists`() {
-        val usersWallets = hashMapOf<Wallet, Int>()
+        val usersWallets = hashMapOf<Wallet, Long>()
         usersWallets[Wallet(id = 1)] = 200
         usersWallets[Wallet(id = 2)] = 300
         val others = arrayListOf<Wallet>()
@@ -52,7 +52,7 @@ class AddCalculatorTest {
         assertEquals(expectedSize, actualSize)
     }
 
-    private fun assertResultListBalances(expectedBalanceArray: IntArray, actualBalanceArray: IntArray) {
+    private fun assertResultListBalances(expectedBalanceArray: LongArray, actualBalanceArray: LongArray) {
 
         assertEquals(true, expectedBalanceArray.contentEquals(actualBalanceArray))
     }
@@ -82,7 +82,7 @@ class AddCalculatorTest {
 
         val resultList = addCalc.getCalculatedResult()
 
-        assertResultListBalances(intArrayOf(200, 300), resultList.map { it.balance }.sorted().toIntArray())
+        assertResultListBalances(longArrayOf(200, 300), resultList.map { it.balance }.sorted().toLongArray())
     }
 
     @Test
@@ -110,7 +110,7 @@ class AddCalculatorTest {
 
         val resultList = addCalc.getCalculatedResult()
 
-        assertResultListBalances(intArrayOf(250, 250), resultList.map { it.balance }.toIntArray())
+        assertResultListBalances(longArrayOf(250, 250), resultList.map { it.balance }.toLongArray())
     }
 
     @Test
@@ -138,7 +138,7 @@ class AddCalculatorTest {
 
         val resultList = addCalc.getCalculatedResult()
 
-        assertResultListBalances(intArrayOf(200, 250, 250, 300), resultList.map { it.balance }.sorted().toIntArray())
+        assertResultListBalances(longArrayOf(200, 250, 250, 300), resultList.map { it.balance }.sorted().toLongArray())
     }
 
     @Test
@@ -158,7 +158,7 @@ class AddCalculatorTest {
         testWallet.upperDivider = 200
         `prepare Calculator`(
             userInput = 500,
-            userConfigWallet = hashMapOf(Pair(testWallet, 300)),
+                userConfigWallet = hashMapOf(Pair(testWallet, 300.toLong())),
             otherWallets = emptyList()
         )
 
@@ -194,7 +194,7 @@ class AddCalculatorTest {
         testOtherWallet.upperDivider = 200
         `prepare Calculator`(
             userInput = 500,
-            userConfigWallet = hashMapOf(Pair(testUserWallet, 300)),
+                userConfigWallet = hashMapOf(Pair(testUserWallet, 300.toLong())),
             otherWallets = listOf(testOtherWallet)
         )
 
@@ -211,13 +211,13 @@ class AddCalculatorTest {
         testUserWallet.upperDivider = 200
         `prepare Calculator`(
             userInput = 500,
-            userConfigWallet = hashMapOf(Pair(testUserWallet, 300), Pair(Wallet(), 400)),
+                userConfigWallet = hashMapOf(Pair(testUserWallet, 300.toLong()), Pair(Wallet(), 400.toLong())),
             otherWallets = emptyList()
         )
 
         val result = addCalc.getCalculatedResult()
 
-        assertResultListBalances(intArrayOf(200, 300), result.map { it.balance }.sorted().toIntArray())
+        assertResultListBalances(longArrayOf(200, 300), result.map { it.balance }.sorted().toLongArray())
     }
 
     @Test
@@ -232,7 +232,7 @@ class AddCalculatorTest {
 
         val result = addCalc.getCalculatedResult()
 
-        assertResultListBalances(intArrayOf(200, 300), result.map { it.balance }.sorted().toIntArray())
+        assertResultListBalances(longArrayOf(200, 300), result.map { it.balance }.sorted().toLongArray())
     }
 
     @Test
@@ -243,12 +243,12 @@ class AddCalculatorTest {
         testUserWallet.upperDivider = 100
         `prepare Calculator`(
             userInput = 500,
-            userConfigWallet = hashMapOf(Pair(testUserWallet, 300), Pair(Wallet(), 300)),
+                userConfigWallet = hashMapOf(Pair(testUserWallet, 300.toLong()), Pair(Wallet(), 300.toLong())),
             otherWallets = listOf(testWallet, Wallet())
         )
 
         val result = addCalc.getCalculatedResult()
 
-        assertResultListBalances(intArrayOf(50, 50, 100, 300), result.map { it.balance }.sorted().toIntArray())
+        assertResultListBalances(longArrayOf(50, 50, 100, 300), result.map { it.balance }.sorted().toLongArray())
     }
 }

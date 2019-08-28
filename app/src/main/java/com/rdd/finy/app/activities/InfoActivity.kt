@@ -102,12 +102,9 @@ class InfoActivity : MvpAppCompatActivity(), InfoView, WalletsAdapter.Callbacks 
         overridePendingTransition(0, R.anim.open_add_wallet)
     }
 
-    override fun updateTotalBalanceState(totalBalance: Int) {
+    override fun updateTotalBalanceState(totalBalance: Long) {
         supportActionBar?.title =
-            getString(
-                R.string.total_balance_menu,
-                totalBalance
-            )
+                "Total balance ${totalBalance / 100}.${totalBalance % 100}"
     }
 
     override fun onShowSetupWalletDialog(walletId: Long) {

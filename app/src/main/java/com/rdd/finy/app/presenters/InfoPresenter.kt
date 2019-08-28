@@ -15,7 +15,7 @@ class InfoPresenter(private val walletRepositoryImpl: WalletRepositoryImpl) : Mv
         walletsDisposable = walletRepositoryImpl.getAllWalletsBalances()
             .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { balances ->
-                    var totalBalance = 0
+                    var totalBalance: Long = 0
                     for (balance in balances) {
                         totalBalance += balance
                     }

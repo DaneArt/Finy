@@ -37,7 +37,7 @@ class BalanceChartPresenter(private val context: Context) : MvpPresenter<Balance
                 })
     }
 
-    private fun updateStatsDiagramState(balances: IntArray) {
+    private fun updateStatsDiagramState(balances: LongArray) {
 
         val statsChartData: PieChartData
 

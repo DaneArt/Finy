@@ -36,14 +36,14 @@ class WalletsContainerPresenter(private val walletRepositoryImpl: WalletReposito
                             }
                             walletsFromDB.size < localIdsList.size -> {
                                 for (wallet in localWalletsList) {
-                                    if (!walletsFromDB.contains(wallet)) {
+                                    if (!walletsFromDB.map { it.id }.contains(wallet.id)) {
                                         viewState.removeCurrentWallet(wallet)
                                     }
                                 }
                             }
                             walletsFromDB.size == localIdsList.size -> {
                                 for (wallet in localWalletsList) {
-                                    if (!walletsFromDB.contains(wallet)) {
+                                    if (!walletsFromDB.map { it.id }.contains(wallet.id)) {
                                         val index = localWalletsList.indexOf(wallet)
                                         viewState.updateCurrentWallet(walletsFromDB[index])
                                     }

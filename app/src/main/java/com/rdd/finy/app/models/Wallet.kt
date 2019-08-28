@@ -14,15 +14,15 @@ class Wallet(
 ) {
 
     constructor(
-        balance: Int,
-        upperDivider: Int, bottomDivider: Int
+            balance: Long,
+            upperDivider: Long, bottomDivider: Long
     ) : this() {
         this.balance = balance
         this.bottomDivider = bottomDivider
         this.upperDivider = upperDivider
     }
 
-    var balance: Int = 0
+    var balance: Long = 0
         set(value) {
             field = when {
                 upperDivider != null && value > upperDivider!! -> throw Exception("Upper divider should be more or equals balance")
@@ -30,7 +30,7 @@ class Wallet(
                 else -> value
             }
         }
-    var upperDivider: Int? = null
+    var upperDivider: Long? = null
         set(value) {
             value?.let { arg ->
                 if (arg < balance)
@@ -41,7 +41,7 @@ class Wallet(
             }
 
         }
-    var bottomDivider: Int? = null
+    var bottomDivider: Long? = null
         set(value) {
             if (value != null) {
                 if (value > balance)

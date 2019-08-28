@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -53,6 +54,13 @@ class SetupWalletDialog : MvpAppCompatDialogFragment(), SetupWalletDialogView {
     lateinit var setupWalletBottomDividerEdit: EditText
     @BindView(R.id.btn_setup_wallet_delete)
     lateinit var deleteWalletBtn: Button
+    @BindView(R.id.img_balance_alert)
+    lateinit var alertBalanceImg: ImageView
+    @BindView(R.id.img_upper_divider_alert)
+    lateinit var alertUpperDividerImg: ImageView
+    @BindView(R.id.img_bottom_divider_alert)
+    lateinit var alertBottomDividerImg: ImageView
+
 
     private var localWallet: Wallet = Wallet()
     private var isCreatingWallet = true
@@ -72,20 +80,17 @@ class SetupWalletDialog : MvpAppCompatDialogFragment(), SetupWalletDialogView {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-
         isCreatingWallet = arguments == null
-
         val view = LayoutInflater.from(activity)
             .inflate(R.layout.dialog_setup_wallet, null)
-        ButterKnife.bind(this, view)
 
+        ButterKnife.bind(this, view)
 
         val builder = AlertDialog.Builder(activity, R.style.AddWalletStyle)
 
         val dialogTitle = if (isCreatingWallet)
             getString(R.string.wallet_setup_new_title_dialog)
         else getString(R.string.wallet_edit_title_dialog)
-
         view.findViewById<TextView>(R.id.txt_setup_wallet_dialog_title).text = dialogTitle
 
         builder.setView(view)
@@ -99,17 +104,8 @@ class SetupWalletDialog : MvpAppCompatDialogFragment(), SetupWalletDialogView {
         dialog.setOnShowListener {
             val positiveButton = (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE)
             positiveButton.setOnClickListener {
-                prepareResultWallet()
-                /*if (localWallet.couldBeSaved) {
-                    sendResult()
-                    dialog.dismiss()
-                } else {
-                    Toast.makeText(
-                        activity,
-                        getString(R.string.save_wallet_error),
-                        Toast.LENGTH_LONG
-                    ).show()
-                }*/
+                buildResultWallet()
+                sendResult()
             }
         }
 
@@ -144,40 +140,73 @@ class SetupWalletDialog : MvpAppCompatDialogFragment(), SetupWalletDialogView {
         localWallet = wallet
 
         setupWalletTitleEdit.setText(localWallet.title)
-        setupWalletBalanceEdit.setText(localWallet.balance.toString())
-        /*if (localWallet.hasUpperDivider)
-            setupWalletUpperDividerEdit.setText(localWallet.upperDivider.toString())
-        if (localWallet.hasBottomDivider)
-            setupWalletBottomDividerEdit.setText(localWallet.bottomDivider.toString())*/
+
+        setupWalletBalanceEdit.setText(setupWalletPresenter.buildBalanceString(localWallet.balance))
+
+        if (localWallet.upperDivider != null) {
+            setupWalletUpperDividerEdit.setText(setupWalletPresenter.buildBalanceString(localWallet.upperDivider!!))
+        }
+
+        if (localWallet.bottomDivider != null) {
+            setupWalletBottomDividerEdit.setText(setupWalletPresenter.buildBalanceString(localWallet.bottomDivider!!))
+        }
 
         deleteWalletBtn.visibility = View.VISIBLE
     }
 
-    private fun prepareResultWallet() {
-        if (setupWalletBalanceEdit.text.toString() != "")
-            localWallet.balance = setupWalletBalanceEdit.text.toString().toInt()
+
+    override fun buildResultWallet() {
+
+        if (setupWalletTitleEdit.text.isNotBlank()) {
+            localWallet.title = setupWalletTitleEdit.text.toString()
+        } else {
+            localWallet.title = context!!.getString(R.string.without_title)
+        }
+
+        if (setupWalletBalanceEdit.text.isNotBlank())
+            localWallet.balance = setupWalletPresenter
+                    .getSaveableMoney(setupWalletBalanceEdit.text.toString())
         else
             localWallet.balance = 0
 
-        localWallet.title = setupWalletTitleEdit.text.toString()
-
-        if (setupWalletUpperDividerEdit.text.toString() != "")
-            localWallet.upperDivider = setupWalletUpperDividerEdit.text.toString().toInt()
-        else
-            localWallet.upperDivider = -1
-
-        if (setupWalletBottomDividerEdit.text.toString() != "")
-            localWallet.bottomDivider = setupWalletBottomDividerEdit.text.toString().toInt()
-        else
-            localWallet.bottomDivider = 0
+        validateUpperDivider()
+        validateBottomDivider()
     }
 
-    private fun sendResult() {
-        Log.e(TAG, "Result sent, $isCreatingWallet")
-        if (isCreatingWallet) {
-            walletRepositoryImpl.insert(localWallet)
-        } else {
-            walletRepositoryImpl.update(localWallet)
+    override fun validateUpperDivider() {
+        try {
+            if (setupWalletUpperDividerEdit.text.isNotBlank())
+                localWallet.upperDivider = setupWalletPresenter
+                        .getSaveableMoney(setupWalletUpperDividerEdit.text.toString())
+            alertUpperDividerImg.visibility = View.GONE
+        } catch (t: Throwable) {
+            alertUpperDividerImg.visibility = View.VISIBLE
+        }
+    }
+
+    override fun validateBottomDivider() {
+        try {
+            if (setupWalletBottomDividerEdit.text.isNotBlank())
+                localWallet.bottomDivider = setupWalletPresenter
+                        .getSaveableMoney(setupWalletBottomDividerEdit.text.toString())
+            alertBottomDividerImg.visibility = View.GONE
+        } catch (t: Throwable) {
+            alertBottomDividerImg.visibility = View.VISIBLE
+        }
+    }
+
+    override fun sendResult() {
+        if (alertBalanceImg.visibility == View.GONE &&
+                alertBottomDividerImg.visibility == View.GONE &&
+                alertUpperDividerImg.visibility == View.GONE
+        ) {
+            if (isCreatingWallet) {
+                walletRepositoryImpl.insert(localWallet)
+            } else {
+                walletRepositoryImpl.update(localWallet)
+            }
+
+            dismiss()
         }
     }
 }

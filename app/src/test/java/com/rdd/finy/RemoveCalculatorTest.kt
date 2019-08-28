@@ -15,9 +15,9 @@ class RemoveCalculatorTest {
     private lateinit var removeCalc: CalculatorBeverage
 
     private fun `prepare Calculator`(
-        userInput: Int,
-        userConfigWallet: HashMap<Wallet, Int>,
-        otherWallets: List<Wallet>
+            userInput: Long,
+            userConfigWallet: HashMap<Wallet, Long>,
+            otherWallets: List<Wallet>
     ) {
         removeCalc = RemoveCalculator(
             userBalance = userInput, userConfigWallets = userConfigWallet,
@@ -26,7 +26,7 @@ class RemoveCalculatorTest {
     }
 
     private fun `prepare Calculator only with ideal userConfig wallets`() {
-        val usersWallets = hashMapOf<Wallet, Int>()
+        val usersWallets = hashMapOf<Wallet, Long>()
         val fWal = Wallet()
         fWal.balance = 200
         val sWal = Wallet()
@@ -48,7 +48,7 @@ class RemoveCalculatorTest {
     }
 
     private fun `prepare Calculator with ideal both walletLists`() {
-        val usersWallets = hashMapOf<Wallet, Int>()
+        val usersWallets = hashMapOf<Wallet, Long>()
 
         val fWal = Wallet()
         fWal.balance = 200
@@ -77,7 +77,7 @@ class RemoveCalculatorTest {
         assertEquals(expectedSize, actualSize)
     }
 
-    private fun assertResultListBalances(expectedBalanceArray: IntArray, actualBalanceArray: IntArray) {
+    private fun assertResultListBalances(expectedBalanceArray: LongArray, actualBalanceArray: LongArray) {
 
         assertEquals(true, expectedBalanceArray.contentEquals(actualBalanceArray))
     }
@@ -107,7 +107,7 @@ class RemoveCalculatorTest {
 
         val resultList = removeCalc.getCalculatedResult()
 
-        assertResultListBalances(intArrayOf(0, 0), resultList.map { it.balance }.sorted().toIntArray())
+        assertResultListBalances(longArrayOf(0, 0), resultList.map { it.balance }.sorted().toLongArray())
     }
 
     @Test
@@ -135,7 +135,7 @@ class RemoveCalculatorTest {
 
         val resultList = removeCalc.getCalculatedResult()
 
-        assertResultListBalances(intArrayOf(0, 0), resultList.map { it.balance }.toIntArray())
+        assertResultListBalances(longArrayOf(0, 0), resultList.map { it.balance }.toLongArray())
     }
 
     @Test
@@ -163,7 +163,7 @@ class RemoveCalculatorTest {
 
         val resultList = removeCalc.getCalculatedResult()
 
-        assertResultListBalances(intArrayOf(0, 0, 0, 0), resultList.map { it.balance }.sorted().toIntArray())
+        assertResultListBalances(longArrayOf(0, 0, 0, 0), resultList.map { it.balance }.sorted().toLongArray())
     }
 
     @Test
@@ -184,7 +184,7 @@ class RemoveCalculatorTest {
         testWallet.bottomDivider = 200
         `prepare Calculator`(
             userInput = 500,
-            userConfigWallet = hashMapOf(Pair(testWallet, 300)),
+                userConfigWallet = hashMapOf(Pair(testWallet, 300.toLong())),
             otherWallets = emptyList()
         )
 
@@ -223,7 +223,7 @@ class RemoveCalculatorTest {
         testOtherWallet.bottomDivider = 200
         `prepare Calculator`(
             userInput = 500,
-            userConfigWallet = hashMapOf(Pair(testUserWallet, 300)),
+                userConfigWallet = hashMapOf(Pair(testUserWallet, 300.toLong())),
             otherWallets = listOf(testOtherWallet)
         )
 
@@ -245,13 +245,13 @@ class RemoveCalculatorTest {
 
         `prepare Calculator`(
             userInput = 500,
-            userConfigWallet = hashMapOf(Pair(fWal, 300), Pair(sWal, 300)),
+                userConfigWallet = hashMapOf(Pair(fWal, 300.toLong()), Pair(sWal, 300.toLong())),
             otherWallets = emptyList()
         )
 
         val result = removeCalc.getCalculatedResult()
 
-        assertResultListBalances(intArrayOf(0, 200), result.map { it.balance }.sorted().toIntArray())
+        assertResultListBalances(longArrayOf(0, 200), result.map { it.balance }.sorted().toLongArray())
     }
 
     @Test
@@ -271,7 +271,7 @@ class RemoveCalculatorTest {
 
         val result = removeCalc.getCalculatedResult()
 
-        assertResultListBalances(intArrayOf(0, 200), result.map { it.balance }.sorted().toIntArray())
+        assertResultListBalances(longArrayOf(0, 200), result.map { it.balance }.sorted().toLongArray())
     }
 
     @Test
@@ -292,13 +292,13 @@ class RemoveCalculatorTest {
 
         `prepare Calculator`(
             userInput = 500,
-            userConfigWallet = hashMapOf(Pair(fWal, 300), Pair(sWal, 200)),
+                userConfigWallet = hashMapOf(Pair(fWal, 300.toLong()), Pair(sWal, 200.toLong())),
             otherWallets = listOf(tWal, foWal)
         )
 
         val result = removeCalc.getCalculatedResult()
 
-        assertResultListBalances(intArrayOf(0, 0, 100, 200), result.map { it.balance }.sorted().toIntArray())
+        assertResultListBalances(longArrayOf(0, 0, 100, 200), result.map { it.balance }.sorted().toLongArray())
     }
 
     @Test
@@ -307,13 +307,13 @@ class RemoveCalculatorTest {
         wallet.balance = 200
         `prepare Calculator`(
             userInput = 300,
-            userConfigWallet = hashMapOf(Pair(wallet, 300)),
+                userConfigWallet = hashMapOf(Pair(wallet, 300.toLong())),
             otherWallets = emptyList()
         )
 
         val result = removeCalc.getCalculatedResult()
 
-        assertResultListBalances(intArrayOf(-100), result.map { it.balance }.sorted().toIntArray())
+        assertResultListBalances(longArrayOf(-100), result.map { it.balance }.sorted().toLongArray())
     }
 
     @Test
@@ -328,7 +328,7 @@ class RemoveCalculatorTest {
 
         val result = removeCalc.getCalculatedResult()
 
-        assertResultListBalances(intArrayOf(-100), result.map { it.balance }.sorted().toIntArray())
+        assertResultListBalances(longArrayOf(-100), result.map { it.balance }.sorted().toLongArray())
     }
 
 

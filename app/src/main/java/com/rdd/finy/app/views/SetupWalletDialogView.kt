@@ -14,5 +14,11 @@ interface SetupWalletDialogView : MvpView{
 
     fun setupViewType()
 
+    fun buildResultWallet()
 
+    fun validateUpperDivider()
+
+    fun validateBottomDivider()
+
+    fun sendResult()
 }

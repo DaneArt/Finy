@@ -3,9 +3,9 @@ package com.rdd.finy.helpers
 import com.rdd.finy.app.models.Wallet
 
 class RemoveCalculator(
-    override var userBalance: Int,
-    override var userConfigWallets: HashMap<Wallet, Int>,
-    override var otherWallets: List<Wallet>
+        override var userBalance: Long,
+        override var userConfigWallets: HashMap<Wallet, Long>,
+        override var otherWallets: List<Wallet>
 ) : CalculatorBeverage() {
 
     override fun getCalculatedResult(): List<Wallet> {
@@ -20,7 +20,7 @@ class RemoveCalculator(
     }
 
     override fun calculateUserConfigWallets() {
-        var diff: Int
+        var diff: Long
 
         for (item in userConfigWallets) {
 
@@ -43,8 +43,8 @@ class RemoveCalculator(
 
     override fun calculateOtherWallets() {
         var partsCount = otherWallets.size
-        var part: Int
-        var diff: Int
+        var part: Long
+        var diff: Long
 
         for (wallet in otherWallets) {
 

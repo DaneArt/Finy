@@ -4,7 +4,7 @@ import com.rdd.finy.app.models.Wallet
 import io.reactivex.Flowable
 
 interface WalletRepository : Repository<Wallet> {
-    fun getAllWalletsBalances(): Flowable<IntArray>
+    fun getAllWalletsBalances(): Flowable<LongArray>
 
-    fun getActiveWalletsBalances(): Flowable<IntArray>
+    fun getActiveWalletsBalances(): Flowable<LongArray>
 }
