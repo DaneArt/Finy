@@ -1,3 +1,18 @@
+/*
+Copyright 2019 Daniil Artamonov
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
 package com.rdd.finy.app.fragments
 
 import android.content.res.Configuration
@@ -6,7 +21,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.rdd.finy.App
@@ -59,9 +73,9 @@ class WalletsContainerFragment : BaseFragment(), WalletsContainerView {
         val orientation = context?.resources?.configuration?.orientation
 
         if (orientation == Configuration.ORIENTATION_PORTRAIT)
-            walletsRView.layoutManager = GridLayoutManager(context, 2)
+            walletsRView.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         else if (orientation == Configuration.ORIENTATION_LANDSCAPE)
-            walletsRView.layoutManager = LinearLayoutManager(context)
+            walletsRView.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 
         walletsAdapter = WalletsAdapter(context!!)
         walletsRView.adapter = walletsAdapter

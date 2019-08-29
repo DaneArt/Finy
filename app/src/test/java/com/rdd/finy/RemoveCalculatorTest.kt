@@ -1,3 +1,18 @@
+/*
+Copyright 2019 Daniil Artamonov
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
 package com.rdd.finy
 
 import com.rdd.finy.app.models.Wallet
@@ -15,9 +30,9 @@ class RemoveCalculatorTest {
     private lateinit var removeCalc: CalculatorBeverage
 
     private fun `prepare Calculator`(
-            userInput: Long,
-            userConfigWallet: HashMap<Wallet, Long>,
-            otherWallets: List<Wallet>
+        userInput: Long,
+        userConfigWallet: HashMap<Wallet, Long>,
+        otherWallets: List<Wallet>
     ) {
         removeCalc = RemoveCalculator(
             userBalance = userInput, userConfigWallets = userConfigWallet,
@@ -184,7 +199,7 @@ class RemoveCalculatorTest {
         testWallet.bottomDivider = 200
         `prepare Calculator`(
             userInput = 500,
-                userConfigWallet = hashMapOf(Pair(testWallet, 300.toLong())),
+            userConfigWallet = hashMapOf(Pair(testWallet, 300.toLong())),
             otherWallets = emptyList()
         )
 
@@ -223,7 +238,7 @@ class RemoveCalculatorTest {
         testOtherWallet.bottomDivider = 200
         `prepare Calculator`(
             userInput = 500,
-                userConfigWallet = hashMapOf(Pair(testUserWallet, 300.toLong())),
+            userConfigWallet = hashMapOf(Pair(testUserWallet, 300.toLong())),
             otherWallets = listOf(testOtherWallet)
         )
 
@@ -245,7 +260,7 @@ class RemoveCalculatorTest {
 
         `prepare Calculator`(
             userInput = 500,
-                userConfigWallet = hashMapOf(Pair(fWal, 300.toLong()), Pair(sWal, 300.toLong())),
+            userConfigWallet = hashMapOf(Pair(fWal, 300.toLong()), Pair(sWal, 300.toLong())),
             otherWallets = emptyList()
         )
 
@@ -292,7 +307,7 @@ class RemoveCalculatorTest {
 
         `prepare Calculator`(
             userInput = 500,
-                userConfigWallet = hashMapOf(Pair(fWal, 300.toLong()), Pair(sWal, 200.toLong())),
+            userConfigWallet = hashMapOf(Pair(fWal, 300.toLong()), Pair(sWal, 200.toLong())),
             otherWallets = listOf(tWal, foWal)
         )
 
@@ -307,7 +322,7 @@ class RemoveCalculatorTest {
         wallet.balance = 200
         `prepare Calculator`(
             userInput = 300,
-                userConfigWallet = hashMapOf(Pair(wallet, 300.toLong())),
+            userConfigWallet = hashMapOf(Pair(wallet, 300.toLong())),
             otherWallets = emptyList()
         )
 

@@ -1,3 +1,18 @@
+/*
+Copyright 2019 Daniil Artamonov
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
 package com.rdd.finy.app.activities
 
 import android.os.Bundle
@@ -72,9 +87,9 @@ class InfoActivity : MvpAppCompatActivity(), InfoView, WalletsAdapter.Callbacks 
         val walletsFragment = WalletsContainerFragment()
         val statsFragment = StatsContainerFragment()
         manager.beginTransaction()
-                .add(R.id.container_wallets_fragment, walletsFragment)
-                .add(R.id.container_stats_fragment, statsFragment)
-                .commit()
+            .add(R.id.container_wallets_fragment, walletsFragment)
+            .add(R.id.container_stats_fragment, statsFragment)
+            .commit()
 
     }
 
@@ -103,8 +118,11 @@ class InfoActivity : MvpAppCompatActivity(), InfoView, WalletsAdapter.Callbacks 
     }
 
     override fun updateTotalBalanceState(totalBalance: Long) {
-        supportActionBar?.title =
-                "Total balance ${totalBalance / 100}.${totalBalance % 100}"
+        supportActionBar?.title = if (totalBalance % 100 > 0) {
+            "Total balance ${totalBalance / 100}.${totalBalance % 100}"
+        } else {
+            "Total balance ${totalBalance / 100}"
+        }
     }
 
     override fun onShowSetupWalletDialog(walletId: Long) {

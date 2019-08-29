@@ -13,23 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-package com.rdd.finy.app.views
+package com.rdd.finy.helpers
 
-import com.rdd.finy.app.models.Wallet
-import moxy.MvpView
-import moxy.viewstate.strategy.SingleStateStrategy
-import moxy.viewstate.strategy.StateStrategyType
+enum class Colors(val hex: String) {
+    RED("#ff6f60|#e53935|#ab000d"),
+    ORANGE("#ffbd45|#fb8c00|#c25e00"),
+    GREEN("#76d275|#43a047|#00701a"),
+    BLUE("#63ccff|#039be5|#006db3"),
+    DARKBLUE("#5472d3|#0d47a1|#002171"),
+    DEEPPURPLE("#9162e4|#5e35b1|#280680")
 
-@StateStrategyType(value = SingleStateStrategy::class)
-interface ControlMoneyView : MvpView {
-
-    fun setupSourceList(wallets : List<Wallet>)
-
-    fun setupRvVisibility()
-
-    fun openWalletsList()
-
-    fun closeWalletsList()
-
-    fun loadAnimations()
 }

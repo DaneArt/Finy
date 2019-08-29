@@ -1,26 +1,38 @@
+/*
+Copyright 2019 Daniil Artamonov
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
 package com.rdd.finy.app.adapters
 
 import android.content.Context
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import android.widget.RadioButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.rdd.finy.R
 import com.rdd.finy.app.models.Wallet
 import java.lang.Math.abs
 
 class WalletsAdapter(private val context: Context) :
-        RecyclerView.Adapter<WalletsAdapter.WalletViewHolder>() {
+    RecyclerView.Adapter<WalletsAdapter.WalletViewHolder>() {
 
     private val TAG = WalletsAdapter::class.java.simpleName
 
     private var walletsSourceList: ArrayList<Wallet> = arrayListOf()
-    private var balancedWalletsList: ArrayList<Wallet> = arrayListOf()
 
     private lateinit var callbacks: Callbacks
 
@@ -73,20 +85,11 @@ class WalletsAdapter(private val context: Context) :
     }
 
     inner class WalletViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
-            RecyclerView.ViewHolder(inflater.inflate(R.layout.item_wallet, parent, false)) {
+        RecyclerView.ViewHolder(inflater.inflate(R.layout.item_wallet, parent, false)) {
 
-        init {
-            ButterKnife.bind(this, itemView)
-        }
-
-        @BindView(R.id.rbtn_wallet_activation)
-        lateinit var isActiveRadBtn: RadioButton
-        @BindView(R.id.pb_wallet_balance)
-        lateinit var balanceBar: ProgressBar
-        @BindView(R.id.txt_wallet_title)
-        lateinit var titleText: TextView
-        @BindView(R.id.txt_wallet_balance)
-        lateinit var balanceText: TextView
+        var balanceBar: ProgressBar = itemView.findViewById(R.id.pb_wallet_balance)
+        var titleText: TextView = itemView.findViewById(R.id.txt_wallet_title)
+        var balanceText: TextView = itemView.findViewById(R.id.txt_wallet_balance)
 
         private lateinit var localWallet: Wallet
 
@@ -96,26 +99,21 @@ class WalletsAdapter(private val context: Context) :
 
             setupBalanceBarProgress()
 
+            balanceBar.progressTintList =
+                ColorStateList.valueOf(Color.parseColor(localWallet.backColor.split("|")[0]))
+            balanceBar.secondaryProgressTintList =
+                ColorStateList.valueOf(Color.parseColor(localWallet.backColor.split("|")[1]))
+            balanceBar.progressBackgroundTintList =
+                ColorStateList.valueOf(Color.parseColor(localWallet.backColor.split("|")[2]))
+
             if (localWallet.title.isNotBlank()) titleText.text = localWallet.title
-
-            isActiveRadBtn.isChecked = localWallet.isActive
-
-            titleText.setOnClickListener {
-                setupViewStateVisibility()
-            }
-
-            isActiveRadBtn.setOnClickListener {
-                localWallet.isActive = !localWallet.isActive
-                callbacks.onUpdateWallet(wallet = localWallet)
-                isActiveRadBtn.isChecked = localWallet.isActive
-            }
 
             titleText.setOnLongClickListener {
                 callbacks.onShowSetupWalletDialog(wallet.id)
                 true
             }
 
-            setupViewStateVisibility()
+            setupViewState()
         }
 
         private fun setupBalanceBarProgress() {
@@ -134,45 +132,37 @@ class WalletsAdapter(private val context: Context) :
                 activeBalance
             }
 
+            balanceBar.max = maximumBalance
+
             balanceBar.progress = abs(reserve)
 
             balanceBar.secondaryProgress = activeBalance
 
-            balanceBar.max = maximumBalance
         }
 
-        private fun setupViewStateVisibility() {
+        private fun setupViewState() {
 
-            if (!balancedWalletsList.contains(localWallet)) {
-                setBalanceViewVisible()
-            } else {
-                setTitleViewVisible()
-            }
+            val balanceTitle = when {
+                localWallet.upperDivider != null -> {
+                    val balance = if (localWallet.balance % 100 > 0) {
+                        "${localWallet.balance / 100}.${localWallet.balance % 100}"
+                    } else {
+                        "${localWallet.balance / 100}"
+                    }
 
-            setupBalanceBarProgress()
-        }
+                    val upperDivider = if (localWallet.upperDivider!! % 100 > 0) {
+                        "${localWallet.upperDivider!! / 100}.${localWallet.upperDivider!! % 100}"
+                    } else {
+                        "${localWallet.upperDivider!! / 100}"
+                    }
 
-        private fun setBalanceViewVisible() {
-            balanceBar.visibility = View.VISIBLE
-            balanceText.visibility = View.VISIBLE
+                    "$balance / $upperDivider"
+                }
 
-            val balanceTitle = if (localWallet.upperDivider != null) {
-                val balance = "${localWallet.balance / 100}.${localWallet.balance % 100}"
-                val upperDivider = "${localWallet.upperDivider!! / 100}.${localWallet.upperDivider!! % 100}"
-                "$balance / $upperDivider"
-            } else {
-                "${localWallet.balance / 100}.${localWallet.balance % 100}"
+                localWallet.balance % 100 > 0 -> "${localWallet.balance / 100}.${localWallet.balance % 100}"
+                else -> "${localWallet.balance / 100}"
             }
             balanceText.text = balanceTitle
-
-            balancedWalletsList.add(localWallet)
-        }
-
-        private fun setTitleViewVisible() {
-            balanceBar.visibility = View.GONE
-            balanceText.visibility = View.GONE
-
-            balancedWalletsList.remove(localWallet)
         }
 
     }

@@ -69,8 +69,16 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:2.1.13"
     implementation "io.reactivex.rxjava2:rxandroid:2.0.2"
 
+    //Diagrams
     implementation 'com.github.lecho:hellocharts-library:1.5.8@aar'
 
+    //CircleButton
+    implementation 'com.github.markushi:circlebutton:1.1'
+
+    //ColorPicker
+    implementation 'petrov.kristiyan:colorpicker-library:1.1.10'
+
+    //Mockito
     implementation 'org.mockito:mockito-core:2.24.0'
 
     testImplementation 'junit:junit:4.12'

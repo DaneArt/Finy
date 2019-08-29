@@ -1,7 +1,23 @@
+/*
+Copyright 2019 Daniil Artamonov
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
 package com.rdd.finy.app.fragments
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +26,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import at.markushi.ui.CircleButton
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
@@ -22,6 +39,7 @@ import com.rdd.finy.data.repositories.WalletRepositoryImpl
 import moxy.MvpAppCompatDialogFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
+import petrov.kristiyan.colorpicker.ColorPicker
 import javax.inject.Inject
 
 
@@ -60,6 +78,8 @@ class SetupWalletDialog : MvpAppCompatDialogFragment(), SetupWalletDialogView {
     lateinit var alertUpperDividerImg: ImageView
     @BindView(R.id.img_bottom_divider_alert)
     lateinit var alertBottomDividerImg: ImageView
+    @BindView(R.id.btn_color_picker)
+    lateinit var colorPickerButton: CircleButton
 
 
     private var localWallet: Wallet = Wallet()
@@ -85,6 +105,8 @@ class SetupWalletDialog : MvpAppCompatDialogFragment(), SetupWalletDialogView {
             .inflate(R.layout.dialog_setup_wallet, null)
 
         ButterKnife.bind(this, view)
+
+        colorPickerButton.setColor(Color.parseColor(localWallet.backColor.split("|")[1]))
 
         val builder = AlertDialog.Builder(activity, R.style.AddWalletStyle)
 
@@ -112,6 +134,21 @@ class SetupWalletDialog : MvpAppCompatDialogFragment(), SetupWalletDialogView {
         setupViewType()
 
         return dialog
+    }
+
+    @OnClick(R.id.btn_color_picker)
+    fun chooseColor() {
+        val colorPicker = ColorPicker(activity)
+        colorPicker.show()
+        colorPicker.setOnChooseColorListener(object : ColorPicker.OnChooseColorListener {
+            override fun onChooseColor(position: Int, color: Int) {
+                // put code
+            }
+
+            override fun onCancel() {
+                // put code
+            }
+        })
     }
 
     @OnClick(R.id.btn_setup_wallet_delete)
@@ -165,7 +202,7 @@ class SetupWalletDialog : MvpAppCompatDialogFragment(), SetupWalletDialogView {
 
         if (setupWalletBalanceEdit.text.isNotBlank())
             localWallet.balance = setupWalletPresenter
-                    .getSaveableMoney(setupWalletBalanceEdit.text.toString())
+                .getSaveableMoney(setupWalletBalanceEdit.text.toString())
         else
             localWallet.balance = 0
 
@@ -177,7 +214,7 @@ class SetupWalletDialog : MvpAppCompatDialogFragment(), SetupWalletDialogView {
         try {
             if (setupWalletUpperDividerEdit.text.isNotBlank())
                 localWallet.upperDivider = setupWalletPresenter
-                        .getSaveableMoney(setupWalletUpperDividerEdit.text.toString())
+                    .getSaveableMoney(setupWalletUpperDividerEdit.text.toString())
             alertUpperDividerImg.visibility = View.GONE
         } catch (t: Throwable) {
             alertUpperDividerImg.visibility = View.VISIBLE
@@ -188,7 +225,7 @@ class SetupWalletDialog : MvpAppCompatDialogFragment(), SetupWalletDialogView {
         try {
             if (setupWalletBottomDividerEdit.text.isNotBlank())
                 localWallet.bottomDivider = setupWalletPresenter
-                        .getSaveableMoney(setupWalletBottomDividerEdit.text.toString())
+                    .getSaveableMoney(setupWalletBottomDividerEdit.text.toString())
             alertBottomDividerImg.visibility = View.GONE
         } catch (t: Throwable) {
             alertBottomDividerImg.visibility = View.VISIBLE
@@ -197,8 +234,8 @@ class SetupWalletDialog : MvpAppCompatDialogFragment(), SetupWalletDialogView {
 
     override fun sendResult() {
         if (alertBalanceImg.visibility == View.GONE &&
-                alertBottomDividerImg.visibility == View.GONE &&
-                alertUpperDividerImg.visibility == View.GONE
+            alertBottomDividerImg.visibility == View.GONE &&
+            alertUpperDividerImg.visibility == View.GONE
         ) {
             if (isCreatingWallet) {
                 walletRepositoryImpl.insert(localWallet)

@@ -27,4 +27,5 @@
     <string name="wallet_edit_title_dialog">Edit wallet</string>
     <string name="wrong_input_for_money_adapter">Wrong input format. It could contains only 0–9, %, .</string>
     <string name="dividers_title">Dividers</string>
+    <string name="color_picker_title" translatable="false">Color</string>
 </resources>

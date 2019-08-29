@@ -1,3 +1,18 @@
+/*
+Copyright 2019 Daniil Artamonov
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
 package com.rdd.finy
 
 import com.rdd.finy.app.models.Wallet
@@ -14,9 +29,9 @@ class AddCalculatorTest {
     private lateinit var addCalc: CalculatorBeverage
 
     private fun `prepare Calculator`(
-            userInput: Long,
-            userConfigWallet: HashMap<Wallet, Long>,
-            otherWallets: List<Wallet>
+        userInput: Long,
+        userConfigWallet: HashMap<Wallet, Long>,
+        otherWallets: List<Wallet>
     ) {
         addCalc = AddCalculator(
             userBalance = userInput, userConfigWallets = userConfigWallet,
@@ -158,7 +173,7 @@ class AddCalculatorTest {
         testWallet.upperDivider = 200
         `prepare Calculator`(
             userInput = 500,
-                userConfigWallet = hashMapOf(Pair(testWallet, 300.toLong())),
+            userConfigWallet = hashMapOf(Pair(testWallet, 300.toLong())),
             otherWallets = emptyList()
         )
 
@@ -194,7 +209,7 @@ class AddCalculatorTest {
         testOtherWallet.upperDivider = 200
         `prepare Calculator`(
             userInput = 500,
-                userConfigWallet = hashMapOf(Pair(testUserWallet, 300.toLong())),
+            userConfigWallet = hashMapOf(Pair(testUserWallet, 300.toLong())),
             otherWallets = listOf(testOtherWallet)
         )
 
@@ -211,7 +226,7 @@ class AddCalculatorTest {
         testUserWallet.upperDivider = 200
         `prepare Calculator`(
             userInput = 500,
-                userConfigWallet = hashMapOf(Pair(testUserWallet, 300.toLong()), Pair(Wallet(), 400.toLong())),
+            userConfigWallet = hashMapOf(Pair(testUserWallet, 300.toLong()), Pair(Wallet(), 400.toLong())),
             otherWallets = emptyList()
         )
 
@@ -243,7 +258,7 @@ class AddCalculatorTest {
         testUserWallet.upperDivider = 100
         `prepare Calculator`(
             userInput = 500,
-                userConfigWallet = hashMapOf(Pair(testUserWallet, 300.toLong()), Pair(Wallet(), 300.toLong())),
+            userConfigWallet = hashMapOf(Pair(testUserWallet, 300.toLong()), Pair(Wallet(), 300.toLong())),
             otherWallets = listOf(testWallet, Wallet())
         )
 
